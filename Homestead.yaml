@@ -1,0 +1,29 @@
+---
+ip: "192.168.10.10"
+memory: 2048
+cpus: 1
+hostname: uno
+name: uno
+provider: virtualbox
+
+authorize: ~/.ssh/id_rsa.pub
+
+keys:
+    - ~/.ssh/id_rsa
+
+folders:
+    - map: "."
+      to: "/var/www"
+      type: "nfs"
+
+sites:
+    - map: fred.dev
+      to: "/var/www/web"
+      type: symfony
+
+databases:
+    - fred
+
+variables:
+  - key: APP_ENVIRONMENT
+    value: vagrant

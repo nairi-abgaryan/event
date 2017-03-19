@@ -1,0 +1,37 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <section class="contact-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-1 col-md-1 col-sm-1"></div>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                    <h3>Ունեք հարցեր</h3>
+                    <p>Ուղարկեք մեզ նամակ</p>
+                    <form  action="">
+                        <fieldset>
+                            <input type="text" name="name" placeholder="Անուն Ազգանուն"/><br>
+                            <input type="email" name="email" placeholder="Էլ հասցե"/><br>
+                            <label for="message">Հաղորդագրություն</label>
+                            <textarea class="form-control" rows="5" id="message"></textarea>
+                            <a href="#"><button class="detailed ">Ուղարկել</button></a>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 contact-info">
+                    <h3>Կոնտակտային տվյալներ</h3>
+                    <h4>Հեռ</h4>
+                    <p>{{ contact.phone }}<br>
+                    </p>
+                    <h4>Հասցե</h4>
+                    <p>{{ contact.adress }}</p>
+                    <h4>Էլ․հասցե</h4>
+                    <p>{{ contact.email }}</p>
+                    <h4>Ադմին Էլ․հասցե</h4>
+                    <p>{{ contact.adminEmail }}</p>
+                </div>
+                <div class="col-lg-1 col-md-1 col-sm-1"></div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,9 @@
+# ----------------------------------------------------------------------------------------------------------------------
+# Admin translations
+# ----------------------------------------------------------------------------------------------------------------------
+
+admin.security.login: Login
+admin.security.logout: Logout
+admin.security.submit: Submit
+admin.security.email: Email
+admin.security.password: Password

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Admin :: {% block title %}{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+    {# jQuery #}
+    <script src="{{ asset('bundles/sonatacore/vendor/jquery/dist/jquery.js') }}"></script>
+
+    {# Bootstrap #}
+    <link rel="stylesheet" href="{{ asset('bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.css') }}">
+    <script src="{{ asset('bundles/sonatacore/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+</head>
+<body>
+<div class="container">
+    {% block body %}{% endblock %}
+    {% block javascripts %}{% endblock %}
+</div>
+</body>
+</html>

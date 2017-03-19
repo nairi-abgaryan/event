@@ -1,0 +1,51 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <section class="home-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                    <h1>Մեր Մասին</h1>
+                    <p>{{ contact.description }}</p>
+                </div>
+                <div class="col-md-1 col-sm-1"></div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="login">
+                     {% if error %}
+                        <div class="alert alert-danger">
+                            {{ error.messageKey|trans(error.messageData, 'security') }}
+                        </div>
+                    {% endif %}
+                    {{ form_start(form,{"class":"form-horizontal","id":"contact_form"}) }}
+                    <fieldset>
+                        {{ form_widget(form.email, { 'attr': {'class': 'form-control', "placeholder":'Էլ Հասցե'} }) }}
+                        {{ form_widget(form.password, { 'attr': {'class': 'form-control', "placeholder":"Գախտնաբառ"} }) }}
+                        <div class="purchase-buttons">
+                            <input type="submit"  style="width: 100px" value="Մուտք">
+                            <a href="{{ path('user_register') }}">Գրանցում</a>
+                        </div>
+                    </fieldset>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </section>
+    {% block news %}
+         <section class="news-section">
+            <div class="container">
+                <div class="row">
+                    {% for value in news %}
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <div class="single-news">
+                            <img src="{{ asset('uploads/images/') }}{{ value.image }}" alt="">
+                            <p>{{ value.description|truncate(200) }}</p>
+                            <div class="text-right">
+                                <em><a href="">Կարդալ ավելին</a></em>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}>
+                </div>
+            </div>
+        </section>
+    {% endblock %}
+{% endblock %}

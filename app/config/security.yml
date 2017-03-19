@@ -1,0 +1,44 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/security.html
+security:
+    encoders:
+        AppBundle\Entity\User: bcrypt
+
+    role_hierarchy:
+       ROLE_ADMIN: [ROLE_USER]
+
+    # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    providers:
+        users:
+            entity: { class: AppBundle\Entity\User, property: email }
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        admin:
+            pattern: ^/admin/
+            anonymous: true
+            guard:
+                authenticators:
+                   -  app.security.admin_login_form_authenticator
+            logout:
+                path: /admin/logout
+            remember_me:
+                secret: '%secret%'
+                lifetime: 604800
+                path: /admin/
+        main:
+            pattern: ^/
+            anonymous: true
+            guard:
+                authenticators:
+                   - app.security.login_form_authenticator
+            remember_me:
+                secret: '%secret%'
+                lifetime: 604800
+                path: /contact/
+    access_control:
+        - { path: ^/admin/login/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/mypage/, role: ROLE_USER }

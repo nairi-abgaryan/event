@@ -1,0 +1,20 @@
+{% block footer %}
+    <!-- Footer Section -->
+    <section id="footer" class="footer-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                    <p class="copyright">Copyright &copy Ունո Փարթներթ ընդ Քո all rights reserved</p>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-1"></div>
+                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                    <img src="{{ asset('img/logo.png') }}" alt="footerlogo">
+                    <p>Հեռ <span>{{ contact.phone }}</span></p>
+                    <p>Հասցե <span>{{ contact.adress }}</span></p>
+                    <p>Էլ․հասցե <span>{{ contact.email }}</span></p>
+                    <p>Ադմին․ Էլ․հասցե <span>{{ contact.adminEmail }}</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

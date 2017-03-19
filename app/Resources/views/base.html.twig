@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Ունո Փարթներթ ընդ Քո” Սահմանափակ պատասխանատվությամբ ընկերություն!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Certifire">
+    <meta property="og:title" content=""/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="http://certifire.io//"/>
+    <meta property="og:image" content=""/>
+    <meta property="og:site_name" content="Certifire"/>
+    <meta property="og:description" content=""/>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{{ asset('bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{{ asset('css/slick.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/slick-theme.css') }}" rel="stylesheet">
+    <!-- Shadowbox CSS -->
+    <link href="{{ asset('css/shadowbox.css') }}" rel="stylesheet">
+    <!--Google Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
+    <!--Amimate Css-->
+    <link rel="stylesheet" href="{{ asset('css/animate.min.css') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('favicon.ico') }}"/>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('img/favicon.png') }}"/>
+</head>
+<body>
+{% block navbar %}
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top"></a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a class="page-scroll" href="#page-top"></a>
+                    </li>
+                    <li {% if app.request.attributes.get('_route') == 'home' %} class="actived" {% endif %}>
+                        <a data-target=".navbar-collapse" class="page-scroll" href="{{ path('home') }}">Գլխավոր</a>
+                    </li>
+                    <li>
+                        <a data-target=".navbar-collapse" class="page-scroll" href="tenders.html">Մրցույթներ</a>
+                    </li>
+                    <li>
+                        <a data-target=".navbar-collapse" class="page-scroll" href="">Իմ Էջը</a>
+                    </li>
+                    <li>
+                        <a data-target=".navbar-collapse" class="page-scroll" href="{{ path('list_contact') }}">Հետադարձ կապ</a>
+                    </li>
+                    <li>
+                        <a data-target=".navbar-collapse" class="page-scroll" href="privacy.html">Ընդհանուր
+                            պայմաններ</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+{% block body %}{% endblock %}
+
+
+{% block javascripts %}
+    <script src="{{ asset('bundles/sonatacore/vendor/jquery/dist/jquery.js') }}"></script>
+    <!-- jQuery Form -->
+    <script src="{{ asset('bundles/sonataadmin/vendor/jquery-form/jquery.form.js') }}"></script>
+    <!-- Slick slider -->
+    <script src="{{ asset('js/slick.min.js') }}"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+
+    <script src="{{ asset('js/shadowbox.js') }}"></script>
+
+    <!-- Scrolling Nav JavaScript -->
+    <script src="{{ asset('js/jquery.easing.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.waypoints.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.counterup.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
+    <script src="{{ asset('js/custom.js') }}"></script>
+
+    <script>
+
+        var isTop = $(".navbar").offset().top < 50;
+
+        handleResize();
+
+        $(window).scroll(function () {
+            handleResize();
+        });
+        $(window).resize(function () {
+            handleResize();
+        });
+
+        function handleResize() {
+            var navbarTopThreshold = 0;
+            var navbarBottomThreshold = 50;
+            var windiwWidthThreshold = 751;
+
+            var navbarScroll = $(".navbar").offset().top;
+            var windowWidth = $(window).width();
+            var isWide = windowWidth > windiwWidthThreshold;
+
+            if (isTop) {
+                if (navbarScroll > navbarBottomThreshold) {
+                    isTop = false;
+                }
+            } else {
+                if (navbarScroll == navbarTopThreshold) {
+                    isTop = true;
+                }
+            }
+
+            if (isWide) {
+                if (isTop) {
+                    $(".page-scroll").css("color", "#ffffff");
+                    $(".navbar-brand").css({"background-image": "url({{ asset('img/logo.png') }})", "height":"49px","margin-left":"-15px"});
+                } else {
+                    $(".page-scroll").css("color", "#ffffff");
+                    $(".active").css("color", "#ffffff");
+                    $(".navbar-brand").css({"background-image": "url({{ asset('img/logo.png') }})", "height":"49px","margin-left":"-15px"});
+                }
+            } else {
+                if (isTop) {
+                    $(".icon-bar").css("background-color", "#333333");
+                    $(".page-scroll").css("color", "#ffffff");
+                    $(".navbar-brand").css({"background-image": "url({{ asset('img/logo.png') }})", "height":"49px","margin-left":"15px", "margin-top":"0px"});
+                    $(".navbar-toggle:hover,.navbar-toggle:focus").css({"background-color": "#ffffff"});
+                    $(".navbar-collapse").css({"background-color": "#333333"});
+                } else {
+                    $(".icon-bar").css("background-color", "#333333");
+                    $(".page-scroll").css("color", "#ffffff");
+                    $(".navbar-brand").css({"background-image": "url({{ asset('img/logo.png') }})", "height":"49px","margin-left":"15px", "margin-top":"0px"});
+                    $(".navbar-toggle:hover,.navbar-toggle:focus").css({"background-color": "#ffffff"});
+                    $(".navbar-collapse").css({"background-color": "#333333"});
+                }
+            }
+        }
+    </script>
+{% endblock %}
+    {{ render(controller('AppBundle:Contact:footer')) }}
+</body>
+</html>

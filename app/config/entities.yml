@@ -1,0 +1,140 @@
+parameters:
+    # ------------------------------------------------------------------------------------------------------------------
+    # Entities
+    # ------------------------------------------------------------------------------------------------------------------
+
+    app.entity.news.class: AppBundle\Entity\News
+    app.entity.image.class: AppBundle\Entity\Image
+    app.entity.file.class: AppBundle\Entity\File
+    app.entity.property.class: AppBundle\Entity\Property
+    app.entity.property.type.class: AppBundle\Entity\PropertyType
+    app.entity.property.product.class: AppBundle\Entity\PropertyProduct
+    app.entity.property.category.class: AppBundle\Entity\PropertyCategory
+    app.entity.conditions.class: AppBundle\Entity\Conditions
+    app.entity.contact.class: AppBundle\Entity\Contact
+    app.entity.user.class: AppBundle\Entity\User
+
+    # ------------------------------------------------------------------------------------------------------------------
+    # Repositories
+    # ------------------------------------------------------------------------------------------------------------------
+
+    app.repository.news.class: AppBundle\Repository\NewsRepository
+    app.repository.image.class: AppBundle\Repository\ImageRepository
+    app.repository.file.class: AppBundle\Repository\FileRepository
+    app.repository.property.class: AppBundle\Repository\PropertyRepository
+    app.repository.property.type.class: AppBundle\Repository\PropertyTypeRepository
+    app.repository.property.product.class: AppBundle\Repository\PropertyProductRepository
+    app.repository.property.category.class: AppBundle\Repository\PropertyCategoryRepository
+    app.repository.conditions.class: AppBundle\Repository\ConditionsRepository
+    app.repository.contact.class: AppBundle\Repository\ContactRepository
+    app.repository.user.class: AppBundle\Repository\UserRepository
+
+services:
+    # ------------------------------------------------------------------------------------------------------------------
+    # Manager Registry Services
+    # ------------------------------------------------------------------------------------------------------------------
+
+    app.orm.property.type.manager:
+        class: Doctrine\Common\Persistence\ManagerRegistry
+        factory: ["@doctrine", getManagerForClass]
+        arguments: ["%app.entity.property.type.class%"]
+
+    app.orm.news.manager:
+        class: Doctrine\Common\Persistence\ManagerRegistry
+        factory: ["@doctrine", getManagerForClass]
+        arguments: ["%app.entity.news.class%"]
+
+    app.orm.image.manager:
+        class: Doctrine\Common\Persistence\ManagerRegistry
+        factory: ["@doctrine", getManagerForClass]
+        arguments: ["%app.entity.image.class%"]
+
+    app.orm.file.manager:
+        class: Doctrine\Common\Persistence\ManagerRegistry
+        factory: ["@doctrine", getManagerForClass]
+        arguments: ["%app.entity.file.class%"]
+
+    app.orm.property.manager:
+        class: Doctrine\Common\Persistence\ManagerRegistry
+        factory: ["@doctrine", getManagerForClass]
+        arguments: ["%app.entity.property.class%"]
+
+    app.orm.property.product.manager:
+        class: Doctrine\Common\Persistence\ManagerRegistry
+        factory: ["@doctrine", getManagerForClass]
+        arguments: ["%app.entity.property.product.class%"]
+
+    app.orm.property.category.manager:
+        class: Doctrine\Common\Persistence\ManagerRegistry
+        factory: ["@doctrine", getManagerForClass]
+        arguments: ["%app.entity.property.category.class%"]
+
+    app.orm.contact.manager:
+        class: Doctrine\Common\Persistence\ManagerRegistry
+        factory: ["@doctrine", getManagerForClass]
+        arguments: ["%app.entity.contact.class%"]
+
+    app.orm.conditions.manager:
+        class: Doctrine\Common\Persistence\ManagerRegistry
+        factory: ["@doctrine", getManagerForClass]
+        arguments: ["%app.entity.conditions.class%"]
+
+    app.orm.user.manager:
+        class: Doctrine\Common\Persistence\ManagerRegistry
+        factory: ["@doctrine", getManagerForClass]
+        arguments: ["%app.entity.user.class%"]
+
+    # ------------------------------------------------------------------------------------------------------------------
+    # Repositories
+    # ------------------------------------------------------------------------------------------------------------------
+
+    app.orm.property.type.repository:
+        class: "%app.entity.property.type.class%"
+        factory: ["@app.orm.property.type.manager", getRepository]
+        arguments: ["%app.entity.property.type.class%"]
+
+    app.orm.news.repository:
+        class: "%app.entity.news.class%"
+        factory: ["@app.orm.news.manager", getRepository]
+        arguments: ["%app.entity.news.class%"]
+
+    app.orm.image.repository:
+        class: "%app.entity.image.class%"
+        factory: ["@app.orm.image.manager", getRepository]
+        arguments: ["%app.entity.image.class%"]
+
+
+    app.orm.file.repository:
+        class: "%app.entity.file.class%"
+        factory: ["@app.orm.file.manager", getRepository]
+        arguments: ["%app.entity.file.class%"]
+
+    app.orm.property.repository:
+        class: "%app.entity.property.class%"
+        factory: ["@app.orm.property.manager", getRepository]
+        arguments: ["%app.entity.property.class%"]
+
+    app.orm.property.product.repository:
+        class: "%app.entity.property.product.class%"
+        factory: ["@app.orm.property.product.manager", getRepository]
+        arguments: ["%app.entity.property.product.class%"]
+
+    app.orm.property.category.repository:
+        class: "%app.entity.property.category.class%"
+        factory: ["@app.orm.property.category.manager", getRepository]
+        arguments: ["%app.entity.property.category.class%"]
+
+    app.orm.contact.repository:
+        class: "%app.repository.contact.class%"
+        factory: ["@app.orm.contact.manager", getRepository]
+        arguments: ["%app.entity.contact.class%"]
+
+    app.orm.conditions.repository:
+        class: "%app.repository.conditions.class%"
+        factory: ["@app.orm.conditions.manager", getRepository]
+        arguments: ["%app.entity.conditions.class%"]
+
+    app.orm.user.repository:
+        class: "%app.repository.user.class%"
+        factory: ["@app.orm.user.manager", getRepository]
+        arguments: ["%app.entity.user.class%"]

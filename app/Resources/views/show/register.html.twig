@@ -1,0 +1,47 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <style>
+        ul li {
+
+        }
+    </style>
+    <section class="home-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                    <h1>Մեր Մասին</h1>
+                    <p>{{ contact.description }}</p>
+                </div>
+                <div class="col-md-1 col-sm-1"></div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    {% if  form_errors(form)  %}
+                        <div class="alert alert-danger">
+                            {{ form_errors(form) }}
+                        </div>
+                    {% endif %}
+                    {{ form_start(form,{"class":"form-horizontal","id":"contact_form_signup"}) }}
+                    <fieldset>
+                        {{ form_row(form.companyName, { 'attr': {'class': 'form-control', "placeholder":'Կազմակերպության Անունs'} }) }}
+                        {{ form_row(form.name, { 'attr': {'class': 'form-control', "placeholder":"Անուն Ազգանուն"} }) }}
+                        {{ form_row(form.phoneNumber, { 'attr': {'class': 'form-control', "placeholder":"Հեռ"} }) }}
+                        {{ form_row(form.email, { 'attr': {'class': 'form-control', "placeholder":"Էլ հասցե"} }) }}
+                        {{ form_row(form.businessAddress, { 'attr': {'class': 'form-control', "placeholder":"Գործունեության հասցե"} }) }}
+                        {{ form_row(form.legalAddress, { 'attr': {'class': 'form-control', "placeholder":"Իրավաբանական  հասցե"} }) }}
+                        {{ form_row(form.tin, { 'attr': {'class': 'form-control', "placeholder":"ՀՎՀՀ"} }) }}
+                        {{ form_row(form.plainPassword, { 'attr': {'class': 'form-control', "placeholder":"Գաղտնաբառ"} }) }}
+                        <label for="aboutcompany">Կազմակերպության Մասին</label>
+                        {{ form_row(form.description, { 'attr': {'class': 'form-control', "placeholder":"Կազմակերպության Մասին"} }) }}
+                        <div class="purchase-buttons">
+                            {#<a href="#">#}
+                                {#<a href="{{ path('home') }}"><button class="log-in" >Մուտք</button></a>#}
+                            {#</a>#}
+                            <input type="submit" value="Գրանցվել">
+                        </div>
+                    </fieldset>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

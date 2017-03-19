@@ -1,0 +1,13 @@
+dependencies:
+  override:
+    - echo "Ignore CircleCI defaults"
+
+test:
+  override:
+    - ls -la
+
+deployment:
+  staging:
+    branch: dev
+    commands:
+      - ssh root@fred.hexdivision.com "cd /var/www && sudo chmod a+x provision.sh && ./provision.sh"

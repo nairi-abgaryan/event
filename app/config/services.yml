@@ -1,0 +1,150 @@
+services:
+
+    app.twig.base_twig:
+         class: AppBundle\Controller\ContactController
+
+    # ------------------------------------------------------------------------------------------------------------------
+    # Authenticators
+    # ------------------------------------------------------------------------------------------------------------------
+
+    app.security.token_authenticator:
+        class: AppBundle\Service\Security\TokenAuthenticator
+        autowire: true
+
+    app.security.admin_login_form_authenticator:
+        class: AppBundle\Service\Security\AdminLoginFormAuthenticator
+        arguments: ["@form.factory", "@doctrine.orm.entity_manager", "@router", "@security.password_encoder", "@request_stack"]
+
+    app.security.login_form_authenticator:
+        class: AppBundle\Service\Security\LoginFormAuthenticator
+        arguments: ["@form.factory", "@doctrine.orm.entity_manager", "@router", "@security.password_encoder", "@request_stack"]
+    # ------------------------------------------------------------------------------------------------------------------
+    # Event Subscribers
+    # ------------------------------------------------------------------------------------------------------------------
+
+    app.doctrine.hash_password_subscriber:
+        class: AppBundle\EventSubscriber\HashPasswordSubscriber
+        autowire: true
+        tags:
+            - { name: doctrine.event_subscriber }
+
+    # ------------------------------------------------------------------------------------------------------------------
+    # Param converters
+    # ------------------------------------------------------------------------------------------------------------------
+
+    app.user_param_converter:
+        class: AppBundle\HTTP\ParamConverter\UserParamConverter
+        arguments: ['@app.user_manager', '@security.token_storage']
+        tags:
+            - {name: request.param_converter, converter: app.user_param_converter, priority: 10}
+
+    # ------------------------------------------------------------------------------------------------------------------
+    # Services
+    # ------------------------------------------------------------------------------------------------------------------
+
+    app.token_service:
+        class: AppBundle\Service\Security\TokenService
+        autowire: true
+
+    # ------------------------------------------------------------------------------------------------------------------
+    # Pagination
+    # ------------------------------------------------------------------------------------------------------------------
+
+    app.pagination_factory:
+        class: AppBundle\Service\Pagination\PaginationFactory
+        autowire: true
+
+    # ------------------------------------------------------------------------------------------------------------------
+    # Admin
+    # ------------------------------------------------------------------------------------------------------------------
+    admin.contact:
+        class: AppBundle\Admin\ContactAdmin
+        arguments: [~, AppBundle\Entity\Contact, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: contact }
+
+    admin.news:
+        class: AppBundle\Admin\NewsAdmin
+        arguments: [~, AppBundle\Entity\News, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: news }
+
+    admin.image:
+        class: AppBundle\Admin\ImageAdmin
+        arguments: [~, AppBundle\Entity\Image, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Images }
+
+    admin.property_attribute:
+        class: AppBundle\Admin\PropertyAttributeAdmin
+        arguments: [~, AppBundle\Entity\PropertyAttribute, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Property attributes }
+
+    admin.property_attribute_condition:
+        class: AppBundle\Admin\PropertyAttributeConditionAdmin
+        arguments: [~, AppBundle\Entity\PropertyAttributeCondition, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Property attribute conditions }
+
+    admin.property_attribute_type:
+        class: AppBundle\Admin\PropertyAttributeTypeAdmin
+        arguments: [~, AppBundle\Entity\PropertyAttributeType, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Property attribute types }
+
+    admin.property_type:
+        class: AppBundle\Admin\PropertyTypeAdmin
+        arguments: [~, AppBundle\Entity\PropertyType, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Property types }
+
+    admin.state:
+        class: AppBundle\Admin\StateAdmin
+        arguments: [~, AppBundle\Entity\State, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: States }
+
+    # ------------------------------------------------------------------------------------------------------------------
+    # Entity managers
+    # ------------------------------------------------------------------------------------------------------------------
+
+    app.property.type_manager:
+        class: AppBundle\Service\Manager\PropertyTypeManager
+        arguments: ["@app.orm.property.type.repository", "@app.orm.property.type.manager"]
+
+    app.news_manager:
+        class: AppBundle\Service\Manager\NewsManager
+        arguments: ["@app.orm.news.repository", "@app.orm.news.manager"]
+
+    app.image_manager:
+        class: AppBundle\Service\Manager\ImageManager
+        arguments: ["@app.orm.image.repository", "@app.orm.image.manager", "%kernel.root_dir%"]
+
+    app.file_manager:
+        class: AppBundle\Service\Manager\FileManager
+        arguments: ["@app.orm.file.repository", "@app.orm.file.manager", "%kernel.root_dir%"]
+
+    app.property_maneger:
+        class: AppBundle\Service\Manager\PropertyManager
+        arguments: ["@app.orm.property.repository", "@app.orm.property.manager"]
+
+    app.property_product_maneger:
+        class: AppBundle\Service\Manager\PropertyProductManager
+        arguments: ["@app.orm.property.category.repository", "@app.orm.property.category.manager"]
+
+    app.property_category_maneger:
+        class: AppBundle\Service\Manager\PropertyCategoryManager
+        arguments: ["@app.orm.property.category.repository", "@app.orm.property.category.manager"]
+
+    app.conditions_manager:
+        class: AppBundle\Service\Manager\ConditionsManager
+        arguments: ["@app.orm.conditions.repository", "@app.orm.conditions.manager"]
+
+    app.user_manager:
+        class: AppBundle\Service\Manager\UserManager
+        arguments: ["@app.orm.user.repository", "@app.orm.user.manager"]
+
+    app.contact_manager:
+        class: AppBundle\Service\Manager\ContactManager
+        arguments: ["@app.orm.contact.repository", "@app.orm.contact.manager"]

@@ -1,0 +1,46 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <section class="my-page-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                    <ul>
+                        <li><a href="mypage.html">Հրապարակված մրցույթներ</a></li>
+                        <li><a href="mypagetend.html">Իմ մասնակցության հայտեր</a></li>
+                        <li><a href="mypagecreate.html">Պատվիրել մրցույթային փաթեթ</a></li>
+                        <li><a href="{{ path('retrieve_user', {"id" : user.id}) }}">Անձնական տվյալներ</a></li>
+                        <li><a href="helpful-docs.html">Օգտակար փաստաթղթեր</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 my-account">
+                    {% if  form_errors(form)  %}
+                        <div class="alert alert-danger">
+                            {{ form_errors(form) }}
+                        </div>
+                    {% endif %}
+                    {{ form_start(form,{"class":"form-horizontal","id":"contact_form_signup"}) }}
+                    <fieldset>
+                        {{ form_row(form.companyName, { 'attr': {'class': 'form-control', "placeholder":'Կազմակերպության Անունs',"value":user.companyName} }) }}
+                        {{ form_row(form.name, { 'attr': {'class': 'form-control', "placeholder":"Անուն Ազգանուն", "value":user.name} }) }}
+                        {{ form_row(form.phoneNumber, { 'attr': {'class': 'form-control', "placeholder":"Հեռ","value":user.phoneNumber} }) }}
+                        {{ form_row(form.email, { 'attr': {'class': 'form-control', "placeholder":"Էլ հասցե","value":user.email} }) }}
+                        {{ form_row(form.businessAddress, { 'attr': {'class': 'form-control', "placeholder":"Գործունեության հասցե","value":user.businessAddress} }) }}
+                        {{ form_row(form.legalAddress, { 'attr': {'class': 'form-control', "placeholder":"Իրավաբանական  հասցե","value":user.legalAddress} }) }}
+                        {{ form_row(form.tin, { 'attr': {'class': 'form-control', "placeholder":"ՀՎՀՀ", "value":user.tin} }) }}
+                        {{ form_row(form.plainPassword, { 'attr': {'class': 'form-control', "placeholder":"Գաղտնաբառ","value":user.plainPassword} }) }}
+                        <label for="aboutcompany">Կազմակերպության Մասին</label>
+                        {{ form_widget(form.description, { 'attr': {'class': 'form-control', "placeholder":"Կազմակերպության Մասին", "value":user.description} }) }}
+                        <div class="purchase-buttons">
+                            {#<a href="#">#}
+                            {#<a href="{{ path('home') }}"><button class="log-in" >Մուտք</button></a>#}
+                            {#</a>#}
+                            <input type="submit" value="Պահպանել">
+                        </div>
+                    </fieldset>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
