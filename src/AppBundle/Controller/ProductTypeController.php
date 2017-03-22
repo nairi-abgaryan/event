@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller\Api;
+namespace AppBundle\Controller;
 
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\View\View;
@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @Route("/properties/attributes/types")
  */
-class PropertyAttributeTypeController extends FOSRestController
+class ProductTypeController extends FOSRestController
 {
     /**
      * List availabe property attribute types.

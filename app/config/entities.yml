@@ -3,11 +3,15 @@ parameters:
     # Entities
     # ------------------------------------------------------------------------------------------------------------------
 
+    app.entity.shipment.class: AppBundle\Entity\Shipment
+    app.entity.price.class: AppBundle\Entity\Price
+    app.entity.price_product.class: AppBundle\Entity\PriceProduct
     app.entity.news.class: AppBundle\Entity\News
     app.entity.image.class: AppBundle\Entity\Image
     app.entity.file.class: AppBundle\Entity\File
     app.entity.property.class: AppBundle\Entity\Property
     app.entity.property.type.class: AppBundle\Entity\PropertyType
+    app.entity.product.type.class: AppBundle\Entity\ProductType
     app.entity.property.product.class: AppBundle\Entity\PropertyProduct
     app.entity.property.category.class: AppBundle\Entity\PropertyCategory
     app.entity.conditions.class: AppBundle\Entity\Conditions
@@ -18,11 +22,15 @@ parameters:
     # Repositories
     # ------------------------------------------------------------------------------------------------------------------
 
+    app.repository.shipment.class: AppBundle\Repository\ShipmentRepository
+    app.repository.price.class: AppBundle\Repository\PriceRepository
+    app.repository.price_product.class: AppBundle\Repository\PriceProductRepository
     app.repository.news.class: AppBundle\Repository\NewsRepository
     app.repository.image.class: AppBundle\Repository\ImageRepository
     app.repository.file.class: AppBundle\Repository\FileRepository
     app.repository.property.class: AppBundle\Repository\PropertyRepository
     app.repository.property.type.class: AppBundle\Repository\PropertyTypeRepository
+    app.repository.product.type.class: AppBundle\Repository\ProductTypeRepository
     app.repository.property.product.class: AppBundle\Repository\PropertyProductRepository
     app.repository.property.category.class: AppBundle\Repository\PropertyCategoryRepository
     app.repository.conditions.class: AppBundle\Repository\ConditionsRepository
@@ -33,6 +41,21 @@ services:
     # ------------------------------------------------------------------------------------------------------------------
     # Manager Registry Services
     # ------------------------------------------------------------------------------------------------------------------
+
+    app.orm.shipment.manager:
+        class: Doctrine\Common\Persistence\ManagerRegistry
+        factory: ["@doctrine", getManagerForClass]
+        arguments: ["%app.entity.shipment.class%"]
+
+    app.orm.price.type.manager:
+        class: Doctrine\Common\Persistence\ManagerRegistry
+        factory: ["@doctrine", getManagerForClass]
+        arguments: ["%app.entity.price.class%"]
+
+    app.orm.price_product.type.manager:
+        class: Doctrine\Common\Persistence\ManagerRegistry
+        factory: ["@doctrine", getManagerForClass]
+        arguments: ["%app.entity.price_product.class%"]
 
     app.orm.property.type.manager:
         class: Doctrine\Common\Persistence\ManagerRegistry
@@ -53,6 +76,11 @@ services:
         class: Doctrine\Common\Persistence\ManagerRegistry
         factory: ["@doctrine", getManagerForClass]
         arguments: ["%app.entity.file.class%"]
+
+    app.orm.product.type.manager:
+        class: Doctrine\Common\Persistence\ManagerRegistry
+        factory: ["@doctrine", getManagerForClass]
+        arguments: ["%app.entity.product.type.class%"]
 
     app.orm.property.manager:
         class: Doctrine\Common\Persistence\ManagerRegistry
@@ -88,6 +116,21 @@ services:
     # Repositories
     # ------------------------------------------------------------------------------------------------------------------
 
+    app.orm.shipment.repository:
+        class: "%app.entity.shipment.class%"
+        factory: ["@app.orm.shipment.manager", getRepository]
+        arguments: ["%app.entity.shipment.class%"]
+
+    app.orm.price.type.repository:
+        class: "%app.entity.price.class%"
+        factory: ["@app.orm.price.type.manager", getRepository]
+        arguments: ["%app.entity.price.class%"]
+
+    app.orm.price_product.type.repository:
+        class: "%app.entity.price_product.class%"
+        factory: ["@app.orm.price_product.type.manager", getRepository]
+        arguments: ["%app.entity.price_product.class%"]
+
     app.orm.property.type.repository:
         class: "%app.entity.property.type.class%"
         factory: ["@app.orm.property.type.manager", getRepository]
@@ -108,6 +151,11 @@ services:
         class: "%app.entity.file.class%"
         factory: ["@app.orm.file.manager", getRepository]
         arguments: ["%app.entity.file.class%"]
+
+    app.orm.product.type.repository:
+        class: "%app.entity.product.type.class%"
+        factory: ["@app.orm.product.type.manager", getRepository]
+        arguments: ["%app.entity.product.type.class%"]
 
     app.orm.property.repository:
         class: "%app.entity.property.class%"

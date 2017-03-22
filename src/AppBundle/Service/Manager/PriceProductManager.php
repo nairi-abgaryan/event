@@ -2,14 +2,14 @@
 
 namespace AppBundle\Service\Manager;
 
-use AppBundle\Entity\PropertyProduct;
-use AppBundle\Repository\PropertyProductRepository;
+use AppBundle\Entity\PriceProduct;
+use AppBundle\Repository\PriceProductRepository;
 use Doctrine\ORM\EntityManager;
 
-class PropertyProductManager
+class PriceProductManager
 {
     /**
-     * @var PropertyProductRepository
+     * @var PriceProductRepository
      */
     private $repository;
 
@@ -21,10 +21,10 @@ class PropertyProductManager
     /**
      * PropertyProductRepository constructor.
      *
-     * @param PropertyProductRepository $repository
+     * @param PriceProductRepository $repository
      * @param EntityManager          $em
      */
-    public function __construct(PropertyProductRepository $repository, EntityManager $em)
+    public function __construct(PriceProductRepository $repository, EntityManager $em)
     {
         $this->repository = $repository;
         $this->em = $em;
@@ -35,25 +35,25 @@ class PropertyProductManager
      */
     public function findAll()
     {
-        $qb = $this->repository->createQueryBuilder('property_category');
+        $qb = $this->repository->createQueryBuilder('price_product');
 
         return $qb;
     }
 
     /**
-     * @return PropertyProduct
+     * @return PriceProduct
      */
     public function create()
     {
-        return new PropertyProduct();
+        return new PriceProduct();
     }
 
     /**
-     * @param PropertyProduct $property
+     * @param PriceProduct $product
      *
-     * @return PropertyProduct
+     * @return PriceProduct
      */
-    public function persist(PropertyProduct $product)
+    public function persist(PriceProduct $product)
     {
         $this->em->persist($product);
         $this->em->flush();

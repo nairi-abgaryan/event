@@ -41,8 +41,8 @@ class PropertyTypeManager
     /**
      * @return object|null|PropertyType
      */
-    public function find()
+    public function find($id)
     {
-        return $this->repository->find(1);
+        return $this->repository->find($id);
     }
 }

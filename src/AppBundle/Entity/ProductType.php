@@ -7,11 +7,11 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
- * @ORM\Table(name="properties_category")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\PropertyCategoryRepository")
+ * @ORM\Table(name="product_type")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductTypeRepository")
  * @Serializer\ExclusionPolicy("all")
  */
-class PropertyCategory
+class ProductType
 {
     use TimestampableEntity;
 

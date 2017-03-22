@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Table(name="properties")
@@ -49,7 +50,7 @@ class Property
     private $category;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="boolean")
      *
      * @Serializer\Expose
      */
@@ -63,26 +64,26 @@ class Property
     private $insurance;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $shipment;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      *
      * @Serializer\Expose
      */
     private $advance;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      *
      * @Serializer\Expose
      */
     private $budget;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      *
      * @Serializer\Expose
      */
@@ -90,14 +91,17 @@ class Property
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\File")
-     * @ORM\JoinColumn(onDelete="CASCADE")
-     *
      * @Serializer\Expose
      */
     private $file;
 
     /**
-     * @ORM\Column(type="integer")
+     * @var UploadedFile
+     */
+    private $filePdf;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $active;
 
@@ -272,12 +276,29 @@ class Property
     }
 
     /**
-     * @param mixed $file
+     * @param File $file
      */
-    public function setFile($file)
+    public function setFile(File $file)
     {
-        $this->$file = $file;
+        $this->file = $file;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getFilePdf()
+    {
+        return $this->filePdf;
+    }
+
+    /**
+     * @param mixed $filePdf
+     */
+    public function setFilePdf(UploadedFile $filePdf)
+    {
+        $this->filePdf = $filePdf;
+    }
+
 
     /**
      * @return mixed

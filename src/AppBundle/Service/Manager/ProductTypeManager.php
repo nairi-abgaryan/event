@@ -2,11 +2,10 @@
 
 namespace AppBundle\Service\Manager;
 
-use AppBundle\Entity\PropertyProduct;
 use AppBundle\Repository\PropertyProductRepository;
 use Doctrine\ORM\EntityManager;
 
-class PropertyProductManager
+class ProductTypeManager
 {
     /**
      * @var PropertyProductRepository
@@ -38,27 +37,6 @@ class PropertyProductManager
         $qb = $this->repository->createQueryBuilder('property_category');
 
         return $qb;
-    }
-
-    /**
-     * @return PropertyProduct
-     */
-    public function create()
-    {
-        return new PropertyProduct();
-    }
-
-    /**
-     * @param PropertyProduct $property
-     *
-     * @return PropertyProduct
-     */
-    public function persist(PropertyProduct $product)
-    {
-        $this->em->persist($product);
-        $this->em->flush();
-
-        return $product;
     }
 }
 

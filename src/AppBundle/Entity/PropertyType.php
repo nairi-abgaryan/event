@@ -78,4 +78,12 @@ class PropertyType
     {
         $this->image = $image;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString()
+    {
+        return (string)$this->name;
+    }
 }

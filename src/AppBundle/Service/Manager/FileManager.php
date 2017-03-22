@@ -3,7 +3,6 @@
 namespace AppBundle\Service\Manager;
 
 use AppBundle\Entity\File;
-use AppBundle\Entity\Image;
 use AppBundle\Entity\User;
 use AppBundle\Repository\FileRepository;
 use Doctrine\ORM\EntityManager;
@@ -81,40 +80,38 @@ class FileManager
     /**
      * @param UploadedFile $file
      * @param User         $owner
-     * @param Image        $oldImage
+     * @param File        $oldImage
      *
-     * @return Image
+     * @return File
      */
-    public function upload(UploadedFile $file, User $owner, Image $oldImage = null)
+    public function upload(UploadedFile $file, User $owner, File $oldImage = null)
     {
-        $image = ($oldImage) ? $oldImage : $this->create();
-
-        if ($image->getPath()) {
-            unlink($this->uploadsDir . $image->getPath());
-        }
+        $image =  $this->create();
 
         $image->setOwner($owner);
-        $path = md5(uniqid($file->getClientOriginalName(), true)) . ".jpg";
+        $path = md5(uniqid($file->getClientOriginalName(), true)).".". $file->getClientOriginalExtension();
         $file->move($this->uploadsDir, $path);
         $image->setPath($path);
+        $image->setFile($file);
+
         return $this->persist($image);
     }
 
     /**
-     * @param Image $image
+     * @param File $image
      */
-    public function uploadFromAdmin(Image $image)
+    public function uploadFromAdmin(File $image)
     {
         $oldImage = ($image->getPath()) ? $image : null;
         $image->setPath($this->upload($image->getFile(), $image->getOwner(), $oldImage)->getPath());
     }
 
     /**
-     * @param Image $image
+     * @param File $image
      *
-     * @return Image
+     * @return File
      */
-    public function persist(Image $image)
+    public function persist(File $image)
     {
         $this->em->persist($image);
         $this->em->flush();

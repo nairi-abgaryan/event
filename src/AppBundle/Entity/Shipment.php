@@ -7,11 +7,11 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
- * @ORM\Table(name="properties_category")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\PropertyCategoryRepository")
+ * @ORM\Table(name="shipment")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ShipmentRepository")
  * @Serializer\ExclusionPolicy("all")
  */
-class PropertyCategory
+class Shipment
 {
     use TimestampableEntity;
 
@@ -26,14 +26,11 @@ class PropertyCategory
 
     /**
      * @ORM\Column(type="string")
-     *
-     * @Serializer\Expose
      */
     private $name;
 
-
     /**
-     * @return int
+     * @return mixed
      */
     public function getId()
     {
@@ -41,7 +38,7 @@ class PropertyCategory
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getName()
     {
@@ -49,19 +46,12 @@ class PropertyCategory
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      */
     public function setName($name)
     {
         $this->name = $name;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function __toString()
-    {
-        return (string)$this->name;
-    }
 }
 

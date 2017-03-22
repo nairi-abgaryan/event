@@ -27,10 +27,30 @@ $(function() {
 /***************************** Add new product row *****************/
 
 $(document).ready(function () {
-    $('#add-row').on('click', function() {
-        $('#add-row').before("<div class='added'><form class='form-inline'><div class='form-group'><input type='text' id='product' /></div><div class='form-group'><input style='margin-left: 4px;' type='text' id='qty'/></div> <div class='form-group'> <select name='sizes' class='choose-size' style='margin-top: 0;'> <option disabled selected >Չ․միավոր</option> <option value=''>հատ</option> <option value=''>ք/մ</option> <option value=''>կգ</option> </select> </div><div class='form-group'><a href='#'><button style='margin-bottom: 23px; margin-left: 4px;' class='upload-image'>Նկար</button></a> </div><div class='form-group'><button type='button' style='margin-left: 4px;' class='remove-row'>X</button></div></form></div>");
+    var i = 2;
 
+    $('#add-row').on('click', function() {
+        $('#add-row').before(
+            "<div class='added'>" +
+            "<div class='form-inline'>" +
+                "<div class='form-group'>" +
+                    "<input type='text' name='product[product"+i+"][name]' />" +
+                "</div><div class='form-group'>" +
+            "<input style='margin-left: 4px;' name='product[product"+i+"][qty]' type='text' />" +
+            "</div> <div class='form-group'> " +
+            "<select name='product[product"+i+"][sizes]' class='choose-size' style='margin-top: 0;'> " +
+                "<option disabled selected >Չ․միավոր</option> " +
+                "<option value='հատ'>հատ</option> " +
+                "<option value='ք/մ'>ք/մ</option> " +
+                "<option value='կգ'>կգ</option> " +
+            "</select> </div>" +
+            "<div class='form-group'>" +
+            "<input type='file'  name='product[product"+i+"][image]' style='margin-bottom: 23px; margin-left: 4px;' class='upload-image'> " +
+            "</div><div class='form-group'><button type='button' style='margin-left: 4px;' class='remove-row'>X</button></div>" +
+            "</div></div>");
+        i++;
     });
+
     $('.create-tender').on('click', '.remove-row', function() {
         $(this).parents()[2].remove()
     })
@@ -57,9 +77,10 @@ $(function () {
 
 
 /************************** Hide uplaod image based on category change *******************************/
-
+$(".products").hide();
+$("#add-row").hide()
 $("#select_category").change(function(){
-    if($(this).val()=== "աշխատանք" || $(this).val()=== "ծառայություն")
+    if($(this).val()=== "1" || $(this).val()=== "2")
     {
         $(".products").hide();
         $("#add-row").hide()

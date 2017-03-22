@@ -3,6 +3,8 @@
 namespace AppBundle\Service\Manager;
 
 use AppBundle\Entity\Property;
+use AppBundle\Entity\PropertyType;
+use AppBundle\Entity\User;
 use AppBundle\Repository\PropertyRepository;
 use Doctrine\ORM\EntityManager;
 
@@ -58,6 +60,47 @@ class PropertyManager
         $qb = $this->repository->createQueryBuilder('property');
 
         return $qb;
+    }
+
+    /**
+     * @param User $user
+     *
+     * @return array
+     */
+    public function findBy($user)
+    {
+        return $this->repository->createQueryBuilder('property')
+            ->where("property.owner = :owner")
+            ->setParameter("owner",$user)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param PropertyType $type
+     *
+     * @return mixed
+     */
+    public function findByTypeResultTwo(PropertyType $type)
+    {
+        return $this->repository->createQueryBuilder('property')
+            ->where("property.type = :type")
+            ->setParameter("type",$type)
+            ->setMaxResults(2)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param PropertyType $type
+     *
+     * @return mixed
+     */
+    public function findByType(PropertyType $type)
+    {
+        return $this->repository->createQueryBuilder('property')
+            ->where("property.type = :type")
+            ->setParameter("type",$type);
     }
 
     /**

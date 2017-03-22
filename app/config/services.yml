@@ -18,6 +18,7 @@ services:
     app.security.login_form_authenticator:
         class: AppBundle\Service\Security\LoginFormAuthenticator
         arguments: ["@form.factory", "@doctrine.orm.entity_manager", "@router", "@security.password_encoder", "@request_stack"]
+
     # ------------------------------------------------------------------------------------------------------------------
     # Event Subscribers
     # ------------------------------------------------------------------------------------------------------------------
@@ -57,57 +58,67 @@ services:
     # ------------------------------------------------------------------------------------------------------------------
     # Admin
     # ------------------------------------------------------------------------------------------------------------------
+
+    admin.shipment:
+        class: AppBundle\Admin\ShipmentAdmin
+        arguments: [~, AppBundle\Entity\Shipment, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: "Առաքման տարբերակներ" }
+
+    admin.product.type:
+        class: AppBundle\Admin\ProductTypeAdmin
+        arguments: [~, AppBundle\Entity\ProductType, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: "Չափման Միավորներ" }
+
     admin.contact:
         class: AppBundle\Admin\ContactAdmin
         arguments: [~, AppBundle\Entity\Contact, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: contact }
+            - { name: sonata.admin, manager_type: orm, label: "Հետադարց Կապ" }
 
     admin.news:
         class: AppBundle\Admin\NewsAdmin
         arguments: [~, AppBundle\Entity\News, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: news }
+            - { name: sonata.admin, manager_type: orm, label: "Նորություններ" }
 
     admin.image:
         class: AppBundle\Admin\ImageAdmin
         arguments: [~, AppBundle\Entity\Image, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Images }
-
-    admin.property_attribute:
-        class: AppBundle\Admin\PropertyAttributeAdmin
-        arguments: [~, AppBundle\Entity\PropertyAttribute, ~]
-        tags:
-            - { name: sonata.admin, manager_type: orm, label: Property attributes }
-
+            - { name: sonata.admin, manager_type: orm, label: "Նկարներ" }
     admin.property_attribute_condition:
-        class: AppBundle\Admin\PropertyAttributeConditionAdmin
-        arguments: [~, AppBundle\Entity\PropertyAttributeCondition, ~]
+        class: AppBundle\Admin\PropertyCategoryAdmin
+        arguments: [~, AppBundle\Entity\PropertyCategory, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Property attribute conditions }
-
-    admin.property_attribute_type:
-        class: AppBundle\Admin\PropertyAttributeTypeAdmin
-        arguments: [~, AppBundle\Entity\PropertyAttributeType, ~]
-        tags:
-            - { name: sonata.admin, manager_type: orm, label: Property attribute types }
+            - { name: sonata.admin, manager_type: orm, label: "Ծառայության տեսակը" }
 
     admin.property_type:
         class: AppBundle\Admin\PropertyTypeAdmin
         arguments: [~, AppBundle\Entity\PropertyType, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Property types }
-
-    admin.state:
-        class: AppBundle\Admin\StateAdmin
-        arguments: [~, AppBundle\Entity\State, ~]
-        tags:
-            - { name: sonata.admin, manager_type: orm, label: States }
+            - { name: sonata.admin, manager_type: orm, label: "Մրցույթի տեսակներ" }
 
     # ------------------------------------------------------------------------------------------------------------------
     # Entity managers
     # ------------------------------------------------------------------------------------------------------------------
+
+    app.shipment.manager:
+        class: AppBundle\Service\Manager\ShipmentManager
+        arguments: ["@app.orm.shipment.manager", "@app.orm.shipment.manager"]
+
+    app.price.manager:
+        class: AppBundle\Service\Manager\PriceManager
+        arguments: ["@app.orm.price.type.manager", "@app.orm.price.type.manager"]
+
+    app.price_product.manager:
+        class: AppBundle\Service\Manager\PriceProductManager
+        arguments: ["@app.orm.price_product.type.manager", "@app.orm.price_product.type.manager"]
+
+    app.product.type.manager:
+        class: AppBundle\Service\Manager\ProductTypeManager
+        arguments: ["@app.orm.product.type.repository", "@app.orm.product.type.manager"]
 
     app.property.type_manager:
         class: AppBundle\Service\Manager\PropertyTypeManager
@@ -125,13 +136,13 @@ services:
         class: AppBundle\Service\Manager\FileManager
         arguments: ["@app.orm.file.repository", "@app.orm.file.manager", "%kernel.root_dir%"]
 
-    app.property_maneger:
+    app.property_manager:
         class: AppBundle\Service\Manager\PropertyManager
         arguments: ["@app.orm.property.repository", "@app.orm.property.manager"]
 
-    app.property_product_maneger:
+    app.property_product_manager:
         class: AppBundle\Service\Manager\PropertyProductManager
-        arguments: ["@app.orm.property.category.repository", "@app.orm.property.category.manager"]
+        arguments: ["@app.orm.property.product.repository", "@app.orm.property.category.manager"]
 
     app.property_category_maneger:
         class: AppBundle\Service\Manager\PropertyCategoryManager

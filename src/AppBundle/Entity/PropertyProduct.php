@@ -32,19 +32,19 @@ class PropertyProduct
     private $property;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      *
      * @Serializer\Expose
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $count;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $type;
 
@@ -99,6 +99,14 @@ class PropertyProduct
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @param mixed $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
     }
 
     /**

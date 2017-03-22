@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html >
+<html>
 <head>
     <meta charset="UTF-8"/>
     <title>{% block title %}Ունո Փարթներթ ընդ Քո” Սահմանափակ պատասխանատվությամբ ընկերություն!{% endblock %}</title>
@@ -15,7 +15,6 @@
     <meta property="og:image" content=""/>
     <meta property="og:site_name" content="Certifire"/>
     <meta property="og:description" content=""/>
-
     <!-- Bootstrap Core CSS -->
     <link href="{{ asset('bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
@@ -76,9 +75,38 @@
         </div>
     </nav>
 {% endblock %}
-{% block body %}{% endblock %}
-
-
+<section class="tenders-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="search-input">
+                    <input type="search" name="search" placeholder="Որոնել">
+                </div>
+                <div>
+                    <select name="category">
+                        <option disabled selected value="">Նշել հարթակը</option>
+                        <option value="">Էքսպրես մրցույթներ</option>
+                        <option value="">Պարզեցված մրցույթներ</option>
+                        <option value="">Մրցույթներ գնանշմամբ</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Նշել ժամանակահատվածը</label><br>
+                    <input type="text" name="daterange" value="Նշել ժամանակահատվածը"/>
+                </div>
+                <form action="" method="get">
+                    <h4>Կատեգորիաներ</h4>
+                    <input type="checkbox" value="Շինարարություն"> Շինարարություն<br>
+                    <input type="checkbox" value="Բժշկություն"> Բժշկություն<br>
+                    <input type="checkbox" value="Մեքենաշինություն"> Մեքենաշինություն<br>
+                    <input type="checkbox" value="Տրանսպորտ"> Տրանսպորտ<br>
+                    <input type="checkbox" value="Վերանորոգում"> Վերանորոգում<br>
+                </form>
+            </div>
+        </div>
+        {% block body %}{% endblock %}
+       </div>
+</section>
 {% block javascripts %}
     <script src="{{ asset('bundles/sonatacore/vendor/jquery/dist/jquery.js') }}"></script>
     <!-- jQuery Form -->
@@ -157,6 +185,6 @@
     </script>
 {% endblock %}
 {% block scrits %}{% endblock %}
-    {{ render(controller('AppBundle:Contact:footer')) }}
+{{ render(controller('AppBundle:Contact:footer')) }}
 </body>
 </html>

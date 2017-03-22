@@ -22,3 +22,5 @@
 .env
 /web/uploads/images/
 !/web/uploads/images/.gitkeep
+/web/uploads/files/
+!/web/uploads/files/.gitkeep

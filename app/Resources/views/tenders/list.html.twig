@@ -1,0 +1,77 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <section class="tenders-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="search-input">
+                        <input type="search" name="search" placeholder="Որոնել">
+                    </div>
+                    <div>
+                        <select name="category">
+                            <option disabled selected value="">Նշել հարթակը</option>
+                            <option value="">Էքսպրես մրցույթներ</option>
+                            <option value="">Պարզեցված մրցույթներ</option>
+                            <option value="">Մրցույթներ գնանշմամբ</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Նշել ժամանակահատվածը</label><br>
+                        <input type="text" name="daterange" value="Նշել ժամանակահատվածը"/>
+                    </div>
+                    <form action="" method="get">
+                        <h4>Կատեգորիաներ</h4>
+                        <input type="checkbox" value="Շինարարություն"> Շինարարություն<br>
+                        <input type="checkbox" value="Բժշկություն"> Բժշկություն<br>
+                        <input type="checkbox" value="Մեքենաշինություն"> Մեքենաշինություն<br>
+                        <input type="checkbox" value="Տրանսպորտ"> Տրանսպորտ<br>
+                        <input type="checkbox" value="Վերանորոգում"> Վերանորոգում<br>
+                    </form>
+                </div>
+            </div>
+            <div class="content" style="float: right;margin-top: -300px;">
+
+                {% for values in property %}
+                    {% for value in values %}
+                    <div class="row" style="width: 1100px;">
+                        {% if value.id % 2 == 0 %}
+                        <div class="col-lg-3 col-md-3 col-sm-3"></div>
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 text-left">
+                            <h3 >{{ value.type.name }}</h3>
+                           <div class="text-right">
+                                 <a href="{{ path('list_type',{"type":value.type.id}) }}">
+                                    <button class="detailed">Տեսնել բոլորը</button>
+                                </a>
+                            </div>
+                        </div>
+                            {% endif %}
+                        <div class="col-lg-3 col-md-3 col-sm-3"></div>
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 same-tender">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <img src="{{ asset('img/example1.jpg') }}" alt="">
+                                <h4>Բյուջե</h4>
+                                <p>{{ value.budget }}</p>
+                                <h4>Ժամանակահատված</h4>
+                                <p>{{ value.start|date("Y/m/d") }}- {{ value.end|date("Y/m/d") }}</p>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <p>Պատվիրատու <span class="item-description">{{ value.owner.companyName }}</span></p>
+                                <p>Հրապարակման օր <span class="item-description">{{ value.createdAt|date("Y/m/d") }}</span></p>
+                                <p>Խմբագրվել Է <span class="item-description">{{ value.updatedAt|date("Y/m/d") }}</span></p>
+                                <h4>Համառոտ բնութագիր</h4>
+                                <p>{{ value.overview|truncate(300) }}</p>
+                                <div class="text-right">
+                                    <a href="{{ path('get_property',{"id":value.id}) }}">
+                                        <button class="detailed">Մանրամասն</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

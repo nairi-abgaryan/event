@@ -9,7 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/users")
@@ -22,10 +21,10 @@ class UsersController extends FOSRestController
      *
      * @Route("/{id}/", name="retrieve_user")
      * @Security("is_granted('ROLE_USER')")
-     *
      * @param User $user
+     * @return mixed
      */
-    public function retrieveAction(Request $request, User $user)
+    public function updateAction(Request $request, User $user)
     {
         if ($this->getUser() !== $user) {
             throw $this->createAccessDeniedException();
@@ -57,7 +56,8 @@ class UsersController extends FOSRestController
     }
 
     /**
-     * @Route("/register", name="user_register")
+     * @Route("/", name="user_register")
+     * @Method({"GET","POST"})
      */
     public function registerAction(Request $request)
     {
@@ -65,7 +65,6 @@ class UsersController extends FOSRestController
         $contact = $this->get("app.contact_manager")->findAll();
 
         $form->handleRequest($request);
-
         if ($form->isValid()) {
             /** @var User $user */
             $user = $form->getData();
@@ -91,53 +90,10 @@ class UsersController extends FOSRestController
         ]);
     }
 
-    /**
-     * Update user.
-     *
-     * @Route("/{id}/", name="update_user")
-     * @Method({"PUT"})
-     * @Security("is_granted('ROLE_USER')")
-     *
-     * @param Request $request
-     * @param User    $user
-     */
-    public function updateAction(Request $request, User $user)
+    public function logoutAction()
     {
-        if ($this->getUser() !== $user) {
-            throw $this->createAccessDeniedException();
-        }
 
-        $form = $this->createForm(UserType::class);
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            /** @var User $user */
-            $user = $form->getData();
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
-
-            $this->addFlash('success', 'Welcome '.$user->getEmail());
-
-            return $this->get('security.authentication.guard_handler')
-                ->authenticateUserAndHandleSuccess(
-                    $user,
-                    $request,
-                    $this->get('app.security.login_form_authenticator'),
-                    'main'
-                );
-        }
-
-        /** @var User $data */
-        $data = $form->getData();
-        $user = $this->get('app.user_manager')->persist($data);
-        return $this->render(':show:user.html.twig', [
-            'form' => $form->createView(),
-            "error" => $form->getErrors(),
-            "user" => $user
-        ]);
     }
-
 }
+
 
