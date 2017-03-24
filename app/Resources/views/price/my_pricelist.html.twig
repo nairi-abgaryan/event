@@ -1,0 +1,39 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    <section class="single-tenders-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Կազմակերպություն</th>
+                            <th>Ապրանք</th>
+                            <th>Գին</th>
+                            <th>Բնութագիր</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for value in pricelist %}
+                            <tr>
+                                <td>Նոր Տուն ՍՊԸ</td>
+                                <td>Ծորակ</td>
+                                <td>7800 դր</td>
+                                <td><a href=""><button class="edit-tender">Ներբեռնել</button></a></td>
+                                <td><a href="mypagecreate.html"><button class="edit-tender">Հաստատել</button></a></td>
+                            </tr>
+                         {% endblock %}
+                        </tbody>
+                    </table>
+                    <div class="text-right">
+                        <a href="mypagecreate.html"><button class="edit-tender">Ավարտել</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

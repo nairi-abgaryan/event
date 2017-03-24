@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Property;
 use AppBundle\Entity\PropertyProduct;
+use AppBundle\Entity\User;
 use AppBundle\Form\Type\PropertyType;
 use FOS\RestBundle\Controller\FOSRestController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -54,9 +55,6 @@ class PropertyController extends FOSRestController
     public function createAction(Request $request)
     {
         $user = $this->getUser();
-
-        $product = $request->request->all();
-
         $form = $this->createForm(PropertyType::class);
         $form->handleRequest($request);
 
@@ -85,11 +83,13 @@ class PropertyController extends FOSRestController
             $product_create->setName($product["name"]);
             $product_create->setCount($product["qty"]);
             $product_create->setType($product["sizes"]);
+
             if($files['product'.$i.'']["image"]){
                 $product_create->setImageFile($files['product'.$i.'']["image"]);
-                $product = $this->addImage($product_create);
+                $product_create = $this->addImage($product_create);
             }
-            $this->get('app.property_product_manager')->persist($product);
+
+            $this->get('app.property_product_manager')->persist($product_create);
             $i++;
         }
 
@@ -112,17 +112,24 @@ class PropertyController extends FOSRestController
     public function updateAction(Request $request, Property $property)
     {
         $user = $this->getUser();
+        if($user !== $property->getOwner()){
+            return $this->render("error/error.html.twig",[
+                "status_text" => "Access denied ",
+                "status_code" => 403
+            ]);
+        }
 
         $form = $this->createForm(PropertyType::class,$property);
         $form->handleRequest($request);
+        $product = $this->get("app.property_product_manager")->findByProperty($property);
 
         if (!$form->isValid()) {
             return $this->render(":property:update.html.twig",[
                 "form" => $form->createView(),
-                "property" => $property
+                "property" => $property,
+                "product" => $product
             ]);
         }
-
 
         /** @var Property $data */
         $data = $form->getData();
@@ -130,12 +137,67 @@ class PropertyController extends FOSRestController
             $this->addAvatar($data);
         }
         $data->setOwner($user);
+        $products = $request->request->all()['product'];
+        $files = $request->files->all()['product'];
 
+        foreach ($product as $product_create){
+            $id = $product_create->getId();
+            $product_create->setName($products["product".$id.""]["name"]);
+
+            $product_create->setCount($products["product".$id.""]["qty"]);
+
+            $product_create->setType($products["product".$id.""]["sizes"]);
+
+            if($files['product'.$id.'']["image"]){
+                $product_create->setImageFile($files['product'.$id.'']["image"]);
+                $product_create = $this->addImage($product_create);
+            }
+
+            $this->get('app.property_product_manager')->persist($product_create);
+        }
         $this->get('app.property_manager')->persist($data);
-        $property = $this->get("app.property_manager")->findBy($user);
-        return $this->render(":property:list.html.twig",[
-            "form" => $form,
-            "property" => $property
+
+        return $this->render(":property:update.html.twig",[
+            "form" => $form->createView(),
+            "property" => $property,
+            "product" => $product
+        ]);
+    }
+
+    /**
+     * @Route("/share/", name="my_share")
+     */
+    public function shareAction(){
+
+        $user = $this->getUser();
+        $properties = $this->get("app.price_product.manager")->findBy($user);
+
+        return $this->render(":property:mylist.html.twig",[
+            "properties" => $properties
+        ]);
+    }
+
+    /**
+     * @Route("/my/property/{id}", name="my_property")
+     *
+     * @param Property $property
+     * @return mixed
+     */
+    public function myPropertyAction(Property $property)
+    {
+        $user = $this->getUser();
+
+        if($user !== $property->getOwner()){
+            return $this->render("error/error.html.twig",[
+                "status_text" => "Access denied ",
+                "status_code" => 403
+            ]);
+        }
+        $product = $this->get("app.property_product_manager")->findByProperty($property);
+
+        return $this->render(":property:share_active.html.twig",[
+            "property" => $property,
+            "product" => $product
         ]);
     }
 

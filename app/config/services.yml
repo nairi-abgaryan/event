@@ -110,11 +110,11 @@ services:
 
     app.price.manager:
         class: AppBundle\Service\Manager\PriceManager
-        arguments: ["@app.orm.price.type.manager", "@app.orm.price.type.manager"]
+        arguments: ["@app.orm.price.type.repository", "@app.orm.price.type.manager"]
 
     app.price_product.manager:
         class: AppBundle\Service\Manager\PriceProductManager
-        arguments: ["@app.orm.price_product.type.manager", "@app.orm.price_product.type.manager"]
+        arguments: ["@app.orm.price_product.type.repository", "@app.orm.price_product.type.manager"]
 
     app.product.type.manager:
         class: AppBundle\Service\Manager\ProductTypeManager

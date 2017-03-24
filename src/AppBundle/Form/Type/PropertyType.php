@@ -62,6 +62,7 @@ class PropertyType extends AbstractType
                 'constraints' => [
                     new Assert\File(['maxSize' => '4M']),
                 ],
+                "required" => false
             ])
             ->add('start', DateType::class, [
                 "label" => false

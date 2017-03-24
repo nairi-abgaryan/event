@@ -45,7 +45,7 @@ $(document).ready(function () {
                 "<option value='կգ'>կգ</option> " +
             "</select> </div>" +
             "<div class='form-group'>" +
-            "<input type='file'  name='product[product"+i+"][image]' style='margin-bottom: 23px; margin-left: 4px;' class='upload-image'> " +
+            "<input type='file'  name='product[product"+i+"][image]' width='100px' class='upload-image'> " +
             "</div><div class='form-group'><button type='button' style='margin-left: 4px;' class='remove-row'>X</button></div>" +
             "</div></div>");
         i++;
@@ -64,7 +64,7 @@ $(function () {
         e.preventDefault();
         $('#login').hide();
         $('#signup').show().addClass('animated fadeIn');
-    })
+    });
 });
 
 $(function () {
@@ -77,16 +77,19 @@ $(function () {
 
 
 /************************** Hide uplaod image based on category change *******************************/
-$(".products").hide();
-$("#add-row").hide()
-$("#select_category").change(function(){
-    if($(this).val()=== "1" || $(this).val()=== "2")
+
+$("#select_type").change(function(){
+    if($(this).val()=== "4" || $(this).val()=== "5")
     {
         $(".products").hide();
-        $("#add-row").hide()
+        $(".service").show();
+        $("#add-row").hide();
+        $(".added").remove();
     }
     else
     {
+        $(".service").hide();
+        $(".select_service").val('');
         $(".products").show();
         $("#add-row").show()
     }

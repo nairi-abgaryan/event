@@ -5,7 +5,6 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as Serializer;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Table(name="price_product")
@@ -33,42 +32,22 @@ class PriceProduct
     private $owner;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $price;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\File")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Property")
      * @Serializer\Expose
      */
-    private $file;
+    private $property;
 
     /**
-     * @var UploadedFile
+     * @ORM\Column(type="boolean", nullable=true)
      */
-    private $filePdf;
+    private $established;
 
     /**
-     * @return int
+     * @return mixed
      */
     public function getId()
     {
         return $this->id;
-    }
-    /**
-     * @return mixed
-     */
-    public function getPrice()
-    {
-        return $this->price;
-    }
-
-    /**
-     * @param integer $price
-     */
-    public function setPrice($price)
-    {
-        $this->price = $price;
     }
 
     /**
@@ -88,37 +67,36 @@ class PriceProduct
     }
 
     /**
-     * @return File
+     * @return Property
      */
-    public function getFile()
+    public function getProperty()
     {
-        return $this->file;
+        return $this->property;
     }
 
     /**
-     * @param File $file
+     * @param Property $property
      */
-    public function setFile(File $file)
+    public function setProperty($property)
     {
-        $this->file = $file;
+        $this->property = $property;
     }
 
     /**
      * @return mixed
      */
-    public function getFilePdf()
+    public function getEstablished()
     {
-        return $this->filePdf;
+        return $this->established;
     }
 
     /**
-     * @param mixed $filePdf
+     * @param mixed $established
      */
-    public function setFilePdf(UploadedFile $filePdf)
+    public function setEstablished($established)
     {
-        $this->filePdf = $filePdf;
+        $this->established = $established;
     }
-
 
     /**
      * @return string

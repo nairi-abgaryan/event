@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Table(name="price")
@@ -32,10 +33,11 @@ class Price
     private $property;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\PropertyProduct")
      * @Serializer\Expose
      */
-    private $owner;
+    private $product;
+
 
     /**
      * @ORM\Column(type="integer")
@@ -43,7 +45,13 @@ class Price
     private $price;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @Serializer\Expose
+     */
+    private $owner;
+
+    /**
+     * @ORM\Column(type="text")
      */
     private $description;
 
@@ -57,6 +65,39 @@ class Price
      * @Serializer\Expose
      */
     private $shipment;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\File")
+     * @ORM\JoinColumn(onDelete="CASCADE", nullable=true)
+     * @Serializer\Expose
+     */
+    private $file;
+
+    /**
+     * @var UploadedFile
+     */
+    private $filePdf;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+     private $established;
+
+    /**
+     * @return mixed
+     */
+    public function getEstablished()
+    {
+        return $this->established;
+    }
+
+    /**
+     * @param mixed $established
+     */
+    public function setEstablished($established)
+    {
+        $this->established = $established;
+    }
 
     /**
      * @return int
@@ -80,6 +121,22 @@ class Price
     public function setProperty(Property $property)
     {
         $this->property = $property;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * @param mixed $product
+     */
+    public function setProduct($product)
+    {
+        $this->product = $product;
     }
 
     /**
@@ -160,6 +217,38 @@ class Price
     public function setShipment($shipment)
     {
         $this->shipment = $shipment;
+    }
+
+    /**
+     * @return File
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param File $file
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
+    }
+
+    /**
+     * @return UploadedFile
+     */
+    public function getFilePdf()
+    {
+        return $this->filePdf;
+    }
+
+    /**
+     * @param UploadedFile $filePdf
+     */
+    public function setFilePdf($filePdf)
+    {
+        $this->filePdf = $filePdf;
     }
 
     /**

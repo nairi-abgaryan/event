@@ -3,14 +3,20 @@
 {% block body %}
     <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 create-tender">
         {{ form_start(form) }}
-        <p>Ընտրել մրցույթի տեսակը</p>
+        <p>Մրցույթի տեսակը</p>
         <div>
-            {{ form_widget(form.type,{"value": property.type}) }}
+            <div style="display: none;">
+                {{ form_widget(form.type, {"id" : "select_type", "value": property.type}) }}
+            </div>
+            <h3>{{ property.type.name }}</h3>
         </div>
 
-        <p>Ընտրել ծառայության տեսակը</p>
+        <p>Ծառայության տեսակը</p>
         <div>
-            {{ form_widget(form.category, {"id" : "select_category", "value": property.category}) }}
+            <div style="display: none;">
+                {{ form_widget(form.category, {"id" : "select_category", "value": property.category}) }}
+            </div>
+            <h3>{{ property.category }}</h3>
         </div>
 
         <div>
@@ -19,28 +25,34 @@
             {{ form_widget(form.start,{"value": property.start}) }}
             {{ form_widget(form.end, {"value": property.end}) }}
         </div>
-        {#  <form class="form-inline products">
-              <div class="form-group">
-                  <label for="product">Նշել Ապրանքը</label><br>
-                  <input type="text" id="product"  />
-              </div>
-              <div class="form-group">
-                  <label for="qty">Քանակ</label><br>
-                  <input type="text" id="qty"  />
-              </div>
-              <div class="form-group">
-                  <select name="sizes" class="choose-size">
-                      <option disabled selected value="">Չ․միավոր</option>
-                      <option value="">հատ</option>
-                      <option value="">ք/մ</option>
-                      <option value="">կգ</option>
-                  </select>
-              </div>
-              <div class="form-group">
-                  <a href="#"><button class="upload-image">Նկար</button></a>
-              </div>
-          </form>
-          <button id="add-row">+</button>#}
+        {% for value in product %}
+            <div class='added'>
+                <div class='form-inline'>
+                    <div class='form-group'>
+                        <input type='text' value="{{ value.name }}" name='product[product{{ value.id }}][name]' />
+                    </div>
+                    <div class='form-group'>
+                        <input style='margin-left: 4px;' value="{{ value.count }}" name='product[product{{ value.id }}][qty]' type='text' />
+                    </div>
+                    <div class='form-group'>
+                        <select name='product[product{{ value.id }}][sizes]' class='choose-size' style='margin-top: 0;'>
+                            <option value='{{ value.type }}'>{{ value.type }}</option>
+                            <option value='հատ'>հատ</option>
+                            <option value='ք/մ'>ք/մ</option>
+                            <option value='կգ'>կգ</option>
+                        </select>
+                    </div>
+                    {% if value.image is not null %}
+                        <div class='form-group'>
+                            <img src="{{asset('/uploads/images/')}}{{  value.image }}" style='margin-bottom: 23px; margin-left: 4px;' width="30px" height="30px">
+                        </div>
+                    {% endif %}
+                    <div class='form-group'>
+                        <input type='file'  name='product[product{{ value.id }}][image]' style='margin-bottom: 23px; margin-left: 4px;'>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
         <p>Ֆինանսավորման ձև</p>
         <div class="checkbox">
             {{ form_widget(form.financing,{"value": property.financing}) }}

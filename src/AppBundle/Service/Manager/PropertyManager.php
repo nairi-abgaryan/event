@@ -3,6 +3,7 @@
 namespace AppBundle\Service\Manager;
 
 use AppBundle\Entity\Property;
+use AppBundle\Entity\PropertyProduct;
 use AppBundle\Entity\PropertyType;
 use AppBundle\Entity\User;
 use AppBundle\Repository\PropertyRepository;

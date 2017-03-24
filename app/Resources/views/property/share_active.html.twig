@@ -1,0 +1,59 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <section class="single-tenders-section">
+        <div class="container">
+            <div class="row single-tender-presentation">
+                <div class="text-center">
+                    <h4>{{ property.category }}</h4>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 tender-image">
+                    <img src="{{ asset('img/example1.jpg') }}" alt="">
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 single-tender-description">
+                    <div class="text-center">
+                        <h4>Մրցույթի տվյալներ</h4>
+                    </div>
+                    <p>Պատվիրատու <span class="item-description">{{ property.owner.companyName }}</span></p>
+                    <p>Ապրանք <span class="item-description">{{ property.category }}</span></p>
+                    <p>Հայտի ժամկետը <span class="item-description">{{ property.end|date("Y/m/d") }}</span></p>
+                    <p>{{ property.overview }}</p>
+                </div>
+            </div>
+            <div class="row price-by-others-big">
+                <div class="text-center">
+                    <h4>Առաջարկվաց գներ</h4>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 text-left">
+                    <a href="third-type-price.html">
+                        <button class="price-pdf">Download all prices</button>
+                    </a>
+                </div>
+                <div class="col-lg-7 col-md-3 col-sm-3">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Անուն</th>
+                            <th>Առաջարկներ</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for value in product %}
+                            <tr>
+                                <td>
+                                    <p>{{ value.name }}</p>
+                                </td>
+                                <td>
+                                    <a href="{{ path('my_product_price',{"product_id" : value.id}) }}">
+                                        <button class="price-pdf">Տեսնել Առաջարկը</button>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

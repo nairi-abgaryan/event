@@ -2,9 +2,11 @@
 
 namespace AppBundle\Service\Manager;
 
+use AppBundle\Entity\Property;
 use AppBundle\Entity\PropertyProduct;
 use AppBundle\Repository\PropertyProductRepository;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\QueryBuilder;
 
 class PropertyProductManager
 {
@@ -41,6 +43,21 @@ class PropertyProductManager
     }
 
     /**
+     * @param Property $property
+     * @return  QueryBuilder
+     */
+    public function findByProperty(Property $property)
+    {
+        $qb = $this->repository->createQueryBuilder('property_category')
+                ->where("property_category.property = :property")
+                ->setParameter("property", $property)
+                ->getQuery()
+                ->execute();
+
+        return $qb;
+    }
+
+    /**
      * @return PropertyProduct
      */
     public function create()
@@ -49,9 +66,9 @@ class PropertyProductManager
     }
 
     /**
-     * @param PropertyProduct $property
+     * @param PropertyProduct $product
      *
-     * @return PropertyProduct
+     * @return mixed
      */
     public function persist(PropertyProduct $product)
     {

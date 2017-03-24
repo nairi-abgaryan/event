@@ -1,0 +1,49 @@
+{% extends ":property:base.html.twig" %}
+
+{% block body %}
+    <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Տեսակը</th>
+                <th>Կազմակեևպություն</th>
+                <th>Ժամանակահատված</th>
+                <th>Հաստատված</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for value in properties %}
+                <tr>
+                    <td><a href="tenders-with-price.html">578</a></td>
+                    <td>{{ value.property.type.name }}</td>
+                    <td>{{ value.owner.companyName }}</td>
+                    <td>{{ value.property.start|date('Y/m/d') }} - {{ value.property.end|date('Y/m/d') }}</td>
+                    <td>{% if value.established %}Այո{% else %}Ոչ{% endif %}</td>
+                    <td><a data-toggle="modal" data-target="#cancel" href="#">
+                            <button class="edit-tender">Հրաժարվել</button>
+                        </a></td>
+                    <div class="modal fade" id="cancel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body text-center">
+                                    <p>Այս տեքստը ոչ միայն կարողացել է
+                                        գոյատևել հինգ դարաշրջան, այլև ներառվել է էլեկտրոնային տպագրության մեջ` մնալով
+                                        էապես անփոփոխ:</p>
+                                </div>
+                                <div class="approve-buttons text-center">
+                                    <button class="edit-tender" type="button">Հաստատել</button>
+                                    <button class="edit-tender" type="button">Չեղարկել</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

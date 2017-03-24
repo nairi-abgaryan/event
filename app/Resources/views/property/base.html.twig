@@ -58,13 +58,13 @@
                     <li {% if app.request.attributes.get('_route') == 'home' %} class="actived" {% endif %}>
                         <a data-target=".navbar-collapse" class="page-scroll" href="{{ path('home') }}">Գլխավոր</a>
                     </li>
-                    <li>
+                    <li {% if app.request.attributes.get('_route') == 'list_property' %} class="actived" {% endif %}>
                         <a data-target=".navbar-collapse" class="page-scroll" href="{{ path('list_property') }}">Մրցույթներ</a>
                     </li>
-                    <li>
+                    <li {% if app.request.attributes.get('_route') == 'my_list_property' %} class="actived" {% endif %}>
                         <a data-target=".navbar-collapse" class="page-scroll" href="{{ path('my_list_property') }}">Իմ Էջը</a>
                     </li>
-                    <li>
+                    <li {% if app.request.attributes.get('_route') == 'list_contact' %} class="actived" {% endif %}>
                         <a data-target=".navbar-collapse" class="page-scroll" href="{{ path('list_contact') }}">Հետադարձ
                             կապ</a>
                     </li>
@@ -80,11 +80,10 @@
 <section class="my-page-section">
     <div class="container">
         <div class="row">
-
             <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
                 <ul>
                     <li><a href="{{ path('my_list_property') }}">Հրապարակված մրցույթներ</a></li>
-                    <li><a href="mypagetend.html">Իմ մասնակցության հայտեր</a></li>
+                    <li><a href="{{ path('my_share') }}">Իմ մասնակցության հայտեր</a></li>
                     <li><a href="{{ path('create_property') }}">Պատվիրել մրցույթային փաթեթ</a></li>
                     <li><a href="{{ path('retrieve_user',{"id": app.user.id}) }}">Անձնական տվյալներ</a></li>
                     <li><a href="helpful-docs.html">Օգտակար փաստաթղթեր</a></li>

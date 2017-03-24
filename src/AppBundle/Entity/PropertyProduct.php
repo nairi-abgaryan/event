@@ -50,7 +50,7 @@ class PropertyProduct
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Image")
-     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @ORM\JoinColumn(onDelete="CASCADE", nullable=true)
      *
      * @Serializer\Expose
      */
@@ -118,7 +118,7 @@ class PropertyProduct
     }
 
     /**
-     * @return Image
+     * @return mixed
      */
     public function getImage()
     {
@@ -126,7 +126,7 @@ class PropertyProduct
     }
 
     /**
-     * @param Image $image
+     * @param mixed $image
      */
     public function setImage(Image $image)
     {

@@ -41,6 +41,21 @@ class PriceProductManager
     }
 
     /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function findBy($user)
+    {
+        $qb = $this->repository->createQueryBuilder('price_product')
+            ->where("price_product.owner = :owner")
+            ->setParameter("owner",$user)
+            ->getQuery()
+            ->execute()
+        ;
+
+        return $qb;
+    }
+
+    /**
      * @return PriceProduct
      */
     public function create()

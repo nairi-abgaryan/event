@@ -5,7 +5,7 @@
         {{ form_start(form) }}
         <p>Ընտրել մրցույթի տեսակը</p>
         <div>
-            {{ form_widget(form.type) }}
+            {{ form_widget(form.type, {"id" : "select_type"}) }}
         </div>
 
         <p>Ընտրել ծառայության տեսակը</p>
@@ -20,7 +20,7 @@
         </div>
        <div class="form-inline products">
               <div class="form-group">
-                  <label for="product">Նշել Ապրանքը</label><br>
+                  <label for="product">Նշել Անունը</label><br>
                   <input type="text" name="product[product1][name]" id="product"/>
               </div>
               <div class="form-group">
@@ -38,8 +38,29 @@
               <div class="form-group">
                   <input type='file'  name='product[product1][image]' style=' margin-top:20px;' class='upload-image'> </a>
               </div>
-          </div>
-          <button id="add-row" type="button">+</button>
+            <button id="add-row" type="button">+</button>
+        </div>
+
+        <div class="form-inline service">
+            <div class="form-group">
+                <label for="product">Նշել Անունը</label><br>
+                <input type="text" name="product[product1][name]" id="product"/>
+            </div>
+            <div class="form-group">
+                <label for="qty">Քանակ</label><br>
+                <input name="product[product1][qty]" type="text" id="qty"  />
+            </div>
+            <div class="form-group">
+                <select name="product[product1][sizes]" class="choose-size">
+                    <option value="հատ">հատ</option>
+                    <option value="ք/մ">ք/մ</option>
+                    <option value="կգ">կգ</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type='file'  name='product[product1][image]' style=' margin-top:20px;' class='upload-image'> </a>
+            </div>
+        </div>
         <p>Ֆինանսավորման ձև</p>
         <div class="checkbox">
             {{ form_widget(form.financing) }}

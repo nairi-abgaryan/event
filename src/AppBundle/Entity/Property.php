@@ -91,6 +91,7 @@ class Property
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\File")
+     * @ORM\JoinColumn(onDelete="CASCADE", nullable=true)
      * @Serializer\Expose
      */
     private $file;
