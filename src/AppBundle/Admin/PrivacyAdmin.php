@@ -7,7 +7,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 
-class PropertyTypeAdmin extends AbstractAdmin
+class PrivacyAdmin extends AbstractAdmin
 {
     /**
      * @param FormMapper $formMapper
@@ -16,8 +16,7 @@ class PropertyTypeAdmin extends AbstractAdmin
     {
         $formMapper
             ->add('name')
-            ->add('limitDays')
-            ->add('image', 'sonata_type_model')
+            ->add('description')
         ;
     }
 
@@ -26,7 +25,9 @@ class PropertyTypeAdmin extends AbstractAdmin
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('name');
+        $datagridMapper
+            ->add('name')
+        ;
     }
 
     /**
@@ -35,8 +36,8 @@ class PropertyTypeAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
+            ->addIdentifier('id')
             ->addIdentifier('name')
-            ->add('limitDays')
         ;
     }
 }

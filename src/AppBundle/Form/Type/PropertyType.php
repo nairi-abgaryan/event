@@ -7,6 +7,7 @@ use AppBundle\Form\Extension\Base64FileType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -43,7 +44,7 @@ class PropertyType extends AbstractType
                 ),
                 "label"=>false
             ])
-            ->add('insurance',ChoiceType::class, [
+            ->add('insurance', ChoiceType::class, [
                 'choices'  => array(
                     'Այո' => true,
                     'Ոչ' => false,
@@ -64,11 +65,18 @@ class PropertyType extends AbstractType
                 ],
                 "required" => false
             ])
-            ->add('start', DateType::class, [
-                "label" => false
-            ])
-            ->add('end',  DateType::class, [
-                "label" => false
+            ->add('start', DateType::class, array(
+                'label' => 'false',
+                "widget" => "single_text",
+                "input" =>"datetime"
+            ))
+            ->add('propertyType', ChoiceType::class, [
+                'choices'  => array(
+                    'Ապրանք' => 1,
+                    'Աշխատանք' => 2,
+                    'Ծառաություն' => 3,
+                ),
+                "label"=>false
             ])
         ;
     }

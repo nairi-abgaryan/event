@@ -62,6 +62,11 @@ class PropertyProduct
     private $imageFile;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     */
+     private $priceOwner;
+
+    /**
      * @return int
      */
     public function getId()
@@ -163,6 +168,22 @@ class PropertyProduct
     public function setImageFile(UploadedFile $imageFile)
     {
         $this->imageFile = $imageFile;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPriceOwner()
+    {
+        return $this->priceOwner;
+    }
+
+    /**
+     * @param mixed $priceOwner
+     */
+    public function setPriceOwner($priceOwner)
+    {
+        $this->priceOwner = $priceOwner;
     }
 
     /**

@@ -19,16 +19,6 @@ class ProductTypeController extends FOSRestController
      * List availabe property attribute types.
      *
      * @Route("/", name="api.list_property_attribute_types")
-     * @Method({"GET"})
-     *
-     * @ApiDoc(
-     *     section="Properties",
-     *     parameters={
-     *          {"name"="page", "dataType"="integer", "required"=false, "description"="Page number"},
-     *          {"name"="per_page", "dataType"="integer", "required"=false, "description"="Max page count"}
-     *     }
-     * )
-     *
      * @param Request $request
      *
      * @return View|Response

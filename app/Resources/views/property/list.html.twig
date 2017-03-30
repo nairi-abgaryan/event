@@ -28,15 +28,17 @@
             {% for value in property %}
                 <tr>
                     <td><input type="checkbox"></td>
-                    <td><a href="mypagecreate.html">{{ value.id }} </a></td>
+                    <td><a href="{{ path('update_property',{"id":value.id}) }}">{{ value.id }} </a></td>
                     <td>{{ value.type }}</td>
                     <td>{{ value.start|date('Y/m/d') }} - {{ value.end|date('Y/m/d') }}</td>
                     <td>Ընթացիկ</td>
                     <td>{{ value.budget }}</td>
-                    <td><a href="third-type.html">1</a></td>
-                    <td><a href="{{ path('update_property',{"id" : value.id }) }}">
+                    <td><a href="{{ path('my_property',{"id" : value.id}) }}">{{ value.priceCount }}</a></td>
+                    <td>
+                        <a href="{{ path('update_property',{"id" : value.id }) }}">
                             <button class="edit-tender">Խմբագրել</button>
-                        </a></td>
+                        </a>
+                    </td>
                     <td><a href="single-tender.html">
                             <button class="edit-tender">Հեռացնել</button>
                         </a></td>

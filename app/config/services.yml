@@ -43,6 +43,14 @@ services:
     # Services
     # ------------------------------------------------------------------------------------------------------------------
 
+    app.mailer:
+        class: AppBundle\Service\Mailer\MailerSender
+        arguments: [%mailer_host%, %mailer_user%, %mailer_port%, %mailer_password%]
+
+    app.mailer_service:
+        class: AppBundle\Service\Mailer\MailerService
+        arguments: ["@app.mailer"]
+
     app.token_service:
         class: AppBundle\Service\Security\TokenService
         autowire: true
@@ -58,6 +66,23 @@ services:
     # ------------------------------------------------------------------------------------------------------------------
     # Admin
     # ------------------------------------------------------------------------------------------------------------------
+
+    admin.property:
+        class: AppBundle\Admin\PropertyAdmin
+        arguments: [~, AppBundle\Entity\Property, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: "Մրցույթներ" }
+    admin.help:
+        class: AppBundle\Admin\HelpfulAdmin
+        arguments: [~, AppBundle\Entity\Helpful, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: "Օգտակար փաստաթղթեր" }
+
+    admin.privacy:
+        class: AppBundle\Admin\PrivacyAdmin
+        arguments: [~, AppBundle\Entity\Privacy, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: "Ընդհանուր պայմաններ" }
 
     admin.shipment:
         class: AppBundle\Admin\ShipmentAdmin
@@ -104,9 +129,17 @@ services:
     # Entity managers
     # ------------------------------------------------------------------------------------------------------------------
 
+    app.help.manager:
+        class: AppBundle\Service\Manager\HelpManager
+        arguments: ["@app.orm.help.repository", "@app.orm.help.manager"]
+
+    app.privacy.manager:
+        class: AppBundle\Service\Manager\PrivacyManager
+        arguments: ["@app.orm.privacy.repository", "@app.orm.privacy.manager"]
+
     app.shipment.manager:
         class: AppBundle\Service\Manager\ShipmentManager
-        arguments: ["@app.orm.shipment.manager", "@app.orm.shipment.manager"]
+        arguments: ["@app.orm.shipment.repository", "@app.orm.shipment.manager"]
 
     app.price.manager:
         class: AppBundle\Service\Manager\PriceManager

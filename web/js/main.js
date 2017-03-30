@@ -1,3 +1,22 @@
+/*my_product_price page*/
+$(document).ready(function () {
+    $(".edit-tender").on("click", function () {
+        $(".edit-tender").html("Հաստատել");
+        $(".edit-tender").css({"background":"#007f00","border":"none"});
+
+        $(this).html("Հաստատված");
+        $(this).css({"background":"red","border":"none"});
+        var url = $(this).attr("data");
+        $(".done").attr("href",url);
+    });
+
+    $(".end-tender").on("click",function () {
+        if(!$(".done").attr("href")){
+            $("#cancel").remove();
+            return window.location.replace($(this).attr("data-url"));
+        }
+    });
+});
 
 /*Navigation bar*/
 
@@ -81,8 +100,7 @@ $(function () {
 $("#select_type").change(function(){
     if($(this).val()=== "4" || $(this).val()=== "5")
     {
-        $(".products").hide();
-        $(".service").show();
+        $(".products").show();
         $("#add-row").hide();
         $(".added").remove();
     }

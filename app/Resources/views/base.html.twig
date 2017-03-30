@@ -45,7 +45,7 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
                     <span></span>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top"></a>
+                <a class="navbar-brand page-scroll" href="{{ path('home') }}"></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -71,6 +71,24 @@
                         <a data-target=".navbar-collapse" class="page-scroll" href="privacy.html">Ընդհանուր
                             պայմաններ</a>
                     </li>
+                    <li class="">
+
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if app.user %}
+                    <li>
+                        <a data-target=".navbar-collapse" class="page-scroll" href="{{ path('retrieve_user',{"id":app.user.id}) }}">{{ app.user.companyName }}</a>
+                        {#<a data-target=".navbar-collapse"  href="{{ path('logout') }}">Դուրս գալ</a>#}
+                    </li>
+                    {% else %}
+                    <li>
+                        <a  data-target=".navbar-collapse"  href="{{ path('login') }}">Մուտք</a>
+                    </li>
+                    <li>
+                        <a  data-target=".navbar-collapse"  href="{{ path('user_register') }}">Գրանցում</a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -81,6 +99,19 @@
 
 {% block javascripts %}
     <script src="{{ asset('bundles/sonatacore/vendor/jquery/dist/jquery.js') }}"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        $("#btnPrint").live("click", function () {
+            var divContents = $("#dvContainer").html();
+            var printWindow = window.open('', '', 'height=400,width=800');
+            printWindow.document.write('<html><head><title>DIV Contents</title>');
+            printWindow.document.write('</head><body >');
+            printWindow.document.write(divContents);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+        });
+    </script>
     <!-- jQuery Form -->
     <script src="{{ asset('bundles/sonataadmin/vendor/jquery-form/jquery.form.js') }}"></script>
     <!-- Slick slider -->

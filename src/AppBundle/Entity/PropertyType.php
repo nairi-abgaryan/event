@@ -40,6 +40,11 @@ class PropertyType
     private $image;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $limitDays;
+
+    /**
      * @return int
      */
     public function getId()
@@ -77,6 +82,22 @@ class PropertyType
     public function setImage(Image $image)
     {
         $this->image = $image;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLimitDays()
+    {
+        return $this->limitDays;
+    }
+
+    /**
+     * @param mixed $limitDays
+     */
+    public function setLimitDays($limitDays)
+    {
+        $this->limitDays = $limitDays;
     }
 
     /**

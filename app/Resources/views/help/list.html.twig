@@ -1,0 +1,33 @@
+{% extends "property/base.html.twig" %}
+
+{% block body %}
+
+    <section class="my-page-section">
+        <div class="container">
+            <div class="col-lg-8 col-md-6 col-sm-6 col-xs-9 docs-name" style="margin-top: -150px;">
+                <table>
+                    <thead>
+                    <tr>
+                        <td>Անուն</td>
+                        <td>Ներբեռնել</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for value in help %}
+                        <tr>
+                            <td>
+                               {{ value.name }}
+                            </td>
+                            <td>
+                                <a target="_blank" href="{{ asset('/uploads/files/') }} {{ value.file }} }}">
+                                    <button class="give-price">Ներբեռնել</button>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+{% endblock %}

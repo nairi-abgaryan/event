@@ -3,6 +3,8 @@ parameters:
     # Entities
     # ------------------------------------------------------------------------------------------------------------------
 
+    app.entity.privacy.class: AppBundle\Entity\Privacy
+    app.entity.help.class: AppBundle\Entity\Helpful
     app.entity.shipment.class: AppBundle\Entity\Shipment
     app.entity.price.class: AppBundle\Entity\Price
     app.entity.price_product.class: AppBundle\Entity\PriceProduct
@@ -22,6 +24,8 @@ parameters:
     # Repositories
     # ------------------------------------------------------------------------------------------------------------------
 
+    app.repository.privacy.class: AppBundle\Repository\PrivacyRepository
+    app.repository.help.class: AppBundle\Repository\HelpRepository
     app.repository.shipment.class: AppBundle\Repository\ShipmentRepository
     app.repository.price.class: AppBundle\Repository\PriceRepository
     app.repository.price_product.class: AppBundle\Repository\PriceProductRepository
@@ -41,6 +45,16 @@ services:
     # ------------------------------------------------------------------------------------------------------------------
     # Manager Registry Services
     # ------------------------------------------------------------------------------------------------------------------
+
+    app.orm.help.manager:
+        class: Doctrine\Common\Persistence\ManagerRegistry
+        factory: ["@doctrine", getManagerForClass]
+        arguments: ["%app.entity.help.class%"]
+
+    app.orm.privacy.manager:
+        class: Doctrine\Common\Persistence\ManagerRegistry
+        factory: ["@doctrine", getManagerForClass]
+        arguments: ["%app.entity.privacy.class%"]
 
     app.orm.shipment.manager:
         class: Doctrine\Common\Persistence\ManagerRegistry
@@ -115,6 +129,16 @@ services:
     # ------------------------------------------------------------------------------------------------------------------
     # Repositories
     # ------------------------------------------------------------------------------------------------------------------
+
+    app.orm.help.repository:
+        class: "%app.entity.help.class%"
+        factory: ["@app.orm.help.manager", getRepository]
+        arguments: ["%app.entity.help.class%"]
+
+    app.orm.privacy.repository:
+        class: "%app.entity.privacy.class%"
+        factory: ["@app.orm.privacy.manager", getRepository]
+        arguments: ["%app.entity.privacy.class%"]
 
     app.orm.shipment.repository:
         class: "%app.entity.shipment.class%"

@@ -6,6 +6,8 @@ use AppBundle\Entity\Property;
 use AppBundle\Entity\PropertyProduct;
 use AppBundle\Entity\User;
 use AppBundle\Form\Type\PropertyType;
+use AppBundle\Service\Mailer\MailSender;
+use AppBundle\Service\Mailer\MailSenderManager;
 use FOS\RestBundle\Controller\FOSRestController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -38,10 +40,10 @@ class PropertyController extends FOSRestController
     public function myListAction()
     {
         $user = $this->getUser();
-        $property = $this->get("app.property_manager")->findBy($user);
+       $properties = $this->get("app.property_manager")->findBy($user);
 
         return $this->render(":property:list.html.twig",[
-            "property" => $property
+            "property" => $properties
         ]);
     }
 
@@ -67,9 +69,15 @@ class PropertyController extends FOSRestController
         /** @var Property $data */
         $data = $form->getData();
 
+        $date = $data->getStart();
+
+        $date->modify("+".$data->getType()->getLimitDays()."day");
+        $data->setEnd($date);
+
         if($data->getFilePdf()){
             $this->addAvatar($data);
         }
+
         $data = $form->getData();
         $data->setOwner($user);
 
@@ -77,7 +85,9 @@ class PropertyController extends FOSRestController
         $products = $request->request->all()['product'];
         $files = $request->files->all()['product'];
         $i = 1;
+
         foreach ($products as $product){
+
             $product_create = $this->get("app.property_product_manager")->create();
             $product_create->setProperty($property);
             $product_create->setName($product["name"]);
@@ -94,7 +104,6 @@ class PropertyController extends FOSRestController
         }
 
         $property = $this->get("app.property_manager")->findBy($user);
-
         return $this->render(":property:list.html.twig",[
             "property" => $property
         ]);
@@ -193,6 +202,7 @@ class PropertyController extends FOSRestController
                 "status_code" => 403
             ]);
         }
+
         $product = $this->get("app.property_product_manager")->findByProperty($property);
 
         return $this->render(":property:share_active.html.twig",[

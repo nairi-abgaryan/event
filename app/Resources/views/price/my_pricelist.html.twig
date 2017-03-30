@@ -11,7 +11,7 @@
                         <tr>
                             <th>Կազմակերպություն</th>
                             <th>Ապրանք</th>
-                            <th>Գին</th>
+                             <th>Գին</th>
                             <th>Բնութագիր</th>
                             <th></th>
                         </tr>
@@ -19,21 +19,56 @@
                         <tbody>
                         {% for value in pricelist %}
                             <tr>
-                                <td>Նոր Տուն ՍՊԸ</td>
-                                <td>Ծորակ</td>
-                                <td>7800 դր</td>
-                                <td><a href=""><button class="edit-tender">Ներբեռնել</button></a></td>
-                                <td><a href="mypagecreate.html"><button class="edit-tender">Հաստատել</button></a></td>
+                                <td>{{ value.owner.companyName }}</td>
+                                <td>{{ value.product.name }}</td>
+                                <td>
+                                    {% if date(value.property.end) <= date() %}
+                                        {{ value.price }}
+                                        {% else %}
+                                        Դուք կարող էք տեսնել առաջարկները {{ value.property.end | date("Y/m/d") }} -ից
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a target="_blank" href="{{ asset('uploads/files/') }}{{ value.file }}">
+                                        <button class="download-tender">Ներբեռնել</button>
+                                    </a>
+                                </td>
+                                <td>
+                                    {% if date(value.property.end) <= date() %}
+                                    <button class="edit-tender"
+                                            data="{{ path('my_done_price',{"id":value.id}) }}" id="check-tender{{ value.price }}">
+                                        Հաստատել
+                                    </button>
+                                    {% endif %}
+                                </td>
                             </tr>
-                         {% endblock %}
+                        {% endfor %}
                         </tbody>
                     </table>
                     <div class="text-right">
-                        <a href="mypagecreate.html"><button class="edit-tender">Ավարտել</button></a>
+                        <button data-url="{{ path('my_property',{"id":pricelist.0.property.id }) }}" data-toggle="modal" data-target="#cancel" class="end-tender">Ավարտել</button>
+                        <div class="modal fade" id="cancel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body text-center">
+                                        <p>
+                                            Այս տեքստը ոչ միայն կարողացել է
+                                            գոյատևել հինգ դարաշրջան, այլև ներառվել
+                                            է էլեկտրոնային տպագրության մեջ` մնալով էապես անփոփոխ:
+                                        </p>
+                                    </div>
+                                    <div class="approve-buttons text-center">
+                                        <a class="done" ><button class="done-tender">Հաստատել</button></a>
+                                        <a href="">
+                                            <button class="cancel-tender" type="button">Չեղարկել</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
 {% endblock %}

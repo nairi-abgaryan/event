@@ -25,9 +25,7 @@
                     <h4>Առաջարկվաց գներ</h4>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-4 text-left">
-                    <a href="third-type-price.html">
-                        <button class="price-pdf">Download all prices</button>
-                    </a>
+                      <a target="_blank" href="{{ path('download_all',{"id": property.id }) }}" class="price-pdf">Download all prices</a>
                 </div>
                 <div class="col-lg-7 col-md-3 col-sm-3">
                     <table>
@@ -44,9 +42,14 @@
                                     <p>{{ value.name }}</p>
                                 </td>
                                 <td>
-                                    <a href="{{ path('my_product_price',{"product_id" : value.id}) }}">
-                                        <button class="price-pdf">Տեսնել Առաջարկը</button>
-                                    </a>
+                                    {% if value.priceOwner %}
+                                        <div> Հաստատվել է {{ value.priceOwner.companyName }} ի Առաջարկը </div>
+                                    {% else %}
+                                        <a href="{{ path('my_product_price',{"id" : value.id}) }}">
+                                            <button class="price-pdf">Տեսնել ԱռաջարկՆերը</button>
+                                        </a>
+                                    {% endif %}
+
                                 </td>
                             </tr>
                         {% endfor %}

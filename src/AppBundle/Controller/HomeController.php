@@ -2,12 +2,8 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\User;
 use AppBundle\Form\Type\LoginType;
-use AppBundle\Form\Type\UserType;
 use FOS\RestBundle\Controller\FOSRestController;
-use GuzzleHttp\Psr7\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**

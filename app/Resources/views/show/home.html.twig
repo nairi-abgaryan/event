@@ -9,6 +9,8 @@
                     <p>{{ contact.description }}</p>
                 </div>
                 <div class="col-md-1 col-sm-1"></div>
+                {% if app.user %}
+                {% else %}
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="login">
                      {% if error %}
                         <div class="alert alert-danger">
@@ -26,6 +28,7 @@
                     </fieldset>
                     {{ form_end(form) }}
                 </div>
+                {% endif %}
             </div>
         </div>
     </section>
@@ -39,7 +42,7 @@
                             <img src="{{ asset('uploads/images/') }}{{ value.image }}" alt="">
                             <p>{{ value.description|truncate(200) }}</p>
                             <div class="text-right">
-                                <em><a href="">Կարդալ ավելին</a></em>
+                                <em><a href="{{ path('news',{"id":value.id}) }}">Կարդալ ավելին</a></em>
                             </div>
                         </div>
                     </div>

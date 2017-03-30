@@ -79,7 +79,7 @@ class Price
     private $filePdf;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
      private $established;
 

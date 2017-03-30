@@ -5,11 +5,13 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Price;
 use AppBundle\Entity\Property;
 use AppBundle\Entity\PropertyProduct;
+use AppBundle\Entity\User;
 use AppBundle\Form\Type\PriceType;
 use FOS\RestBundle\Controller\FOSRestController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/price")
@@ -39,6 +41,7 @@ class PriceController extends FOSRestController
         $data = $form->getData();
         $files =  $request->files->all()["product"];
         foreach ($products as $key => $value){
+
             $id = $value->getId();
             $create = $this->get("app.price.manager")->create();
             $create->setDescription($data["description"]);
@@ -52,16 +55,25 @@ class PriceController extends FOSRestController
             if($files[$id]["file"]){
                 $create->setFilePdf($files[$id]["file"]);
                 $create = $this->addAvatar($create);
-
             }
+
             $this->get("app.price.manager")->persist($create);
         }
 
+        $count = $this->get("app.price.manager")->findByCount($property);
+        $property->setPriceCount((int)$count["1"]);
+        $this->get("app.property_manager")->persist($property);
         $create_activate = $this->get("app.price_product.manager")->create();
+
         $create_activate->setProperty($property);
         $create_activate->setOwner($user);
         $create_activate->setEstablished(0);
         $this->get("app.price_product.manager")->persist($create_activate);
+
+        $message = "<html><body><h3>Ձեզ գնային առաջարկ է արել-><h3></body></html>".$user->getCompanyName()."
+        Մրցույթի վերջանալու օրն է". date_format($property->getEnd(),"y-m-d");
+        $this->get("app.mailer_service")->sendMail($message, $property->getOwner()->getEmail());
+
         $properties = $this->get("app.price_product.manager")->findBy($user);
         return new RedirectResponse($this->generateUrl("my_share",[
             "properties" => $properties
@@ -86,10 +98,35 @@ class PriceController extends FOSRestController
         }
 
         $pricelist = $this->get("app.price.manager")->findByProduct($product);
-
         return $this->render(":price:my_pricelist.html.twig",[
             "pricelist" => $pricelist
         ]);
+    }
+
+    /**
+     * @Route("/product/done/{id}/", name="my_done_price")
+     *
+     * @param Price $price
+     * @return mixed
+     */
+    public function doneProductPrice(Price $price)
+    {
+        $user = $this->getUser();
+
+        if($user !==  $price->getProperty()->getOwner()){
+            return $this->render("error/error.html.twig",[
+                "status_text" => "Access denied ",
+                "status_code" => 403
+            ]);
+        }
+
+        $product = $price->getProduct();
+        $product->setPriceOwner($price->getOwner());
+        $this->get("app.property_product_manager")->persist($product);
+        return $this->redirect($this->generateUrl("my_property",[
+            "id" => $price->getProperty()->getId()
+        ]));
+
     }
 
     /**

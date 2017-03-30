@@ -7,7 +7,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 
-class PropertyTypeAdmin extends AbstractAdmin
+class HelpfulAdmin extends AbstractAdmin
 {
     /**
      * @param FormMapper $formMapper
@@ -16,8 +16,9 @@ class PropertyTypeAdmin extends AbstractAdmin
     {
         $formMapper
             ->add('name')
-            ->add('limitDays')
-            ->add('image', 'sonata_type_model')
+            ->add('filePdf', 'file', array(
+                'required' => false
+            ))
         ;
     }
 
@@ -26,7 +27,9 @@ class PropertyTypeAdmin extends AbstractAdmin
      */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('name');
+        $datagridMapper
+            ->add('name')
+        ;
     }
 
     /**
@@ -35,8 +38,26 @@ class PropertyTypeAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
+            ->addIdentifier('id')
             ->addIdentifier('name')
-            ->add('limitDays')
         ;
     }
+
+    public function prePersist($image)
+    {
+        $this->manageFileUpload($image);
+    }
+
+    public function preUpdate($image)
+    {
+        $this->manageFileUpload($image);
+    }
+
+    private function manageFileUpload($image)
+    {
+        if ($image->getFilePdf()) {
+            $image->lifecycleFileUpload();
+        }
+    }
+
 }

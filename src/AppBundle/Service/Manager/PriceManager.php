@@ -50,8 +50,9 @@ class PriceManager
     public function findByProperty(Property $property)
     {
         $qb = $this->repository->createQueryBuilder('price')
-            ->where("price.product = :product")
-            ->setParameter("product",$property)
+            ->where("price.property = :property")
+            ->setParameter("property",$property)
+            ->orderBy("price.product")
             ->getQuery()
             ->execute()
         ;
@@ -70,6 +71,23 @@ class PriceManager
             ->setParameter("product",$product)
             ->getQuery()
             ->execute()
+        ;
+
+        return $qb;
+    }
+
+    /**
+     * @param Property $property
+     * @return mixed
+     */
+    public function findByCount(Property $property)
+    {
+        $qb = $this->repository->createQueryBuilder('price')
+            ->select("COUNT(price.id)")
+            ->where("price.property = :property")
+            ->setParameter("property",$property)
+            ->getQuery()
+            ->getSingleResult()
         ;
 
         return $qb;

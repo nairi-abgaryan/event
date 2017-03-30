@@ -107,14 +107,29 @@ class Property
     private $active;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     private $start;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="datetime")
      */
     private $end;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $priceCount;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $actived = false;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $propertyType;
 
     /**
      * @return int
@@ -350,11 +365,52 @@ class Property
     }
 
     /**
-     * {@inheritdoc}
+     * @return mixed
      */
-    public function __toString()
+    public function getPriceCount()
     {
-        return (string)$this;
+        return $this->priceCount;
     }
+
+    /**
+     * @param mixed $priceCount
+     */
+    public function setPriceCount($priceCount)
+    {
+        $this->priceCount = $priceCount;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActived()
+    {
+        return $this->actived;
+    }
+
+    /**
+     * @param mixed $actived
+     */
+    public function setActived($actived)
+    {
+        $this->actived = $actived;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPropertyType()
+    {
+        return $this->propertyType;
+    }
+
+    /**
+     * @param mixed $propertyType
+     */
+    public function setPropertyType($propertyType)
+    {
+        $this->propertyType = $propertyType;
+    }
+
 }
 

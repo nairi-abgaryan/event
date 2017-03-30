@@ -48,8 +48,8 @@ class PropertyProductManager
      */
     public function findByProperty(Property $property)
     {
-        $qb = $this->repository->createQueryBuilder('property_category')
-                ->where("property_category.property = :property")
+        $qb = $this->repository->createQueryBuilder('property_product')
+                ->where("property_product.property = :property")
                 ->setParameter("property", $property)
                 ->getQuery()
                 ->execute();

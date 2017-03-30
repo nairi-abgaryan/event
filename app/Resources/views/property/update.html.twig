@@ -18,12 +18,15 @@
             </div>
             <h3>{{ property.category }}</h3>
         </div>
-
+        <div>
+            {{ form_widget(form.propertyType) }}
+        </div>
         <div>
             <label for="range">Նշել ժամանակահատվածը</label><br>
             {#  <input type="text" name="daterange" id="range" value="Նշել ժամանակահատվածը" />#}
-            {{ form_widget(form.start,{"value": property.start}) }}
-            {{ form_widget(form.end, {"value": property.end}) }}
+            {{ form_widget(form.start) }}
+           {# {{ form_widget(form.end, {"value": property.end}) }}#}
+            <strong>Ավարտ {{  property.end|date("Y/m/d") }}</strong>
         </div>
         {% for value in product %}
             <div class='added'>
