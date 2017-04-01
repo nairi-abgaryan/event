@@ -35,7 +35,7 @@
                                 </td>
                                 <td>
                                     {% if date(value.property.end) <= date() %}
-                                    <button class="edit-tender"
+                                    <button class="accept-price"
                                             data="{{ path('my_done_price',{"id":value.id}) }}" id="check-tender{{ value.price }}">
                                         Հաստատել
                                     </button>
@@ -46,7 +46,8 @@
                         </tbody>
                     </table>
                     <div class="text-right">
-                        <button data-url="{{ path('my_property',{"id":pricelist.0.property.id }) }}" data-toggle="modal" data-target="#cancel" class="end-tender">Ավարտել</button>
+                        <a data-url="{{ path('my_property',{"id":pricelist.0.property.id }) }}"
+                           data-toggle="modal" data-target="#cancel" class="end-tender"><button>Ավարտել</button></a>
                         <div class="modal fade" id="cancel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
@@ -66,6 +67,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>

@@ -39,12 +39,30 @@
                             <button class="edit-tender">Խմբագրել</button>
                         </a>
                     </td>
-                    <td><a href="single-tender.html">
-                            <button class="edit-tender">Հեռացնել</button>
-                        </a></td>
+                    <td>
+                        <a data-toggle="modal" data-target="#cancel" href="#">
+                            <button data-target="#cancel" data-url="{{ path('delete_property',{"id":value.id}) }}" class="delete-property">
+                                Հեռացնել
+                            </button>
+                        </a>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
+        <div class="modal fade" id="cancel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <p>Այս տեքստը ոչ միայն կարողացել է
+                            գոյատևել հինգ դարաշրջան, այլև ներառվել է էլեկտրոնային տպագրության մեջ` մնալով էապես անփոփոխ:</p>
+                    </div>
+                    <div class="approve-buttons text-center">
+                        <button class="accept-tender" type="button">Հաստատել</button>
+                        <button class="cancel-tender" type="button">Չեղարկել</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

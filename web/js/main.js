@@ -1,8 +1,8 @@
 /*my_product_price page*/
 $(document).ready(function () {
-    $(".edit-tender").on("click", function () {
-        $(".edit-tender").html("Հաստատել");
-        $(".edit-tender").css({"background":"#007f00","border":"none"});
+    $(".accept-price").on("click", function () {
+        $(".accept-price").html("Հաստատել");
+        $(".accept-price").css({"background":"#007f00","border":"none"});
 
         $(this).html("Հաստատված");
         $(this).css({"background":"red","border":"none"});
@@ -10,7 +10,7 @@ $(document).ready(function () {
         $(".done").attr("href",url);
     });
 
-    $(".end-tender").on("click",function () {
+    $(".end-price").on("click",function () {
         if(!$(".done").attr("href")){
             $("#cancel").remove();
             return window.location.replace($(this).attr("data-url"));
@@ -18,6 +18,18 @@ $(document).ready(function () {
     });
 });
 
+$(".delete-property").on("click", function () {
+     var url = $(this).attr("data-url");
+     $(".accept-tender").attr("data-url",url);
+});
+
+$(".accept-tender").on("click",function () {
+    var url =$(this).attr("data-url");
+    window.location.replace(url);
+});
+$(".cancel-tender").on("click",function () {
+    $('.modal').modal('toggle');
+})
 /*Navigation bar*/
 
 $(window).scroll(function() {

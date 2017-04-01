@@ -233,4 +233,25 @@ class PropertyController extends FOSRestController
         return $product;
     }
 
+    /**
+     * @Route("/delete/{id}", name="delete_property")
+     * @param Property $property
+     * @return mixed
+     */
+    public function deleteAction(Property $property)
+    {
+        $user = $this->getUser();
+        if($user !== $property->getOwner()){
+            return $this->render("error/error.html.twig",[
+                "status_text" => "Access denied ",
+                "status_code" => 403
+            ]);
+        }
+
+        $property->setRemoved(true);
+
+        $this->get("app.property_manager")->persist($property);
+
+        return $this->redirect($this->generateUrl("my_list_property"));
+    }
 }

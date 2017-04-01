@@ -124,4 +124,18 @@ class PropertyManager
 
         return $property;
     }
+
+
+    /**
+     * @param Property $property
+     *
+     * @return string
+     */
+    public function remove(Property $property)
+    {
+        $this->em->remove($property);
+        $this->em->flush();
+
+        return "Removed item";
+    }
 }

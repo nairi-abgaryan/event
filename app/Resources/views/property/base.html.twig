@@ -101,7 +101,7 @@
                     <li><a href="{{ path('my_share') }}">Իմ մասնակցության հայտեր</a></li>
                     <li><a href="{{ path('create_property') }}">Պատվիրել մրցույթային փաթեթ</a></li>
                     <li><a href="{{ path('retrieve_user',{"id": app.user.id}) }}">Անձնական տվյալներ</a></li>
-                    <li><a href="helpful-docs.html">Օգտակար փաստաթղթեր</a></li>
+                    <li><a href="{{ path('help_list') }}">Օգտակար փաստաթղթեր</a></li>
                 </ul>
             </div>
             {% block body %} {% endblock %}

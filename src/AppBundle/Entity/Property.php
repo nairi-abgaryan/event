@@ -102,9 +102,9 @@ class Property
     private $filePdf;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="boolean", nullable=true)
      */
-    private $active;
+    private $removed = false;
 
     /**
      * @ORM\Column(type="datetime")
@@ -315,21 +315,20 @@ class Property
         $this->filePdf = $filePdf;
     }
 
-
     /**
      * @return mixed
      */
-    public function getActive()
+    public function getRemoved()
     {
-        return $this->active;
+        return $this->removed;
     }
 
     /**
-     * @param mixed $active
+     * @param mixed $removed
      */
-    public function setActive($active)
+    public function setRemoved($removed)
     {
-        $this->active = $active;
+        $this->removed = $removed;
     }
 
     /**

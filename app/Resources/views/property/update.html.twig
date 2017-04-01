@@ -8,15 +8,15 @@
             <div style="display: none;">
                 {{ form_widget(form.type, {"id" : "select_type", "value": property.type}) }}
             </div>
-            <h3>{{ property.type.name }}</h3>
+            <strong>{{ property.type.name }}</strong>
         </div>
 
-        <p>Ծառայության տեսակը</p>
+        <div>Ծառայության տեսակը</div>
         <div>
             <div style="display: none;">
                 {{ form_widget(form.category, {"id" : "select_category", "value": property.category}) }}
             </div>
-            <h3>{{ property.category }}</h3>
+            <strong>{{ property.category }}</strong>
         </div>
         <div>
             {{ form_widget(form.propertyType) }}
