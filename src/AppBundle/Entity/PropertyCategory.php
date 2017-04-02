@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as Serializer;
@@ -31,6 +32,10 @@ class PropertyCategory
      */
     private $name;
 
+    public function __construct($id)
+    {
+        $this->id = new ArrayCollection();
+    }
 
     /**
      * @return int

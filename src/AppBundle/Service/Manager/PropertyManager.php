@@ -7,7 +7,10 @@ use AppBundle\Entity\PropertyProduct;
 use AppBundle\Entity\PropertyType;
 use AppBundle\Entity\User;
 use AppBundle\Repository\PropertyRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Validator\Constraints\Date;
 
 class PropertyManager
 {
@@ -20,6 +23,7 @@ class PropertyManager
      * @var EntityManager
      */
     private $em;
+
 
     /**
      * PropertyManager constructor.
@@ -72,7 +76,10 @@ class PropertyManager
     {
         return $this->repository->createQueryBuilder('property')
             ->where("property.owner = :owner")
-            ->setParameter("owner",$user)
+            ->andWhere("property.actived =:active")
+            ->andWhere("property.removed =:notRemoved")
+            ->setParameters(array("owner" => $user,"active"=>true,"notRemoved" => false))
+            ->orderBy("property.start", "DESC")
             ->getQuery()
             ->getResult();
     }
@@ -86,8 +93,16 @@ class PropertyManager
     {
         return $this->repository->createQueryBuilder('property')
             ->where("property.type = :type")
-            ->setParameter("type",$type)
-            ->setMaxResults(2)
+            ->andWhere("property.actived =:active")
+            ->andWhere("property.removed =:notRemoved")
+            ->andWhere("property.end >= :date")
+            ->setParameters(array(
+                "type" => $type,
+                "active"=>true,
+                "notRemoved" => false,
+                "date" => new \DateTime("now")
+            ))
+            ->orderBy("property.end","DESC")
             ->getQuery()
             ->getResult();
     }
@@ -102,6 +117,30 @@ class PropertyManager
         return $this->repository->createQueryBuilder('property')
             ->where("property.type = :type")
             ->setParameter("type",$type);
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function findByFilters($type,$propertyType,$start,$end, $category)
+    {
+        $qb = $this->repository->createQueryBuilder('property');
+
+        $qb ->where($qb->expr()->in("property.type" ,":type"))
+            ->andWhere("property.start >= :start")
+            ->andWhere("property.end <= :end")
+            ->andWhere($qb->expr()->in("property.propertyType" ,":propertyType"))
+            ->andWhere($qb->expr()->in("property.category" ,":category"))
+            ->setParameters(array(
+                "type" => $type,
+                "category" => $category,
+                "start" => $start,
+                "end" => $end,
+                "propertyType" => $propertyType
+            ))
+        ;
+        return $qb;
     }
 
     /**

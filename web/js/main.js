@@ -18,6 +18,21 @@ $(document).ready(function () {
     });
 });
 
+/** Search function **/
+$(document).on("ready", function () {
+    $(".search_category label").after("<br />");
+    $(".search").on("click",function () {
+        var $inputs = $('.search-form :input');
+
+        // not sure if you wanted this, but I thought I'd add it.
+        // get an associative array of just the values.
+        var values = {};
+        $inputs.each(function() {
+            values[this.name] = $(this).val();
+        });
+    });
+});
+
 $(".delete-property").on("click", function () {
      var url = $(this).attr("data-url");
      $(".accept-tender").attr("data-url",url);

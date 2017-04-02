@@ -4,7 +4,6 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Property;
 use AppBundle\Entity\PropertyProduct;
-use AppBundle\Entity\User;
 use AppBundle\Form\Type\PropertyType;
 use AppBundle\Service\Mailer\MailSender;
 use AppBundle\Service\Mailer\MailSenderManager;

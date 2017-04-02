@@ -1,22 +1,9 @@
-AppBundle\Entity\User:
-    user_{1..30}:
-        email: user+<current()>@example.com
-        first_name: <firstName()>
-        last_name: <lastName()>
-        plainPassword: password
-        password: password
-        gender: <randomElement(['male', 'female'])>
-        birthday: '<date()>'
-        facebookId: '<current()>'
-        facebookAccessToken: '<current()>'
-        instagramId: '<current()>'
-
-AppBundle\Entity\Image:
-    avatar_{1..30}:
+AppBundle\Entity\Property:
+    property_{1..30}:
         owner: '@user_<current()>'
-        public_id: <current()>
-        format: png
-        version: 1
+        type: <randomElement([])>
+        file: <avatar>
+        category: <randomElement('@category')>
         type: 1
         position: 1
     gallery_image_{1..30}:
@@ -26,15 +13,3 @@ AppBundle\Entity\Image:
         version: 1
         type: 2
         position: 1
-
-AppBundle\Entity\Device:
-    device_{1..30}:
-        owner: '@user_<current()>'
-        type: <randomElement([1, 2])>
-        token: <current()>
-
-AppBundle\Entity\Reaction:
-    reaction_{1..30}:
-        owner: '@user_<current()>'
-        user: '@user_<numberBetween(1, 30)>'
-        type: <randomElement([0, 1])>

@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 // read http://symfony.com/doc/current/setup.html#checking-symfony-application-configuration-and-setup
 // for more information
 //umask(0000);
-
+date_default_timezone_set('Asia/Tbilisi');
 /** @var \Composer\Autoload\ClassLoader $loader */
 $loader = require __DIR__.'/../app/autoload.php';
 //Debug::enable();

@@ -67,7 +67,7 @@
                         <a data-target=".navbar-collapse" class="page-scroll" href="{{ path('list_contact') }}">Հետադարձ կապ</a>
                     </li>
                     <li>
-                        <a data-target=".navbar-collapse" class="page-scroll" href="privacy.html">Ընդհանուր
+                        <a data-target=".navbar-collapse" class="page-scroll" href="{{ path('privacy_list') }}">Ընդհանուր
                             պայմաններ</a>
                     </li>
                 </ul>
@@ -75,34 +75,40 @@
         </div>
     </nav>
 {% endblock %}
+<style>
+    .search{
+        width: 120px;
+        color: #FFFFFF;
+        background: #00a65a;
+    }
+</style>
 <section class="tenders-section">
     <div class="container">
-        <div class="row">
+        <div class="row" >
+            {{ form_start(form,{"action":"/tender/search","attr":{"class":"search-form","method":"get"}}) }}
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                <div class="search-input">
-                    <input type="search" name="search" placeholder="Որոնել">
+                <div>
+                    <label>Նշել հարթակը</label>
+                    {{ form_widget(form.type) }}
                 </div>
                 <div>
-                    <select name="category">
-                        <option disabled selected value="">Նշել հարթակը</option>
-                        <option value="">Էքսպրես մրցույթներ</option>
-                        <option value="">Պարզեցված մրցույթներ</option>
-                        <option value="">Մրցույթներ գնանշմամբ</option>
-                    </select>
+                    <label>Նշել տեսակը</label><br>
+                     {{ form_widget(form.propertyType) }}
                 </div>
-                <div>
+                <div >
                     <label>Նշել ժամանակահատվածը</label><br>
-                    <input type="text" name="daterange" value="Նշել ժամանակահատվածը"/>
+                        {{ form_widget(form.start) }}
+                        {{ form_widget(form.end) }}
                 </div>
-                <form action="" method="get">
-                    <h4>Կատեգորիաներ</h4>
-                    <input type="checkbox" value="Շինարարություն"> Շինարարություն<br>
-                    <input type="checkbox" value="Բժշկություն"> Բժշկություն<br>
-                    <input type="checkbox" value="Մեքենաշինություն"> Մեքենաշինություն<br>
-                    <input type="checkbox" value="Տրանսպորտ"> Տրանսպորտ<br>
-                    <input type="checkbox" value="Վերանորոգում"> Վերանորոգում<br>
-                </form>
+                <div class="search_category">
+                    <label>Կատեգորիաներ</label>
+                    {{ form_row(form.category,{attr:{"name":"id"}}) }}
+                </div>
+                <div class="search_category">
+                    <button class="search " type="submit">Որոնել</button>
+                </div>
             </div>
+            {{ form_end(form) }}
         </div>
         {% block body %}{% endblock %}
        </div>
@@ -123,7 +129,6 @@
     <script src="{{ asset('js/jquery.waypoints.min.js') }}"></script>
     <script src="{{ asset('js/jquery.counterup.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
-    <script src="{{ asset('js/custom.js') }}"></script>
 
     <script>
 

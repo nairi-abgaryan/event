@@ -8,13 +8,13 @@
                 <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
                     <h3>Ունեք հարցեր</h3>
                     <p>Ուղարկեք մեզ նամակ</p>
-                    <form  action="">
+                    <form  action="{{ path('send_contact') }}" method="post">
                         <fieldset>
                             <input type="text" name="name" placeholder="Անուն Ազգանուն"/><br>
                             <input type="email" name="email" placeholder="Էլ հասցե"/><br>
                             <label for="message">Հաղորդագրություն</label>
-                            <textarea class="form-control" rows="5" id="message"></textarea>
-                            <a href="#"><button class="detailed ">Ուղարկել</button></a>
+                            <textarea class="form-control" name="message" rows="5" id="message"></textarea>
+                            <button type="submit" class="detailed ">Ուղարկել</button>
                         </fieldset>
                     </form>
                 </div>

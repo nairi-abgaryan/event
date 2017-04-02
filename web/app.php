@@ -16,3 +16,4 @@ $request = Request::createFromGlobals();
 $response = $kernel->handle($request);
 $response->send();
 $kernel->terminate($request, $response);
+date_default_timezone_set('Asia/Tbilisi');

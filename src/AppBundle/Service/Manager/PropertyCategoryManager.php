@@ -38,4 +38,19 @@ class PropertyCategoryManager
 
         return $qb;
     }
+
+    /**
+     * @param array $criteria
+     *
+     * @return mixed
+     */
+    public function findBy($criteria = [])
+    {
+        $qb = $this->repository->createQueryBuilder("property_category");
+
+        $qb->select("property_category.id")->where($qb->expr()->in("property_category.id", $criteria));
+        $result = $qb->getQuery()->getResult();
+
+        return $result;
+    }
 }
