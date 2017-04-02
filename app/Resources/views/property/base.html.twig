@@ -100,7 +100,9 @@
                     <li><a href="{{ path('my_list_property') }}">Հրապարակված մրցույթներ</a></li>
                     <li><a href="{{ path('my_share') }}">Իմ մասնակցության հայտեր</a></li>
                     <li><a href="{{ path('create_property') }}">Պատվիրել մրցույթային փաթեթ</a></li>
-                    <li><a href="{{ path('retrieve_user',{"id": app.user.id}) }}">Անձնական տվյալներ</a></li>
+                    {% if app.user %}
+                        <li><a href="{{ path('retrieve_user',{"id": app.user.id}) }}">Անձնական տվյալներ</a></li>
+                    {% endif %}
                     <li><a href="{{ path('help_list') }}">Օգտակար փաստաթղթեր</a></li>
                 </ul>
             </div>
