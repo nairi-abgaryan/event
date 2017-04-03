@@ -14,13 +14,10 @@ $loader = require __DIR__ . '/../app/autoload.php';
 //Debug::enable();
 
 $kernel = new AppKernel('dev', true);
-<<<<<<< HEAD
 $kernel->loadClassCache();
 
-=======
 
 //$kernel->loadClassCache();
->>>>>>> a043fe031f2e12c393e484fb96954a1f9821c896
 $request = Request::createFromGlobals();
 $response = $kernel->handle($request);
 $response->send();
