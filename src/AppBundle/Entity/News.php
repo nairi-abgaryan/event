@@ -41,6 +41,7 @@ class News
      *     cascade={"persist"},
      *     fetch="LAZY"
      * )
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $image;
 
