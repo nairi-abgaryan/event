@@ -76,7 +76,6 @@ class PropertyAdmin extends AbstractAdmin
             ->add('file',  'sonata_media_type', [
                 'provider' => 'sonata.media.provider.file',
                 'context' => 'default',
-                'help' => $photoHelper,
             ])
             ->add('start', DateType::class, [
                 "label" => "Սկզիբ"
