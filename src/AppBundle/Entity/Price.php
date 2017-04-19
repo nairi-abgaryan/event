@@ -35,6 +35,7 @@ class Price
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\PropertyProduct")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @Serializer\Expose
      */
     private $product;
