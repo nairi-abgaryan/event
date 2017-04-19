@@ -30,7 +30,9 @@ class PropertyAdmin extends AbstractAdmin
         $photoHelper = $this->getConfigurationPool()
             ->getContainer()->get('app.admin_helper')
             ->getFileHelper($object->getFile());
-
+        if($photoHelper){
+            $help = array('help' => $photoHelper);
+        }
         $formMapper
             ->add('type', EntityType::class, [
                 "class" => 'AppBundle\Entity\PropertyType',
@@ -73,10 +75,6 @@ class PropertyAdmin extends AbstractAdmin
             ->add('overview', TextareaType::class, [
                 "label" => "Մրցույթի համառոտ բնութագիր"
             ])
-            ->add('file',  'sonata_media_type', [
-                'provider' => 'sonata.media.provider.file',
-                'context' => 'default',
-            ])
             ->add('start', DateType::class, [
                 "label" => "Սկզիբ"
             ])
@@ -98,7 +96,23 @@ class PropertyAdmin extends AbstractAdmin
                 )
             );
             ;
-
+            /** @var Property $object */
+            $object = $this->getSubject();
+            $photoHelper = $this->getConfigurationPool()
+                ->getContainer()->get('app.admin_helper')
+                ->getFileHelper($object->getFile());
+            if($photoHelper){
+                $formMapper->add('file',  'sonata_media_type', [
+                    'provider' => 'sonata.media.provider.file',
+                    'context' => 'default',
+                    'help' =>$photoHelper
+                ]);
+            }else{
+                $formMapper->add('file',  'sonata_media_type', [
+                    'provider' => 'sonata.media.provider.file',
+                    'context' => 'default'
+                ]);
+            }
     }
 
     /**
