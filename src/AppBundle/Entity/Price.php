@@ -40,7 +40,7 @@ class Price
 
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $price;
 
@@ -51,7 +51,7 @@ class Price
     private $owner;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $description;
 
@@ -61,8 +61,7 @@ class Price
     private $financing;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Shipment")
-     * @Serializer\Expose
+     * @ORM\Column(type="boolean")
      */
     private $shipment;
 

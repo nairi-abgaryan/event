@@ -47,9 +47,9 @@ class SearchType extends AbstractType
             ))
             ->add('propertyType', ChoiceType::class, [
                 'choices'  => array(
-                    'Ապրանք' => 1,
-                    'Աշխատանք' => 2,
-                    'Ծառաություն' => 3,
+                    'Ապրանք' => 'Ապրանք',
+                    'Աշխատանք' => 'Աշխատանք',
+                    'Ծառաություն' => 'Ծառաություն',
                 ),
                 "label"=>false,
                 "required" => false

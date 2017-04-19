@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as Serializer;
+use Sonata\MediaBundle\Model\Media;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -90,10 +91,15 @@ class Property
      */
     private $overview;
 
+
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\File")
-     * @ORM\JoinColumn(onDelete="CASCADE", nullable=true)
-     * @Serializer\Expose
+     * @var Media
+     *
+     * @ORM\ManyToOne(
+     *     targetEntity="Application\Sonata\MediaBundle\Entity\Media",
+     *     cascade={"persist"},
+     *     fetch="LAZY"
+     * )
      */
     private $file;
 
@@ -128,9 +134,38 @@ class Property
     private $actived = false;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $propertyType;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\PropertyProduct", mappedBy="property")
+     * @ORM\JoinColumn(name="property_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $product;
+
+    public function __construct()
+    {
+        $this->product = new ArrayCollection();
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProduct()
+    {
+        return $this->product ;
+    }
+
+    /**
+     * @param mixed $product
+     */
+    public function setProduct($product)
+    {
+        $this->product = $product;
+
+        return $this;
+    }
 
     /**
      * @return int
@@ -285,7 +320,7 @@ class Property
     }
 
     /**
-     * @return File
+     * @return Media
      */
     public function getFile()
     {
@@ -293,9 +328,9 @@ class Property
     }
 
     /**
-     * @param File $file
+     * @param Media $file
      */
-    public function setFile(File $file)
+    public function setFile(Media $file)
     {
         $this->file = $file;
     }
@@ -412,5 +447,12 @@ class Property
         $this->propertyType = $propertyType;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function __toString()
+    {
+        return (string)$this->id;
+    }
 }
 

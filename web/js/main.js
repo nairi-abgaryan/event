@@ -24,8 +24,6 @@ $(document).on("ready", function () {
     $(".search").on("click",function () {
         var $inputs = $('.search-form :input');
 
-        // not sure if you wanted this, but I thought I'd add it.
-        // get an associative array of just the values.
         var values = {};
         $inputs.each(function() {
             values[this.name] = $(this).val();
@@ -33,18 +31,31 @@ $(document).on("ready", function () {
     });
 });
 
+
 $(".delete-property").on("click", function () {
      var url = $(this).attr("data-url");
      $(".accept-tender").attr("data-url",url);
 });
 
+$(".cancel-tender").on("click",function () {
+    $('.modal').modal('toggle');
+})
+
 $(".accept-tender").on("click",function () {
     var url =$(this).attr("data-url");
     window.location.replace(url);
 });
-$(".cancel-tender").on("click",function () {
-    $('.modal').modal('toggle');
-})
+
+$(".delete-my-share-property").on("click", function () {
+     var url = $(this).attr("data-url");
+     $(".accept-my-list-delete").attr("data-url",url);
+});
+
+$(".accept-my-list-delete").on("click",function () {
+    var url =$(this).attr("data-url");
+    window.location.replace(url);
+});
+
 /*Navigation bar*/
 
 $(window).scroll(function() {
@@ -76,24 +87,18 @@ $(document).ready(function () {
     var i = 2;
 
     $('#add-row').on('click', function() {
-        $('#add-row').before(
-            "<div class='added'>" +
-            "<div class='form-inline'>" +
-                "<div class='form-group'>" +
-                    "<input type='text' name='product[product"+i+"][name]' />" +
-                "</div><div class='form-group'>" +
-            "<input style='margin-left: 4px;' name='product[product"+i+"][qty]' type='text' />" +
-            "</div> <div class='form-group'> " +
-            "<select name='product[product"+i+"][sizes]' class='choose-size' style='margin-top: 0;'> " +
-                "<option disabled selected >Չ․միավոր</option> " +
-                "<option value='հատ'>հատ</option> " +
-                "<option value='ք/մ'>ք/մ</option> " +
-                "<option value='կգ'>կգ</option> " +
-            "</select> </div>" +
-            "<div class='form-group'>" +
-            "<input type='file'  name='product[product"+i+"][image]' width='100px' class='upload-image'> " +
-            "</div><div class='form-group'><button type='button' style='margin-left: 4px;' class='remove-row'>X</button></div>" +
-            "</div></div>");
+        var newaddress = $(".products").eq(0).clone();
+
+        newaddress.find('input').each(function() {
+            this.name= this.name.replace('[1]', '['+i+']');
+            this.name= this.name.replace('[image]', '[image'+i+']');
+        });
+
+        newaddress.find('select').each(function() {
+            this.name= this.name.replace('[type]', '['+i+'][type]');
+        });
+
+        $('#add-row').before(newaddress);
         i++;
     });
 
@@ -125,7 +130,7 @@ $(function () {
 /************************** Hide uplaod image based on category change *******************************/
 
 $("#select_type").change(function(){
-    if($(this).val()=== "4" || $(this).val()=== "5")
+    if($(this).val()=== "2" || $(this).val()=== "3")
     {
         $(".products").show();
         $("#add-row").hide();

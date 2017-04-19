@@ -5,6 +5,8 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as Serializer;
+use Sonata\MediaBundle\Form\Type\MediaType;
+use Sonata\MediaBundle\Model\Media;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -27,7 +29,8 @@ class PropertyProduct
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Property")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Property", inversedBy="product")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $property;
 
@@ -44,22 +47,20 @@ class PropertyProduct
     private $count;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProductType")
      */
     private $type;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Image")
-     * @ORM\JoinColumn(onDelete="CASCADE", nullable=true)
+     * @var Media
      *
-     * @Serializer\Expose
+     * @ORM\ManyToOne(
+     *     targetEntity="Application\Sonata\MediaBundle\Entity\Media",
+     *     cascade={"persist"},
+     *     fetch="LAZY"
+     * )
      */
     private $image;
-
-    /**
-     * @var UploadedFile
-     */
-    private $imageFile;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
@@ -133,7 +134,7 @@ class PropertyProduct
     /**
      * @param mixed $image
      */
-    public function setImage(Image $image)
+    public function setImage(Media $image)
     {
         $this->image = $image;
     }
@@ -155,7 +156,7 @@ class PropertyProduct
     }
 
     /**
-     * @return UploadedFile
+     * @return MediaType
      */
     public function getImageFile()
     {
@@ -163,9 +164,9 @@ class PropertyProduct
     }
 
     /**
-     * @param UploadedFile $imageFile
+     * @param MediaType $imageFile
      */
-    public function setImageFile(UploadedFile $imageFile)
+    public function setImageFile(MediaType $imageFile)
     {
         $this->imageFile = $imageFile;
     }
@@ -186,11 +187,8 @@ class PropertyProduct
         $this->priceOwner = $priceOwner;
     }
 
-    /**
-     * @return string
-     */
     public function __toString()
     {
-        return $this->name;
+        return (string)$this->image;
     }
 }

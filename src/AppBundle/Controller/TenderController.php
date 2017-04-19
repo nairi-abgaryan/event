@@ -29,6 +29,8 @@ class TenderController extends FOSRestController
 
         $type = $this->get("app.property.type_manager")->findAll();
         $i = 0;
+        $property = [];
+
         foreach ($type as $item) {
             $property[$i] = $this->get("app.property_manager")->findByTypeResultTwo($item);
             $i++;
@@ -50,12 +52,13 @@ class TenderController extends FOSRestController
     {
         $type = $this->get("app.property.type_manager")->find($request->get("type"));
 
-        $property["0"] = $this->get("app.property_manager")->findByType($type);
+        $property = $this->get("app.property_manager")->findByType($type);
 
         $paginatedItems = $this->get('app.pagination_factory')
-            ->createCollection($property["0"], $request, 'list_type');
+            ->createCollection($property, $request, 'list_type');
+
         $form = $this->createForm(SearchType::class);
-        return $this->render("tenders/sort.html.twig",[
+        return $this->render("tenders/sortList.html.twig",[
             "property" => $paginatedItems,
             "form" => $form->createView()
         ]);
@@ -87,7 +90,7 @@ class TenderController extends FOSRestController
 
         $data = $request->request->all()["search"];
         $type = $this->get("app.property.type_manager")->findAll();
-        $propertyType = [1, 2, 3];
+        $propertyType = ['Ապրանք', 'Աշխատանք', 'Ծառաություն'];
         $start = new \DateTime("2017-01-01 00:00:00");
         $end = new \DateTime("2050-01-01 00:00:00");
         $category = $this->get("app.property_category_maneger")->findAll()->getQuery()->getResult();
@@ -115,12 +118,10 @@ class TenderController extends FOSRestController
 
         $property = $this->get("app.property_manager")->findByFilters($type, $propertyType, $start, $end, $category);
 
-        $paginatedItems = $this->get('app.pagination_factory')
-            ->createCollection($property, $request, 'list_type');
         $form = $this->createForm(SearchType::class);
         return $this->render(":tenders:sort.html.twig",
                 [
-                    "property"=>$paginatedItems,
+                    "property"=>$property,
                     "form" => $form->createView()
                 ]
         );

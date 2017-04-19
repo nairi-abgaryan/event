@@ -1,23 +1,40 @@
 <style>
+    thead  tr td{
+        width:400px;
+        height:50px;
+        background: #789339;
+        border: 1px solid black;
+    }
+    tr{
+        border: 1px solid black;
+    }
     tr td {
         width:300px;
     }
 </style>
 
-<table id="headerTable" style="display: none;">
+<table id="headerTable">
     <thead>
     <tr>
-        <td>Անուն</td>
-        <td>Կազմակերպություն</td>
-        <td>գին</td>
+        <td>Հ/հ</td>
+        <td>Կազմակերպության անվանումը</td>
+        <td>Սկիզբ</td>
+        <td>Վերջ</td>
+        <td>Գնային առաջարկը</td>
+        <td>Ներառյալ ԱԱՀ </td>
     </tr>
     </thead>
     <tbody>
+    {% set i=0 %}
         {% for value in price %}
+            {% set i = i + 1 %}
             <tr>
-                <td>{{ value.product.name }}</td>
+                <td>{{ i }}</td>
                 <td>{{ value.owner.companyName }}</td>
-                 <td>{{ value.price }}</td>
+                <td>{{ property.start|date("Y/m/d") }}</td>
+                <td>{{ property.end|date("Y/m/d")}}</td>
+                <td>{{ value.price }}</td>
+                <td>{% if value.shipment %}Այո{% else %}Ոչ{% endif %}</td>
             </tr>
         {% endfor %}
     </tbody>
@@ -55,4 +72,5 @@
         sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
 
     window.location.replace("{{ path('my_property',{"id": property.id }) }}");
+
 </script>

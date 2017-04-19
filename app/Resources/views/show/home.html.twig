@@ -14,7 +14,7 @@
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="login">
                      {% if error %}
                         <div class="alert alert-danger">
-                            {{ error.messageKey|trans(error.messageData, 'security') }}
+                            Սխալ մուտքանուն կամ գախտնաբառ
                         </div>
                     {% endif %}
                     {{ form_start(form,{"class":"form-horizontal","id":"contact_form"}) }}
@@ -39,14 +39,14 @@
                     {% for value in news %}
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                         <div class="single-news">
-                            <img src="{{ asset('uploads/images/') }}{{ value.image }}" alt="">
+                            <img src="{% path value.image, 'reference' %}" alt="">
                             <p>{{ value.description|truncate(200) }}</p>
                             <div class="text-right">
                                 <em><a href="{{ path('news',{"id":value.id}) }}">Կարդալ ավելին</a></em>
                             </div>
                         </div>
                     </div>
-                    {% endfor %}>
+                    {% endfor %}
                 </div>
             </div>
         </section>

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Application\Sonata\MediaBundle\Entity\Media;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as Serializer;
@@ -32,12 +33,16 @@ class PropertyType
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Image")
-     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @var Media
      *
-     * @Serializer\Expose
+     * @ORM\ManyToOne(
+     *     targetEntity="Application\Sonata\MediaBundle\Entity\Media",
+     *     cascade={"persist"},
+     *     fetch="LAZY"
+     *  )
+     *
      */
-    private $image;
+    private $image=null;
 
     /**
      * @ORM\Column(type="integer")
@@ -69,7 +74,7 @@ class PropertyType
     }
 
     /**
-     * @return Image
+     * @return Media
      */
     public function getImage()
     {
@@ -77,9 +82,9 @@ class PropertyType
     }
 
     /**
-     * @param Image $image
+     * @param Media $image
      */
-    public function setImage(Image $image)
+    public function setImage(Media $image=null)
     {
         $this->image = $image;
     }

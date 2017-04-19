@@ -20,12 +20,12 @@
                 <tr>
                     <td><a href="{{ path('get_property',{"id":value.property.id}) }}">578</a></td>
                     <td>{{ value.property.type.name }}</td>
-                    <td>{{ value.owner.companyName }}</td>
+                    <td>{{ value.property.owner.companyName }}</td>
                     <td>{{ value.property.start|date('Y/m/d') }} - {{ value.property.end|date('Y/m/d') }}</td>
                     <td>{% if value.established %}Այո{% else %}Ոչ{% endif %}</td>
                     <td>
                         <a data-toggle="modal" data-target="#cancel" href="#">
-                            <button class="edit-tender">Հրաժարվել</button>
+                            <button data-url="{{ path('delete_share',{"id":value.id}) }}" class="delete-my-share-property">Հրաժարվել</button>
                         </a>
                     </td>
                     <div class="modal fade" id="cancel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -37,8 +37,8 @@
                                         էապես անփոփոխ:</p>
                                 </div>
                                 <div class="approve-buttons text-center">
-                                    <button class="edit-tender" type="button">Հաստատել</button>
-                                    <button class="edit-tender" type="button">Չեղարկել</button>
+                                    <button class="accept-my-list-delete" type="button">Հաստատել</button>
+                                    <button class="cancel-tender" type="button">Չեղարկել</button>
                                 </div>
                             </div>
                         </div>

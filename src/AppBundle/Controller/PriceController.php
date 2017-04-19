@@ -40,6 +40,7 @@ class PriceController extends FOSRestController
         /** @var Price $data */
         $data = $form->getData();
         $files =  $request->files->all()["product"];
+
         foreach ($products as $key => $value){
 
             $id = $value->getId();
@@ -48,7 +49,11 @@ class PriceController extends FOSRestController
             $create->setProperty($property);
             $create->setProduct($value);
             $create->setOwner($user);
-            $create->setPrice($data["product"][$id]["price"]);
+
+            $create->setPrice(0);
+            if(isset($data["product"][$id]["price"]))
+                $create->setPrice((int)$data["product"][$id]["price"]);
+
             $create->setFinancing($data["financing"]);
             $create->setShipment($data["shipment"]);
 

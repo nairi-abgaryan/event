@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="single-news-content">
-                        <img src="{{ asset('/uploads/images/') }}{{ news.image }}" alt="">
+                        <img src="{% path news.image, 'reference' %}" alt="">
                         <p>{{ news.description }}</p>
                     </div>
                 </div>

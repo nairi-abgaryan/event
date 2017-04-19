@@ -29,9 +29,11 @@
                                     {% endif %}
                                 </td>
                                 <td>
+                                    {% if date(value.property.end) <= date() %}
                                     <a target="_blank" href="{{ asset('uploads/files/') }}{{ value.file }}">
                                         <button class="download-tender">Ներբեռնել</button>
                                     </a>
+                                    {% endif %}
                                 </td>
                                 <td>
                                     {% if date(value.property.end) <= date() %}

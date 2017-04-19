@@ -2,13 +2,13 @@
 
 namespace AppBundle\Service\Manager;
 
-use AppBundle\Repository\PropertyProductRepository;
+use AppBundle\Repository\ProductTypeRepository;
 use Doctrine\ORM\EntityManager;
 
 class ProductTypeManager
 {
     /**
-     * @var PropertyProductRepository
+     * @var ProductTypeRepository
      */
     private $repository;
 
@@ -20,10 +20,10 @@ class ProductTypeManager
     /**
      * PropertyProductRepository constructor.
      *
-     * @param PropertyProductRepository $repository
+     * @param ProductTypeRepository $repository
      * @param EntityManager          $em
      */
-    public function __construct(PropertyProductRepository $repository, EntityManager $em)
+    public function __construct(ProductTypeRepository $repository, EntityManager $em)
     {
         $this->repository = $repository;
         $this->em = $em;
@@ -35,6 +35,16 @@ class ProductTypeManager
     public function findAll()
     {
         $qb = $this->repository->createQueryBuilder('property_category');
+
+        return $qb;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function find($id)
+    {
+        $qb = $this->repository->find($id);
 
         return $qb;
     }

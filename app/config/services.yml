@@ -42,6 +42,9 @@ services:
     # ------------------------------------------------------------------------------------------------------------------
     # Services
     # ------------------------------------------------------------------------------------------------------------------
+    app.admin_helper:
+        class: AppBundle\Service\Helper\AdminHelper
+        arguments: ["@sonata.media.twig.extension", "@sonata.media.provider.file"]
 
     app.mailer:
         class: AppBundle\Service\Mailer\MailerSender
@@ -72,6 +75,7 @@ services:
         arguments: [~, AppBundle\Entity\Property, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Մրցույթներ" }
+
     admin.help:
         class: AppBundle\Admin\HelpfulAdmin
         arguments: [~, AppBundle\Entity\Helpful, ~]
@@ -108,22 +112,29 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Նորություններ" }
 
-    admin.image:
-        class: AppBundle\Admin\ImageAdmin
-        arguments: [~, AppBundle\Entity\Image, ~]
-        tags:
-            - { name: sonata.admin, manager_type: orm, label: "Նկարներ" }
     admin.property_attribute_condition:
         class: AppBundle\Admin\PropertyCategoryAdmin
         arguments: [~, AppBundle\Entity\PropertyCategory, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Ծառայության տեսակը" }
 
+    admin.user:
+        class: AppBundle\Admin\UserAdmin
+        arguments: [~, AppBundle\Entity\User, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: "Օգտատերեր" }
+
     admin.property_type:
         class: AppBundle\Admin\PropertyTypeAdmin
         arguments: [~, AppBundle\Entity\PropertyType, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Մրցույթի տեսակներ" }
+
+    admin.property_product:
+        class: AppBundle\Admin\PropertyProductAdmin
+        arguments: [~, AppBundle\Entity\PropertyProduct, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: "Մրցույթներ Ապրանքներ" }
 
     # ------------------------------------------------------------------------------------------------------------------
     # Entity managers

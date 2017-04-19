@@ -76,9 +76,7 @@ class PropertyManager
     {
         return $this->repository->createQueryBuilder('property')
             ->where("property.owner = :owner")
-            ->andWhere("property.actived =:active")
-            ->andWhere("property.removed =:notRemoved")
-            ->setParameters(array("owner" => $user,"active"=>true,"notRemoved" => false))
+            ->setParameters(array("owner" => $user))
             ->orderBy("property.start", "DESC")
             ->getQuery()
             ->getResult();
@@ -116,7 +114,16 @@ class PropertyManager
     {
         return $this->repository->createQueryBuilder('property')
             ->where("property.type = :type")
-            ->setParameter("type",$type);
+            ->andWhere("property.end > :end")
+            ->andWhere("property.removed = :removed")
+            ->andWhere("property.actived = :actived")
+            ->setParameters([
+                'actived' => 1,
+                'removed' => 0,
+                'type' => $type,
+                'end' => new \DateTime(\date('Y:m:d H:i:s'))
+            ])
+            ;
     }
 
 
@@ -130,17 +137,23 @@ class PropertyManager
         $qb ->where($qb->expr()->in("property.type" ,":type"))
             ->andWhere("property.start >= :start")
             ->andWhere("property.end <= :end")
+            ->andWhere("property.actived = :actived")
+            ->andWhere("property.removed = :removed")
             ->andWhere($qb->expr()->in("property.propertyType" ,":propertyType"))
             ->andWhere($qb->expr()->in("property.category" ,":category"))
             ->setParameters(array(
+                "removed" => 0,
+                "actived" => 1,
                 "type" => $type,
                 "category" => $category,
                 "start" => $start,
                 "end" => $end,
                 "propertyType" => $propertyType
             ))
+            ->setMaxResults(50)
         ;
-        return $qb;
+
+        return $qb->getQuery()->getResult();
     }
 
     /**

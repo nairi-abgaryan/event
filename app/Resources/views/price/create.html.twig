@@ -15,7 +15,7 @@
                             <div class="checkbox">
                                 {{ form_widget(form.financing) }}
                             </div>
-                            <p>Ընտրեք առաքման տարբերակը</p>
+                            <p>ԱԱՀ</p>
                             <div class="checkbox">
                                 {{ form_widget(form.shipment) }}
                             </div>
@@ -35,7 +35,10 @@
                                 {% for product in products %}
                                 <tr>
                                     <td>
+                                         <span class="btn btn-success fileinput-button">
+                                                <label>Նկար</label>
                                         <input type="file" name="product[{{ product.id }}][file]" >
+                                         </span>
                                     </td>
                                     <td>{{ product.name }}</td>
                                     <td>{% if product.count  %}{{ product.count }}{% endif %}</td>

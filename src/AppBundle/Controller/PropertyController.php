@@ -2,15 +2,18 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\PriceProduct;
 use AppBundle\Entity\Property;
-use AppBundle\Entity\PropertyProduct;
+use AppBundle\Form\Type\PropertyProductType;
 use AppBundle\Form\Type\PropertyType;
 use AppBundle\Service\Mailer\MailSender;
 use AppBundle\Service\Mailer\MailSenderManager;
+use Application\Sonata\MediaBundle\Entity\Media;
 use FOS\RestBundle\Controller\FOSRestController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -34,7 +37,7 @@ class PropertyController extends FOSRestController
      *
      * @Route("/mylist/", name="my_list_property")
      * @Method({"GET"})
-     *
+     * @Security("is_granted('ROLE_USER')")
      */
     public function myListAction()
     {
@@ -51,27 +54,32 @@ class PropertyController extends FOSRestController
      * Create property
      *
      * @Route("/", name="create_property")
-     *
+     * @Security("is_granted('ROLE_USER')")
      */
     public function createAction(Request $request)
     {
         $user = $this->getUser();
         $form = $this->createForm(PropertyType::class);
+        $form_product = $this->createForm(PropertyProductType::class);
         $form->handleRequest($request);
 
         if (!$form->isValid()) {
             return $this->render(":property:create.html.twig",[
-                "form" => $form->createView()
+                "form" => $form->createView(),
+                "form_product" => $form_product->createView()
             ]);
         }
 
         /** @var Property $data */
         $data = $form->getData();
 
-        $date = $data->getStart();
+        $limit = $data->getType()->getLimitDays();
+        $diff = $data->getEnd()->diff($data->getStart());
 
-        $date->modify("+".$data->getType()->getLimitDays()."day");
-        $data->setEnd($date);
+        if ($diff->days > $limit || $data->getEnd() > $data->getStart()){
+            $startDate = new \DateTime($data->getStart()->format("Y-m-d H:i:s"));
+            $data->setEnd($startDate->add(new \DateInterval('P'.$limit.'D')));
+        }
 
         if($data->getFilePdf()){
             $this->addAvatar($data);
@@ -81,25 +89,38 @@ class PropertyController extends FOSRestController
         $data->setOwner($user);
 
         $property = $this->get('app.property_manager')->persist($data);
-        $products = $request->request->all()['product'];
-        $files = $request->files->all()['product'];
-        $i = 1;
+        $products = $request->request->all()['property_product'];
+        $q = 2;
+        $files = $request->files->all()['property_product'];
 
         foreach ($products as $product){
 
+            $i = 'image';
             $product_create = $this->get("app.property_product_manager")->create();
             $product_create->setProperty($property);
-            $product_create->setName($product["name"]);
-            $product_create->setCount($product["qty"]);
-            $product_create->setType($product["sizes"]);
 
-            if($files['product'.$i.'']["image"]){
-                $product_create->setImageFile($files['product'.$i.'']["image"]);
-                $product_create = $this->addImage($product_create);
+            if(isset($product["name"]))
+            $product_create->setName($product["name"]);
+
+            if(isset($product["qty"]))
+                $product_create->setCount($product["qty"]);
+
+            if(isset($products["type"])){
+                $prodType = $this->get('app.product.type.manager')->find($products["type"]);
+                $product_create->setType($prodType);
+            }elseif (isset($product["type"])){
+                $prodType = $this->get('app.product.type.manager')->find($product["type"]);
+                $product_create->setType($prodType);
             }
 
+            if($files[$i]["binaryContent"]){
+                $image = $files[$i]["binaryContent"];
+                $media = $this->addImage($image);
+                $product_create->setImage($media);
+            }
             $this->get('app.property_product_manager')->persist($product_create);
-            $i++;
+            $q = $q+1;
+            $i = $i.$q;
         }
 
         $property = $this->get("app.property_manager")->findBy($user);
@@ -128,6 +149,7 @@ class PropertyController extends FOSRestController
         }
 
         $form = $this->createForm(PropertyType::class,$property);
+        $form_product = $this->createForm(PropertyProductType::class);
         $form->handleRequest($request);
         $product = $this->get("app.property_product_manager")->findByProperty($property);
 
@@ -135,6 +157,7 @@ class PropertyController extends FOSRestController
             return $this->render(":property:update.html.twig",[
                 "form" => $form->createView(),
                 "property" => $property,
+                "form_product" => $form_product->createView(),
                 "product" => $product
             ]);
         }
@@ -154,11 +177,10 @@ class PropertyController extends FOSRestController
 
             $product_create->setCount($products["product".$id.""]["qty"]);
 
-            $product_create->setType($products["product".$id.""]["sizes"]);
-
             if($files['product'.$id.'']["image"]){
-                $product_create->setImageFile($files['product'.$id.'']["image"]);
-                $product_create = $this->addImage($product_create);
+                $image = $files['product'.$id.'']["image"];
+                $media = $this->addImage($image);
+                $product_create->setImage($media);;
             }
 
             $this->get('app.property_product_manager')->persist($product_create);
@@ -174,6 +196,8 @@ class PropertyController extends FOSRestController
 
     /**
      * @Route("/share/", name="my_share")
+     *
+     * @Security("is_granted('ROLE_USER')")
      */
     public function shareAction(){
 
@@ -187,7 +211,7 @@ class PropertyController extends FOSRestController
 
     /**
      * @Route("/my/property/{id}", name="my_property")
-     *
+     * @Security("is_granted('ROLE_USER')")
      * @param Property $property
      * @return mixed
      */
@@ -221,19 +245,25 @@ class PropertyController extends FOSRestController
     }
 
     /**
-     * @param PropertyProduct $product
+     * @param UploadedFile $product
      *
-     * @return PropertyProduct
+     * @return Media
      */
-    private function addImage(PropertyProduct $product)
+    private function addImage(UploadedFile $image)
     {
-        $image = $this->get('app.image_manager')->upload($product->getImageFile(), $this->getUser(), $product->getImage());
-        $product->setImage($image);
-        return $product;
+        $media = new Media();
+        $mediaManager = $this->get('sonata.media.manager.media');
+        $media->setBinaryContent($image);
+        $media->setContext('default');
+        $media->setProviderName('sonata.media.provider.image');
+        $mediaManager->save($media);
+
+        return $media;
     }
 
     /**
      * @Route("/delete/{id}", name="delete_property")
+     * @Security("is_granted('ROLE_USER')")
      * @param Property $property
      * @return mixed
      */
@@ -252,5 +282,26 @@ class PropertyController extends FOSRestController
         $this->get("app.property_manager")->persist($property);
 
         return $this->redirect($this->generateUrl("my_list_property"));
+    }
+
+    /**
+     * @Route("/delete/share/{id}", name="delete_share")
+     * @Security("is_granted('ROLE_USER')")
+     * @param PriceProduct $priceProduct
+     * @return mixed
+     */
+    public function deletePriceAction(PriceProduct $priceProduct)
+    {
+        $user = $this->getUser();
+        if($user !== $priceProduct->getOwner()){
+            return $this->render("error/error.html.twig",[
+                "status_text" => "Access denied ",
+                "status_code" => 403
+            ]);
+        }
+
+       $this->get('app.price_product.manager')->remove($priceProduct);
+
+        return $this->redirect($this->generateUrl("my_share"));
     }
 }

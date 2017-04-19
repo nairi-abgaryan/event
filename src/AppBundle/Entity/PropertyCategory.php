@@ -32,11 +32,6 @@ class PropertyCategory
      */
     private $name;
 
-    public function __construct($id)
-    {
-        $this->id = new ArrayCollection();
-    }
-
     /**
      * @return int
      */

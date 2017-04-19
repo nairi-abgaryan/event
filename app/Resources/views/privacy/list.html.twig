@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 privacy-text">
                     <h4>{{ privacy.0.name }}</h4>
-                    <p>{{ privacy.0.description }}</p>
+                    <p>{% autoescape  %}{{ privacy.0.description|raw }}{% endautoescape %}</p>
                 </div>
             </div>
         </div>

@@ -12,6 +12,7 @@ FRED
 * sudo apt-get install wkhtmltopdf server Requirements
 Install these requirements and continue.
 
+
 ## Deploy on a Local Machine
 
 1. Clone project code from this repository.

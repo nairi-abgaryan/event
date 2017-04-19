@@ -2,7 +2,7 @@
 
 {% block body %}
             <div class="content" style="float: right;margin-top: -300px;">
-                {% for value in property.toArray.items %}
+                {% for value in property %}
                         <div class="row" style="width: 1100px;">
                             <div class="col-lg-3 col-md-3 col-sm-3"></div>
                             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 same-tender">
@@ -28,19 +28,5 @@
                             </div>
                         </div>
                 {% endfor %}
-                <div >
-                    <nav aria-label="Page navigation example" class="text-center">
-                        <ul class="pagination ">
-                            {% if property.toArray._links.prev  is defined %}
-                                <li class="page-item"><a class="page-link"  href="{{ property.toArray._links.prev }}">Նախորդ</a></li>
-                                <li class="page-item"><a class="page-link"  href="{{ property.toArray._links.last }}">Վերջին</a></li>
-                            {% endif %}
-                            {% if property.toArray._links.next  is defined %}
-                                <li class="page-item"><a class="page-link"  href="{{ property.toArray._links.next }}">Հաջորդ</a></li>
-                            {% endif %}
-
-                        </ul>
-                    </nav>
-                </div>
             </div>
 {% endblock %}

@@ -3,6 +3,7 @@
 {% block body %}
     <div class="content" style="float: right;margin-top: -300px;">
         {% set count = 0 %}
+        {% if property is defined  %}
         {% for values in property %}
             {% for value in values %}
                 <div class="row" style="width: 1100px;">
@@ -23,13 +24,12 @@
                         <div class="col-lg-4 col-md-4 col-sm-4">
                             <img src="{{ asset('img/example1.jpg') }}" alt="">
                             <h4>Բյուջե</h4>
-                            <p>{{ value.budget }}</p>
+                            <p>{{ value.budget|number_format(0, '.') }}</p>
                             <h4>Ժամանակահատված</h4>
                             <p>{{ value.start|date("Y/m/d") }}- {{ value.end|date("Y/m/d") }}</p>
                         </div>
                         <div class="col-lg-8 col-md-8 col-sm-8">
-                            <p>Պատվիրատու <span class="item-description">{{ value.owner.companyName }}</span>
-                            </p>
+                            <p>Պատվիրատու <span class="item-description">{{ value.owner.companyName }}</span></p>
                             <p>Հրապարակման օր <span
                                         class="item-description">{{ value.createdAt|date("Y/m/d") }}</span></p>
                             <p>Խմբագրվել Է <span
@@ -46,5 +46,6 @@
                 </div>
             {% endfor %}
         {% endfor %}
+        {% endif %}
     </div>
 {% endblock %}

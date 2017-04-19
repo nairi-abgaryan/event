@@ -69,6 +69,7 @@ class ContactController extends FOSRestController
                             ".$request['message']."
                         </body>
                     </html>";
+
         $this->get("app.mailer_service")->sendMail($message, $contact->getAdminEmail());
 
         return $this->render(":show:contact.html.twig",[

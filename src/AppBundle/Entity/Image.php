@@ -29,8 +29,8 @@ class Image
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
-     * @ORM\JoinColumn(onDelete="CASCADE")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="User")
+     * @ORM\JoinColumn(onDelete="CASCADE", nullable=true)
      */
     private $owner;
 

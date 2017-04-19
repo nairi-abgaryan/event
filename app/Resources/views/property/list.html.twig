@@ -18,6 +18,7 @@
                         <option>Արխիվացված</option>
                     </select>
                 </th>
+                <th>Հաստատված</th>
                 <th>Մրցույթային բյուջե</th>
                 <th>Առաջարկների քանակ</th>
                 <th></th>
@@ -31,9 +32,27 @@
                     <td><a href="{{ path('update_property',{"id":value.id}) }}">{{ value.id }} </a></td>
                     <td>{{ value.type }}</td>
                     <td>{{ value.start|date('Y/m/d') }} - {{ value.end|date('Y/m/d') }}</td>
-                    <td>Ընթացիկ</td>
+                    <td>
+                        {% if value.removed == 1 %}
+                            Արխիվացված
+                        {% elseif date(value.end) < date() %}
+                            Կայացած
+                        {% elseif date(value.end) > date() and date(value.start) < date() %}
+                            Ընթացիկ
+                        {% elseif date(value.start) > date() %}
+                            Չկայացած
+                        {% endif %}
+                    </td>
+                    <td>{% if value.actived == 1 %}
+                            Այո
+                        {% else %}
+                            Ոչ
+                        {% endif %}
+                    </td>
                     <td>{{ value.budget }}</td>
-                    <td><a href="{{ path('my_property',{"id" : value.id}) }}">{{ value.priceCount }}</a></td>
+                    <td>
+                        <a href="{{ path('my_property',{"id" : value.id}) }}">{{ value.priceCount }}</a>
+                    </td>
                     <td>
                         <a href="{{ path('update_property',{"id" : value.id }) }}">
                             <button class="edit-tender">Խմբագրել</button>

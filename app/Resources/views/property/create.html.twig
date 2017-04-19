@@ -2,7 +2,7 @@
 
 {% block body %}
     <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 create-tender">
-        {{ form_start(form) }}
+        {{ form_start(form, {"action":path('create_property')}) }}
         <p>Ընտրել մրցույթի տեսակը</p>
         <div>
             {{ form_widget(form.type, {"id" : "select_type"}) }}
@@ -19,33 +19,34 @@
             <label for="range">Նշել ժամանակահատվածը</label><br>
             {#  <input type="text" name="daterange" id="range" value="Նշել ժամանակահատվածը" />#}
             {% set currentDate = "now"|date("mm/dd/YY")  %}
-
+            <label for="range">Սկիզբ </label>
             {{ form_widget(form.start,{"attr":{value : currentDate}}) }}
-            {#{{ form_widget(form.end) }}#}
+            <label for="range">Վերջ</label>
+            {{ form_widget(form.end) }}
         </div>
        <div class="form-inline products">
               <div class="form-group">
                   <label for="product">Նշել Անունը</label><br>
-                  <input type="text" name="product[product1][name]" id="product"/>
+                  <input type="text" name="property_product[1][name]" id="product"/>
               </div>
               <div class="form-group">
                   <label for="qty">Քանակ</label><br>
-                  <input name="product[product1][qty]" type="text" id="qty"  />
+                  <input name="property_product[1][qty]" type="text" id="qty"  />
               </div>
+              <div  class="form-group">
+                  <label >Չ․միավոր</label><br>
+                  {{ form_widget(form_product.type, {"class":"choose-size"}) }}
+              </div>
+
               <div class="form-group">
-                  <select name="product[product1][sizes]" class="choose-size">
-                      <option disabled selected value="">Չ․միավոր</option>
-                      <option value="հատ">հատ</option>
-                      <option value="ք/մ">ք/մ</option>
-                      <option value="կգ">կգ</option>
-                  </select>
+                   <span class="btn btn-success fileinput-button">
+                        <label>Նկար</label>
+                             {{ form_widget(form_product.image, {"class":"upload-image"}) }}
+                   </span>
               </div>
-              <div class="form-group">
-                  <input type='file'  name='product[product1][image]' style=' margin-top:20px;' class='upload-image'> </a>
-              </div>
-            <button id="add-row" type="button">+</button>
         </div>
 
+        <button id="add-row" type="button">+</button>
         <p>Ֆինանսավորման ձև</p>
         <div class="checkbox">
             {{ form_widget(form.financing) }}
@@ -56,11 +57,7 @@
         </div>
         <p>Առաքում</p>
         <div class="checkbox">
-            <label for="delivery"><input type="checkbox" value="">Այո</label>
             {{ form_widget(form.shipment) }}
-        </div>
-        <div class="checkbox">
-            <label><input type="checkbox" value="">Ոչ</label>
         </div>
         <label for="depozit">Կանխավճար</label><br>
         {{ form_widget(form.advance) }}<br>
@@ -69,11 +66,12 @@
         <label for="desc">Մրցույթի համառոտ բնութագիր</label>
         {{ form_widget(form.overview, { 'attr': {'class': 'form-control',"id":"desc","rows": 5}}) }}
         <label>Մրցույթի տեղնիկական բնութագիր</label>
-        <a href="#">{{ form_widget(form.filePdf) }}</a>
+        <span class="btn btn-success fileinput-button">
+            <label>Ֆայլ</label>
+            {{ form_widget(form.file,{"id" : "custom-file-input"}) }}
+        </span>
         <div class="text-center">
-            <a href="#">
-                <button class="give-price">Ավելացնել</button>
-            </a>
+                <input type="submit" class="give-price" value="Ավելացնել">
         </div>
         {{ form_end(form) }}
     </div>
@@ -87,7 +85,5 @@
     </style>
 {% endblock %}
 {% block scrits %}
-    <script>
-        $('#datetimepicker').datetimepicker();
-    </script>
+
 {% endblock %}

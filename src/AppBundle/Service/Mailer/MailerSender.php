@@ -52,7 +52,12 @@ class MailerSender
         $mail->Subject = 'Uno Buy';
         $mail->Body = $body;
         $mail->send();
-
+        if(!$mail->Send())  {
+            echo "Message could not be sent. <p>";
+            echo "Mailer Error: " . $mail->ErrorInfo;
+            exit;
+        }
+        echo "Message has been sent";
     }
 }
 

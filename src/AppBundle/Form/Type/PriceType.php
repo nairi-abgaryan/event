@@ -21,7 +21,9 @@ class PriceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('description', TextareaType::class)
+            ->add('description', TextareaType::class, [
+                "required" => false
+            ])
             ->add('financing', ChoiceType::class, [
                 'choices'  => array(
                     'Կանխիկ' => true,
@@ -29,9 +31,12 @@ class PriceType extends AbstractType
                 ),
                 "label"=>false
             ])
-            ->add('shipment', EntityType::class, [
-                "class" => Shipment::class,
-                'choice_label' => 'name',
+            ->add('shipment', ChoiceType::class, [
+                'choices'  => array(
+                    'Այո' => true,
+                    'Ոչ' => false,
+                ),
+                "label"=>false
             ]);
         ;
     }

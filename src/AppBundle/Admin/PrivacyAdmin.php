@@ -6,6 +6,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 
 class PrivacyAdmin extends AbstractAdmin
 {
@@ -16,7 +17,7 @@ class PrivacyAdmin extends AbstractAdmin
     {
         $formMapper
             ->add('name')
-            ->add('description')
+            ->add('description', CKEditorType::class)
         ;
     }
 

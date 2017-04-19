@@ -2,9 +2,11 @@
 
 namespace AppBundle\Entity;
 
+use Application\Sonata\MediaBundle\Entity\Media;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Table(name="news")
@@ -32,9 +34,13 @@ class News
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Image")
+     * @var Media
      *
-     * @Serializer\Expose
+     * @ORM\ManyToOne(
+     *     targetEntity="Application\Sonata\MediaBundle\Entity\Media",
+     *     cascade={"persist"},
+     *     fetch="LAZY"
+     * )
      */
     private $image;
 
@@ -63,7 +69,7 @@ class News
     }
 
     /**
-     * @return Image
+     * @return Media
      */
     public function getImage()
     {
@@ -71,11 +77,11 @@ class News
     }
 
     /**
-     * @param Image $image
+     * @param Media $image
      */
-    public function setImage(Image $image)
+    public function setImage(Media $image)
     {
         $this->image = $image;
     }
-
 }
+

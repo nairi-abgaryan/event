@@ -65,8 +65,7 @@
                         <a data-target=".navbar-collapse" class="page-scroll" href="{{ path('my_list_property') }}">Իմ Էջը</a>
                     </li>
                     <li {% if app.request.attributes.get('_route') == 'list_contact' %} class="actived" {% endif %}>
-                        <a data-target=".navbar-collapse" class="page-scroll" href="{{ path('list_contact') }}">Հետադարձ
-                            կապ</a>
+                        <a data-target=".navbar-collapse" class="page-scroll" href="{{ path('list_contact') }}">Հետադարձ կապ</a>
                     </li>
                     <li>
                         <a data-target=".navbar-collapse" class="page-scroll" href="{{ path('privacy_list') }}">Ընդհանուր
@@ -114,7 +113,7 @@
 
 
 {% block javascripts %}
-    <script src="{{ asset('bundles/sonatacore/vendor/jquery/dist/jquery.js') }}"></script>
+    <script src="{{ asset('js/jquery.js') }}"></script>
     <!-- jQuery Form -->
     <script src="{{ asset('bundles/sonataadmin/vendor/jquery-form/jquery.form.js') }}"></script>
     <!-- Slick slider -->

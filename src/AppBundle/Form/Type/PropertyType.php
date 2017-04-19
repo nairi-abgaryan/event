@@ -3,15 +3,13 @@
 namespace AppBundle\Form\Type;
 
 use AppBundle\Entity\Property;
-use AppBundle\Form\Extension\Base64FileType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Sonata\MediaBundle\Form\Type\MediaType;;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -59,26 +57,30 @@ class PropertyType extends AbstractType
             ->add('overview', TextareaType::class, [
                 "label" => false
             ])
-            ->add('filePdf', FileType::class, [
-                'constraints' => [
-                    new Assert\File(['maxSize' => '4M']),
-                ],
-                "required" => false
+            ->add('file', MediaType::class, [
+                "required" => false,
+                'provider' => 'sonata.media.provider.file',
+                'context' => 'default'
             ])
             ->add('start', DateType::class, array(
-                'label' => 'false',
+                'label' => 'Սկիզբ',
+                "widget" => "single_text",
+                "input" =>"datetime"
+            ))
+            ->add('end', DateType::class, array(
+                'label' => 'Վերջ',
                 "widget" => "single_text",
                 "input" =>"datetime"
             ))
             ->add('propertyType', ChoiceType::class, [
                 'choices'  => array(
-                    'Ապրանք' => 1,
-                    'Աշխատանք' => 2,
-                    'Ծառաություն' => 3,
+                    'Ապրանք' => "Ապրանք",
+                    'Աշխատանք' => "Աշխատանք",
+                    'Ծառաություն' => "Ծառաություն",
                 ),
                 "label"=>false
-            ])
-        ;
+            ]);
+        $builder->get('file')->remove('unlink');
     }
 
     /**

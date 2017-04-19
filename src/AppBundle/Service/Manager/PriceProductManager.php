@@ -75,5 +75,19 @@ class PriceProductManager
 
         return $product;
     }
+
+
+    /**
+     * @param PriceProduct $priceProduct
+     *
+     * @return string
+     */
+    public function remove(PriceProduct $priceProduct)
+    {
+        $this->em->remove($priceProduct);
+        $this->em->flush();
+
+        return "Removed item";
+    }
 }
 

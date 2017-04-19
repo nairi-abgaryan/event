@@ -23,36 +23,34 @@
         </div>
         <div>
             <label for="range">Նշել ժամանակահատվածը</label><br>
-            {#  <input type="text" name="daterange" id="range" value="Նշել ժամանակահատվածը" />#}
+            <label for="range">Սկիզբ </label>
             {{ form_widget(form.start) }}
-           {# {{ form_widget(form.end, {"value": property.end}) }}#}
+            <label for="range">Վերջ</label>
+           {{ form_widget(form.end) }}
             <strong>Ավարտ {{  property.end|date("Y/m/d") }}</strong>
         </div>
         {% for value in product %}
-            <div class='added'>
-                <div class='form-inline'>
-                    <div class='form-group'>
-                        <input type='text' value="{{ value.name }}" name='product[product{{ value.id }}][name]' />
-                    </div>
-                    <div class='form-group'>
-                        <input style='margin-left: 4px;' value="{{ value.count }}" name='product[product{{ value.id }}][qty]' type='text' />
-                    </div>
-                    <div class='form-group'>
-                        <select name='product[product{{ value.id }}][sizes]' class='choose-size' style='margin-top: 0;'>
-                            <option value='{{ value.type }}'>{{ value.type }}</option>
-                            <option value='հատ'>հատ</option>
-                            <option value='ք/մ'>ք/մ</option>
-                            <option value='կգ'>կգ</option>
-                        </select>
-                    </div>
-                    {% if value.image is not null %}
+            <div class="form-inline products">
+                <div class="form-group">
+                    <label for="product">Նշել Անունը</label><br>
+                    <input type='text' value="{{ value.name }}" name='product[product{{ value.id }}][name]' />
+                </div>
+                <div class="form-group">
+                    <label for="qty">Քանակ</label><br>
+                    <input style='margin-left: 4px;' value="{{ value.count }}" name='product[product{{ value.id }}][qty]' type='text' />
+                </div>
+                <div class="form-group">
+                   <span class="btn btn-success fileinput-button">
+                        <label>Նկար</label>
+                           <div class='form-group'>
+                            <input type='file'  name='product[product{{ value.id }}][image]' style='margin-bottom: 23px; margin-left: 4px;'>
+                        </div>
+                   </span>
+                     {% if value.image is not null %}
                         <div class='form-group'>
-                            <img src="{{asset('/uploads/images/')}}{{  value.image }}" style='margin-bottom: 23px; margin-left: 4px;' width="30px" height="30px">
+                            <img src="{% path value.image, 'reference' %}" style=' margin-left: 4px;' width="50px" height="50px" alt="">
                         </div>
                     {% endif %}
-                    <div class='form-group'>
-                        <input type='file'  name='product[product{{ value.id }}][image]' style='margin-bottom: 23px; margin-left: 4px;'>
-                    </div>
                 </div>
             </div>
         {% endfor %}
@@ -68,9 +66,6 @@
         <div class="checkbox">
             {{ form_widget(form.shipment,{"value": property.shipment}) }}
         </div>
-        <div class="checkbox">
-            <label><input type="checkbox" value="">Ոչ</label>
-        </div>
         <label for="depozit">Կանխավճար</label><br>
         {{ form_widget(form.advance,{"value": property.advance}) }}<br>
         <label for="budget">Մրցույթային բյուջեն</label><br>
@@ -78,7 +73,8 @@
         <label for="desc">Մրցույթի համառոտ բնութագիր</label>
         {{ form_widget(form.overview, {"value": property.overview , 'attr': {'class': 'form-control',"id":"desc","rows": 5}}) }}
         <label>Մրցույթի տեղնիկական բնութագիր</label>
-        <a href="#">{{ form_widget(form.filePdf,{"value":property.filePdf}) }}</a>
+        <a target="_blank" href="{% path property.file, 'reference' %} ">Բեռնել</a>
+        <a href="#">{{ form_widget(form.file,{"value":property.file}) }}</a>
         <div class="text-center">
             <a href="#">
                 <button class="give-price">Ավելացնել</button>
