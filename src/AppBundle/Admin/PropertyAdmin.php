@@ -140,7 +140,8 @@ class PropertyAdmin extends AbstractAdmin
             ->add("owner")
             ->add("start")
             ->add("end")
-            ->add("file",null, array('template' => 'AppBundle:admin:list_image.html.twig'))
+            ->add("actived")
+            ->add("removed")
             ->add("download",null, array("template"=>":help:download.html.twig"))
         ;
     }

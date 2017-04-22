@@ -32,6 +32,7 @@ class SearchType extends AbstractType
                 "multiple" => true,
                 'expanded' => true,
                 "required" => false,
+                "label" => false
             ])
             ->add('start', DateType::class, array(
                 'label' => 'false',

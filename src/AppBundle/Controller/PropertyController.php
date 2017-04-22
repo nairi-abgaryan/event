@@ -89,6 +89,7 @@ class PropertyController extends FOSRestController
         $data->setOwner($user);
 
         $property = $this->get('app.property_manager')->persist($data);
+
         $products = $request->request->all()['property_product'];
         $q = 2;
         $files = $request->files->all()['property_product'];
@@ -118,12 +119,14 @@ class PropertyController extends FOSRestController
                 $media = $this->addImage($image);
                 $product_create->setImage($media);
             }
+
             $this->get('app.property_product_manager')->persist($product_create);
             $q = $q+1;
             $i = $i.$q;
         }
 
         $property = $this->get("app.property_manager")->findBy($user);
+
         return $this->render(":property:list.html.twig",[
             "property" => $property
         ]);

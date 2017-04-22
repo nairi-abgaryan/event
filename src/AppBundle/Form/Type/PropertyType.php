@@ -10,7 +10,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -49,28 +51,43 @@ class PropertyType extends AbstractType
                 ),
                 "label"=>false
             ])
-            ->add('shipment')
-            ->add('advance')
-            ->add('budget', IntegerType::class, [
-                "label" =>false
+            ->add('shipment', TextType::class, [
+                'attr'=>array('oninvalid'=>"setCustomValidity('Լրացնել դաշտը')")
+            ])
+            ->add('advance', TextType::class, [
+                'attr'=>array('oninvalid'=>"setCustomValidity('Լրացնել դաշտը')")
+            ])
+            ->add('budget', NumberType::class, [
+                "label" =>false,
+                'attr'=>array('oninvalid' => "setCustomValidity('Լրացնել դաշտը')")
             ])
             ->add('overview', TextareaType::class, [
-                "label" => false
+                "label" => false,
+                "required" =>false
             ])
             ->add('file', MediaType::class, [
                 "required" => false,
                 'provider' => 'sonata.media.provider.file',
-                'context' => 'default'
+                'context' => 'default',
+                'attr'=>array('oninvalid'=>"setCustomValidity('Լրացնել դաշտը')")
             ])
             ->add('start', DateType::class, array(
                 'label' => 'Սկիզբ',
                 "widget" => "single_text",
-                "input" =>"datetime"
+                "input" =>"datetime",
+                'attr' => [
+                            'oninvalid'=>"setCustomValidity('Նշեք ժամանակահատվածը')",
+                            "onchange"=>"try { setCustomValidity('') } catch (e) {}"
+                        ]
             ))
             ->add('end', DateType::class, array(
                 'label' => 'Վերջ',
                 "widget" => "single_text",
-                "input" =>"datetime"
+                "input" =>"datetime",
+                'attr'=>[
+                        'oninvalid'=>"setCustomValidity('Նշեք ժամանակահատվածը')",
+                        "onchange"=>"try { setCustomValidity('') } catch (e) {}"
+                    ]
             ))
             ->add('propertyType', ChoiceType::class, [
                 'choices'  => array(

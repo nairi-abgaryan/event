@@ -20,8 +20,14 @@
             {#  <input type="text" name="daterange" id="range" value="Նշել ժամանակահատվածը" />#}
             {% set currentDate = "now"|date("mm/dd/YY")  %}
             <label for="range">Սկիզբ </label>
-            {{ form_widget(form.start,{"attr":{value : currentDate}}) }}
+            {% if form_errors(form.end) %}
+                <span style="color: red">*Ձեր լրացրած դաշտը սխալ է  </span>
+            {% endif %}
+            {{ form_widget(form.start,{"attr":{value : currentDate}}) }} <br>
             <label for="range">Վերջ</label>
+            {% if form_errors(form.end) %}
+                <span style="color: red">*Ձեր լրացրած դաշտը սխալ է  </span>
+            {% endif %}
             {{ form_widget(form.end) }}
         </div>
        <div class="form-inline products">
@@ -35,6 +41,9 @@
               </div>
               <div  class="form-group">
                   <label >Չ․միավոր</label><br>
+                  {% if form_errors(form_product.type) %}
+                      <span style="color: red">*Ձեր լրացրած դաշտը սխալ է  </span>
+                  {% endif %}
                   {{ form_widget(form_product.type, {"class":"choose-size"}) }}
               </div>
 
@@ -49,33 +58,53 @@
         <button id="add-row" type="button">+</button>
         <p>Ֆինանսավորման ձև</p>
         <div class="checkbox">
+            {% if form_errors(form.financing) %}
+                <span style="color: red">*Ձեր լրացրած դաշտը սխալ է  </span>
+            {% endif %}
             {{ form_widget(form.financing) }}
         </div>
         <p>Ապահովագրություն</p>
         <div class="checkbox">
+            {% if form_errors(form.insurance) %}
+                <span style="color: red">*Ձեր լրացրած դաշտը սխալ է  </span>
+            {% endif %}
             {{ form_widget(form.insurance) }}
         </div>
-        <p>Առաքում</p>
+        <p>Առաքման հասցե</p>
         <div class="checkbox">
+            {% if form_errors(form.shipment) %}
+                <span style="color: red">*Ձեր լրացրած դաշտը սխալ է  </span>
+            {% endif %}
             {{ form_widget(form.shipment) }}
         </div>
         <label for="depozit">Կանխավճար</label><br>
+        {% if form_errors(form.advance) %}
+            <span style="color: red">*Ձեր լրացրած դաշտը սխալ է  </span>
+        {% endif %}
         {{ form_widget(form.advance) }}<br>
         <label for="budget">Մրցույթային բյուջեն</label><br>
-        {{ form_widget(form.budget) }}<br>
+        {% if form_errors(form.advance) %}
+            <span style="color: red">*Ձեր լրացրած դաշտը սխալ է  </span>
+        {% endif %}
+        {{ form_widget(form.advance) }}<br>
+        {{ form_widget(form.budget, {"attr":{"id":"budget"}}) }}<br>
         <label for="desc">Մրցույթի համառոտ բնութագիր</label>
         {{ form_widget(form.overview, { 'attr': {'class': 'form-control',"id":"desc","rows": 5}}) }}
         <label>Մրցույթի տեղնիկական բնութագիր</label>
         <span class="btn btn-success fileinput-button">
             <label>Ֆայլ</label>
-            {{ form_widget(form.file,{"id" : "custom-file-input"}) }}
+            {{ form_widget(form.file, {"id" : "custom-file-input","attr":{"onchange":"onChange(this.value)"}} ) }}
         </span>
+        <label id="success-file" style="color:darkgreen"></label>
         <div class="text-center">
                 <input type="submit" class="give-price" value="Ավելացնել">
         </div>
         {{ form_end(form) }}
     </div>
 
+    <script>
+
+    </script>
 {% endblock %}
 {% block stylesheets %}
     <style>
@@ -83,7 +112,4 @@
             display: none;
         }
     </style>
-{% endblock %}
-{% block scrits %}
-
 {% endblock %}

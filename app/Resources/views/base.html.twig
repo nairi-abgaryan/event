@@ -63,10 +63,10 @@
                     <li>
                         <a data-target=".navbar-collapse" class="page-scroll" href="{{ path('my_list_property') }}">Իմ Էջը</a>
                     </li>
-                    <li>
+                    <li {%  if app.request.attributes.get('_route') == 'list_contact' %} class="actived" {% endif %} >
                         <a data-target=".navbar-collapse" class="page-scroll" href="{{ path('list_contact') }}">Հետադարձ կապ</a>
                     </li>
-                    <li>
+                    <li {%  if app.request.attributes.get('_route') == 'privacy_list' %} class="actived" {% endif %} >
                         <a data-target=".navbar-collapse" class="page-scroll" href="{{ path('privacy_list') }}">Ընդհանուր
                             պայմաններ</a>
                     </li>
@@ -88,6 +88,10 @@
                         <a  data-target=".navbar-collapse"  href="{{ path('user_register') }}">Գրանցում</a>
                     </li>
                     {% endif %}
+                    <li>
+                        <a href="{{ path('logout') }}">Ելք</a>
+                    </li>
+
                 </ul>
             </div>
         </div>
@@ -106,7 +110,7 @@
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 
     <script src="{{ asset('js/shadowbox.js') }}"></script>
-
+    <script src="{{ asset('bundles/sonataadmin/vendor/jqueryui/ui/i18n/jquery.ui.datepicker-af.js') }}" ></script>
     <!-- Scrolling Nav JavaScript -->
     <script src="{{ asset('js/jquery.easing.min.js') }}"></script>
     <script src="{{ asset('js/jquery.waypoints.min.js') }}"></script>
