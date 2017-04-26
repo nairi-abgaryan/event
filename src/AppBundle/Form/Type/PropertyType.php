@@ -71,19 +71,15 @@ class PropertyType extends AbstractType
                 'context' => 'default',
                 'attr'=>array('oninvalid'=>"setCustomValidity('Լրացնել դաշտը')")
             ])
-            ->add('start', DateType::class, array(
+            ->add('start', TextType::class, array(
                 'label' => 'Սկիզբ',
-                "widget" => "single_text",
-                "input" =>"datetime",
                 'attr' => [
                             'oninvalid'=>"setCustomValidity('Նշեք ժամանակահատվածը')",
                             "onchange"=>"try { setCustomValidity('') } catch (e) {}"
                         ]
             ))
-            ->add('end', DateType::class, array(
+            ->add('end', TextType::class, array(
                 'label' => 'Վերջ',
-                "widget" => "single_text",
-                "input" =>"datetime",
                 'attr'=>[
                         'oninvalid'=>"setCustomValidity('Նշեք ժամանակահատվածը')",
                         "onchange"=>"try { setCustomValidity('') } catch (e) {}"
