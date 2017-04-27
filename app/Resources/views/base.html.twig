@@ -89,7 +89,9 @@
                     </li>
                     {% endif %}
                     <li>
-                        <a href="{{ path('logout') }}">Ելք</a>
+                        {% if app.user %}
+                            <a href="{{ path('logout') }}">Ելք</a>
+                        {% endif %}
                     </li>
 
                 </ul>
@@ -110,13 +112,11 @@
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 
     <script src="{{ asset('js/shadowbox.js') }}"></script>
-    <script src="{{ asset('bundles/sonataadmin/vendor/jqueryui/ui/i18n/jquery.ui.datepicker-af.js') }}" ></script>
     <!-- Scrolling Nav JavaScript -->
     <script src="{{ asset('js/jquery.easing.min.js') }}"></script>
     <script src="{{ asset('js/jquery.waypoints.min.js') }}"></script>
     <script src="{{ asset('js/jquery.counterup.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
-    <script src="{{ asset('js/custom.js') }}"></script>
 
     <script>
 

@@ -88,7 +88,9 @@
                         </li>
                     {% endif %}
                     <li>
-                        <a href="{{ path('logout') }}">Ելք</a>
+                        {% if app.user %}
+                            <a href="{{ path('logout') }}">Ելք</a>
+                        {% endif %}
                     </li>
                 </ul>
             </div>
@@ -133,56 +135,6 @@
     <script src="{{ asset('js/jquery.waypoints.min.js') }}"></script>
     <script src="{{ asset('js/jquery.counterup.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
-    <script type="text/javascript">
-        $(function () {
-
-           $('#select_type').on("change",function () {
-               $("#datetimepicker6").data("DateTimePicker").minDate(null)
-               $("#datetimepicker7").data("DateTimePicker").minDate(null)
-               $('#datetimepicker6').data("DateTimePicker").clear()
-               $('#datetimepicker7').data("DateTimePicker").clear()
-               timeDate()
-
-           })
-            function timeDate() {
-                var startDate = moment();
-
-                $('#datetimepicker6').datetimepicker({
-                    allowInputToggle: true,
-                    useCurrent: false,
-                    minDate: startDate,
-                    format: 'MMM DD, YYYY',
-                });
-
-                $("#datetimepicker6").on("dp.change", function (e) {
-                    var expres = $('#select_type').val()
-                    var end
-                    if(expres == 2){
-                        end = moment(e.date._d).add(2, 'd');
-                    }else if(expres ==3){
-                        end = moment(e.date._d).add(7, 'd');
-                    }else if(expres ==4){
-                        end = moment(e.date._d).add(30, 'd');
-                    }
-                    if(e.date) {
-                        console.log( e.date._d)
-                        $('#datetimepicker7').datetimepicker({
-                            allowInputToggle: true,
-                            useCurrent: false,
-                            format: 'MMM DD, YYYY',
-                            minDate: e.date._d
-                        });
-                        $('#datetimepicker7').data("DateTimePicker").maxDate(end._d);
-                    }
-                });
-                $("#datetimepicker7").on("dp.change", function (e) {
-                    $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
-                });
-            }
-
-            timeDate()
-        });
-    </script>
     <script>
 
         var isTop = $(".navbar").offset().top < 50;

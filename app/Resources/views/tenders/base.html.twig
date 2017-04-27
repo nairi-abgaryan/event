@@ -71,7 +71,9 @@
                             պայմաններ</a>
                     </li>
                     <li>
-                        <a href="{{ path('logout') }}">Ելք</a>
+                        {% if app.user %}
+                            <a href="{{ path('logout') }}">Ելք</a>
+                        {% endif %}
                     </li>
                 </ul>
             </div>

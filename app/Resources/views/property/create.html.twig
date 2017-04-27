@@ -1,5 +1,14 @@
 {% extends ":property:base.html.twig" %}
-
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css">
+    <style>
+        #add-row {
+            display: none;
+        }
+    </style>
+{% endblock %}
 {% block body %}
     <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 create-tender">
         {{ form_start(form, {"action":path('create_property')}) }}
@@ -23,26 +32,17 @@
             {% if form_errors(form.end) %}
                 <span style="color: red">*Ձեր լրացրած դաշտը սխալ է  </span>
             {% endif %}
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <div class="input-group date" id="datetimepicker6">
-                        {{ form_widget(form.start,{"attr":{value : currentDate,type:"text", class:"form-control"}}) }}
-                        <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                    </div>
+            <div class="form-group">
+                <div class="input-group date" id="datetimepicker1">
+                    {{ form_widget(form.start) }}
                 </div>
             </div>
-
             <label for="range">Վերջ</label>
             {% if form_errors(form.end) %}
                 <span style="color: red">*Ձեր լրացրած դաշտը սխալ է  </span>
             {% endif %}
             <div class='input-group date' id='datetimepicker7'>
-                {{ form_widget(form.end,{"attr":{ class:"form-control"}}) }}
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
+                {{ form_widget(form.end) }}
             </div>
 
         </div>
@@ -122,10 +122,45 @@
 
     </script>
 {% endblock %}
-{% block stylesheets %}
-    <style>
-        #add-row {
-            display: none;
-        }
-    </style>
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var startDate = moment();
+            $('#select_type').on("change", function () {
+                timeDate($(this).val())
+            });
+            function timeDate(expres) {
+                $('.js-datepicker').datepicker(
+                    {
+                        format: 'yyyy-mm-dd',
+                        startDate: startDate._d,
+                    }
+                ).on('changeDate', function (selected) {
+                    var endStart = moment(selected.date)
+                    var end;
+
+                    if (expres == 2) {
+                        end = moment(selected.date).add(1, 'd');
+                    } else if (expres == 3) {
+                        end = moment(selected.date).add(6, 'd');
+                    } else if (expres == 4) {
+                        end = moment(selected.date).add(29, 'd');
+                    }else {
+                        end =  moment(selected.date).add(1, 'd');
+                    }
+                    $('.js-datepicker2').datepicker('update', endStart._d);
+                    $('.js-datepicker2').datepicker('setStartDate', endStart._d);
+                    $('.js-datepicker2').datepicker('setEndDate', end._d);
+                });
+                $('.js-datepicker2').datepicker(
+                    {
+                        format: 'yyyy-mm-dd',
+                    }
+                );
+            }
+            timeDate()
+        });
+    </script>
 {% endblock %}

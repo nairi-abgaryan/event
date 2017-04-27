@@ -71,18 +71,24 @@ class PropertyType extends AbstractType
                 'context' => 'default',
                 'attr'=>array('oninvalid'=>"setCustomValidity('Լրացնել դաշտը')")
             ])
-            ->add('start', TextType::class, array(
+            ->add('start', DateType::class, array(
                 'label' => 'Սկիզբ',
+                'widget' => 'single_text',
+                'html5' => false,
                 'attr' => [
+                            'class' => 'js-datepicker',
                             'oninvalid'=>"setCustomValidity('Նշեք ժամանակահատվածը')",
-                            "onchange"=>"try { setCustomValidity('') } catch (e) {}"
+                            "onchange"=>"try { setCustomValidity('') } catch (e) {}",
                         ]
             ))
-            ->add('end', TextType::class, array(
+            ->add('end', DateType::class, array(
                 'label' => 'Վերջ',
+                'widget' => 'single_text',
+                'html5' => false,
                 'attr'=>[
+                        'class' => 'js-datepicker2',
                         'oninvalid'=>"setCustomValidity('Նշեք ժամանակահատվածը')",
-                        "onchange"=>"try { setCustomValidity('') } catch (e) {}"
+                        "onchange"=>"try { setCustomValidity('') } catch (e) {}",
                     ]
             ))
             ->add('propertyType', ChoiceType::class, [
