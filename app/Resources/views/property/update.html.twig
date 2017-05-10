@@ -47,7 +47,7 @@
                 </div>
                 <div class="form-group">
                     <label for="qty">Քանակ</label><br>
-                    <input style='margin-left: 4px;' value="{{ value.count }}"  oninvalid="setCustomValidity('Նշեք Քանակը')" onchange="try { setCustomValidity('') } catch (e) {}" name='product[product{{ value.id }}][qty]' type='text' />
+                    <input style='margin-left: 4px;' type="number" value="{{ value.count }}"  oninvalid="setCustomValidity('Նշեք Քանակը')" onchange="try { setCustomValidity('') } catch (e) {}" name='product[product{{ value.id }}][qty]' type='text' />
                 </div>
                 <div class="form-group">
                    <span class="btn btn-success fileinput-button">
