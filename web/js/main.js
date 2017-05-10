@@ -106,17 +106,18 @@ $(function() {
 
 $(document).ready(function () {
     var i = 2;
+    $("#property_product_type").attr("name",'property_product[1][type]');
+    $("#property_product_image_binaryContent").attr("name","property_product[1][image][binaryContent]");
 
     $('#add-row').on('click', function() {
         var newaddress = $(".products").eq(0).clone();
 
         newaddress.find('input').each(function() {
             this.name= this.name.replace('[1]', '['+i+']');
-            this.name= this.name.replace('[image]', '[image'+i+']');
         });
 
         newaddress.find('select').each(function() {
-            this.name= this.name.replace('[type]', '['+i+'][type]');
+            this.name= this.name.replace('[1]', '['+i+']');
         });
 
         $('#add-row').before(newaddress);

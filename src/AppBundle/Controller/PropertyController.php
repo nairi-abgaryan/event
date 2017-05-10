@@ -76,7 +76,7 @@ class PropertyController extends FOSRestController
         $limit = $data->getType()->getLimitDays();
         $diff = $data->getEnd()->diff($data->getStart());
 
-        if ($diff->days > $limit || $data->getEnd() > $data->getStart()){
+        if ($diff->days > $limit || $data->getEnd() < $data->getStart()){
             $startDate = new \DateTime($data->getStart()->format("Y-m-d H:i:s"));
             $data->setEnd($startDate->add(new \DateInterval('P'.$limit.'D')));
         }
@@ -91,12 +91,12 @@ class PropertyController extends FOSRestController
         $property = $this->get('app.property_manager')->persist($data);
 
         $products = $request->request->all()['property_product'];
-        $q = 2;
+
         $files = $request->files->all()['property_product'];
+        $i = 1;
 
         foreach ($products as $product){
 
-            $i = 'image';
             $product_create = $this->get("app.property_product_manager")->create();
             $product_create->setProperty($property);
 
@@ -106,23 +106,19 @@ class PropertyController extends FOSRestController
             if(isset($product["qty"]))
                 $product_create->setCount($product["qty"]);
 
-            if(isset($products["type"])){
-                $prodType = $this->get('app.product.type.manager')->find($products["type"]);
-                $product_create->setType($prodType);
-            }elseif (isset($product["type"])){
+            if (isset($product["type"])){
                 $prodType = $this->get('app.product.type.manager')->find($product["type"]);
                 $product_create->setType($prodType);
             }
 
-            if($files[$i]["binaryContent"]){
-                $image = $files[$i]["binaryContent"];
+            if($files[$i]['image']["binaryContent"]){
+                $image = $files[$i]['image']["binaryContent"];
                 $media = $this->addImage($image);
                 $product_create->setImage($media);
             }
 
             $this->get('app.property_product_manager')->persist($product_create);
-            $q = $q+1;
-            $i = $i.$q;
+            $i++;
         }
 
         $property = $this->get("app.property_manager")->findBy($user);
@@ -153,6 +149,7 @@ class PropertyController extends FOSRestController
 
         $form = $this->createForm(PropertyType::class,$property);
         $form_product = $this->createForm(PropertyProductType::class);
+
         $form->handleRequest($request);
         $product = $this->get("app.property_product_manager")->findByProperty($property);
 
@@ -167,6 +164,14 @@ class PropertyController extends FOSRestController
 
         /** @var Property $data */
         $data = $form->getData();
+        $limit = $data->getType()->getLimitDays();
+        $diff = $data->getEnd()->diff($data->getStart());
+
+        if ($diff->days > $limit || $data->getEnd() < $data->getStart()){
+            $startDate = new \DateTime($data->getStart()->format("Y-m-d H:i:s"));
+            $data->setEnd($startDate->add(new \DateInterval('P'.$limit.'D')));
+        }
+
         if($data->getFilePdf()){
             $this->addAvatar($data);
         }

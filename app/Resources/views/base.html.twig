@@ -50,7 +50,7 @@
                 <ul class="nav navbar-nav">
                     <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
                     <li class="hidden">
-                        <a class="page-scroll" href="#page-top"></a>
+                        <a class="page-scroll" href="{{ path('home') }}"></a>
                     </li>
                     <li {% if app.request.attributes.get('_route') == 'home' %} class="actived" {% endif %}>
                         <a data-target=".navbar-collapse" class="page-scroll" href="{{ path('home') }}">Գլխավոր</a>

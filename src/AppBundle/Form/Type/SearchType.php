@@ -35,16 +35,20 @@ class SearchType extends AbstractType
                 "label" => false
             ])
             ->add('start', DateType::class, array(
-                'label' => 'false',
-                "widget" => "single_text",
-                "input" =>"datetime",
-                "required" => false
+                'label' => 'Սկիզբ',
+                'widget' => 'single_text',
+                'html5' => false,
+                'attr' => [
+                    'class' => 'js-datepicker'
+                ]
             ))
             ->add('end', DateType::class, array(
-                'label' => 'false',
-                "widget" => "single_text",
-                "input" =>"datetime",
-                "required" => false
+                'label' => 'Սկիզբ',
+                'widget' => 'single_text',
+                'html5' => false,
+                'attr' => [
+                    'class' => 'js-datepicker'
+                ]
             ))
             ->add('propertyType', ChoiceType::class, [
                 'choices'  => array(

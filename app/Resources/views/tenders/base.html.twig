@@ -32,6 +32,8 @@
     <link rel="shortcut icon" type="image/png" href="{{ asset('favico.ico') }}"/>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css">
     <![endif]-->
 </head>
 <body>
@@ -42,7 +44,7 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
                     <span></span>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top"></a>
+                <a class="navbar-brand page-scroll" href="{{ path('home') }}"></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -55,14 +57,16 @@
                     <li {% if app.request.attributes.get('_route') == 'home' %} class="actived" {% endif %}>
                         <a data-target=".navbar-collapse" class="page-scroll" href="{{ path('home') }}">Գլխավոր</a>
                     </li>
-                    <li {%  if app.request.attributes.get('_route') == 'list_property' %} class="actived" {% endif %} >
+                    <li {% if app.request.attributes.get('_route') == 'list_property' %} class="actived" {% endif %} >
                         <a data-target=".navbar-collapse" class="page-scroll" href="{{ path('list_property') }}">Մրցույթներ</a>
                     </li>
                     <li>
-                        <a data-target=".navbar-collapse" class="page-scroll" href="{{ path('my_list_property') }}">Իմ Էջը</a>
+                        <a data-target=".navbar-collapse" class="page-scroll" href="{{ path('my_list_property') }}">Իմ
+                            Էջը</a>
                     </li>
                     <li>
-                        <a data-target=".navbar-collapse" class="page-scroll" href="{{ path('list_contact') }}">Հետադարձ կապ</a>
+                        <a data-target=".navbar-collapse" class="page-scroll" href="{{ path('list_contact') }}">Հետադարձ
+                            կապ</a>
                     </li>
                     <li>
                         <a data-target=".navbar-collapse" class="page-scroll" href="{{ path('privacy_list') }}">Ընդհանուր
@@ -79,7 +83,7 @@
     </nav>
 {% endblock %}
 <style>
-    .search{
+    .search {
         width: 120px;
         color: #FFFFFF;
         background: #00a65a;
@@ -87,7 +91,7 @@
 </style>
 <section class="tenders-section">
     <div class="container">
-        <div class="row" >
+        <div class="row">
             {{ form_start(form,{"action":"/tender/search","attr":{"class":"search-form","method":"get"}}) }}
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                 <div>
@@ -96,12 +100,12 @@
                 </div>
                 <div>
                     <label>Նշել տեսակը</label><br>
-                     {{ form_widget(form.propertyType) }}
+                    {{ form_widget(form.propertyType) }}
                 </div>
-                <div >
+                <div>
                     <label>Նշել ժամանակահատվածը</label><br>
-                        {{ form_widget(form.start) }}
-                        {{ form_widget(form.end) }}
+                    {{ form_widget(form.start) }}
+                    {{ form_widget(form.end) }}
                 </div>
                 <div class="search_category">
                     <label>Կատեգորիաներ</label>
@@ -114,7 +118,7 @@
             {{ form_end(form) }}
         </div>
         {% block body %}{% endblock %}
-       </div>
+    </div>
 </section>
 
 {% block javascripts %}
@@ -129,13 +133,28 @@
     <script src="{{ asset('js/shadowbox.js') }}"></script>
 
     <!-- Scrolling Nav JavaScript -->
-   {# <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.25/daterangepicker.min.js"></script>#}
+    {# <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/2.1.25/daterangepicker.min.js"></script>#}
     <script src="{{ asset('js/jquery.easing.min.js') }}"></script>
     <script src="{{ asset('js/jquery.waypoints.min.js') }}"></script>
     <script src="{{ asset('js/jquery.counterup.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.js-datepicker').datepicker(
+                {
+                    format: 'yyyy-mm-dd'
+                }
+            );
 
+            $('.js-datepicker2').datepicker(
+                {
+                    format: 'yyyy-mm-dd'
+                }
+            );
+        })();
+    </script>
     <script>
 
         var isTop = $(".navbar").offset().top < 50;
@@ -171,23 +190,41 @@
             if (isWide) {
                 if (isTop) {
                     $(".page-scroll").css("color", "#ffffff");
-                    $(".navbar-brand").css({"background-image": "url({{ asset('img/logo.png') }})", "height":"49px","margin-left":"-15px"});
+                    $(".navbar-brand").css({
+                        "background-image": "url({{ asset('img/logo.png') }})",
+                        "height": "49px",
+                        "margin-left": "-15px"
+                    });
                 } else {
                     $(".page-scroll").css("color", "#ffffff");
                     $(".active").css("color", "#ffffff");
-                    $(".navbar-brand").css({"background-image": "url({{ asset('img/logo.png') }})", "height":"49px","margin-left":"-15px"});
+                    $(".navbar-brand").css({
+                        "background-image": "url({{ asset('img/logo.png') }})",
+                        "height": "49px",
+                        "margin-left": "-15px"
+                    });
                 }
             } else {
                 if (isTop) {
                     $(".icon-bar").css("background-color", "#333333");
                     $(".page-scroll").css("color", "#ffffff");
-                    $(".navbar-brand").css({"background-image": "url({{ asset('img/logo.png') }})", "height":"49px","margin-left":"15px", "margin-top":"0px"});
+                    $(".navbar-brand").css({
+                        "background-image": "url({{ asset('img/logo.png') }})",
+                        "height": "49px",
+                        "margin-left": "15px",
+                        "margin-top": "0px"
+                    });
                     $(".navbar-toggle:hover,.navbar-toggle:focus").css({"background-color": "#ffffff"});
                     $(".navbar-collapse").css({"background-color": "#333333"});
                 } else {
                     $(".icon-bar").css("background-color", "#333333");
                     $(".page-scroll").css("color", "#ffffff");
-                    $(".navbar-brand").css({"background-image": "url({{ asset('img/logo.png') }})", "height":"49px","margin-left":"15px", "margin-top":"0px"});
+                    $(".navbar-brand").css({
+                        "background-image": "url({{ asset('img/logo.png') }})",
+                        "height": "49px",
+                        "margin-left": "15px",
+                        "margin-top": "0px"
+                    });
                     $(".navbar-toggle:hover,.navbar-toggle:focus").css({"background-color": "#ffffff"});
                     $(".navbar-collapse").css({"background-color": "#333333"});
                 }

@@ -51,15 +51,19 @@ class PropertyType extends AbstractType
                 ),
                 "label"=>false
             ])
-            ->add('shipment', TextType::class, [
-                'attr'=>array('oninvalid'=>"setCustomValidity('Լրացնել դաշտը')")
-            ])
+            ->add('shipment')
             ->add('advance', TextType::class, [
-                'attr'=>array('oninvalid'=>"setCustomValidity('Լրացնել դաշտը')")
+                'attr'=>array(
+                    'oninvalid'=>"setCustomValidity('Լրացնել դաշտը')",
+                    "onchange"=>"try { setCustomValidity('') } catch (e) {}",
+                )
             ])
             ->add('budget', NumberType::class, [
                 "label" =>false,
-                'attr'=>array('oninvalid' => "setCustomValidity('Լրացնել դաշտը')")
+                'attr'=>array(
+                    'oninvalid' => "setCustomValidity('Լրացնել դաշտը')",
+                    "onchange"=>"try { setCustomValidity('') } catch (e) {}",
+                )
             ])
             ->add('overview', TextareaType::class, [
                 "label" => false,
@@ -69,7 +73,10 @@ class PropertyType extends AbstractType
                 "required" => false,
                 'provider' => 'sonata.media.provider.file',
                 'context' => 'default',
-                'attr'=>array('oninvalid'=>"setCustomValidity('Լրացնել դաշտը')")
+                'attr'=>array(
+                    'oninvalid'=>"setCustomValidity('Լրացնել դաշտը')",
+                    "onchange"=>"try { setCustomValidity('') } catch (e) {}",
+                )
             ])
             ->add('start', DateType::class, array(
                 'label' => 'Սկիզբ',
