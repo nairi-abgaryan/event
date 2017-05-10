@@ -101,12 +101,14 @@ class PropertyAdmin extends AbstractAdmin
             $photoHelper = $this->getConfigurationPool()
                 ->getContainer()->get('app.admin_helper')
                 ->getFileHelper($object->getFile());
+
             if($photoHelper){
                 $formMapper->add('file',  'sonata_media_type', [
                     'provider' => 'sonata.media.provider.file',
                     'context' => 'default',
                     'help' =>$photoHelper
                 ]);
+
             }else{
                 $formMapper->add('file',  'sonata_media_type', [
                     'provider' => 'sonata.media.provider.file',
