@@ -20,7 +20,6 @@
 !/bin/symfony_requirements
 /.vagrant/
 .env
-/web/uploads/images/
-!/web/uploads/images/.gitkeep
-/web/uploads/files/
-!/web/uploads/files/.gitkeep
+/web/uploads/
+web/bower_components/
+web/wkhtmltox/
