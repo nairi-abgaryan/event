@@ -25,15 +25,12 @@
     <link href="{{ asset('css/slick-theme.css') }}" rel="stylesheet">
     <!-- Shadowbox CSS -->
     <link href="{{ asset('css/shadowbox.css') }}" rel="stylesheet">
-    <!--Google Fonts-->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
     <!--Amimate Css-->
     <link rel="stylesheet" href="{{ asset('css/animate.min.css') }}">
     <link rel="shortcut icon" type="image/png" href="{{ asset('favico.ico') }}"/>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <link rel="stylesheet"
-          href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css">
+    <script src="{{ asset('js/html5shiv.js') }}"></script>
+    <script src="{{ asset('js/respond.min.js') }}"></script>
+    <link rel="stylesheet"  href="{{ asset('css/datapiker.css') }}">
     <![endif]-->
 </head>
 <body>
@@ -52,7 +49,7 @@
                 <ul class="nav navbar-nav">
                     <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
                     <li class="hidden">
-                        <a class="page-scroll" href="#page-top"></a>
+                        <a class="page-scroll" href={{ path('home') }}page-top"></a>
                     </li>
                     <li {% if app.request.attributes.get('_route') == 'home' %} class="actived" {% endif %}>
                         <a data-target=".navbar-collapse" class="page-scroll" href="{{ path('home') }}">Գլխավոր</a>
@@ -139,7 +136,7 @@
     <script src="{{ asset('js/jquery.waypoints.min.js') }}"></script>
     <script src="{{ asset('js/jquery.counterup.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="{{ asset('js/datepicker.min.js') }}"></script>
     <script type="text/javascript">
         $(function () {
             $('.js-datepicker').datepicker(
@@ -182,7 +179,7 @@
                     isTop = false;
                 }
             } else {
-                if (navbarScroll == navbarTopThreshold) {
+                if (navbarScroll === navbarTopThreshold) {
                     isTop = true;
                 }
             }

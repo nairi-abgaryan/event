@@ -77,7 +77,7 @@ class PropertyManager
         return $this->repository->createQueryBuilder('property')
             ->where("property.owner = :owner")
             ->setParameters(array("owner" => $user))
-            ->orderBy("property.start", "DESC")
+            ->orderBy("property.createdAt", "DESC")
             ->getQuery()
             ->getResult();
     }
