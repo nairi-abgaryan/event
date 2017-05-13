@@ -64,7 +64,8 @@ class PropertyAdmin extends AbstractAdmin
                 "label" => "Ապահովագրություն"
             ])
             ->add('shipment',TextType::class, [
-                "label" => "Առաքում"
+                "label" => "Առաքում",
+                "required" => false
             ])
             ->add('advance',IntegerType::class, [
                 "label" => "Կանխավճար"
@@ -73,7 +74,8 @@ class PropertyAdmin extends AbstractAdmin
                 "label" => "Մրցույթային բյուջեն"
             ])
             ->add('overview', TextareaType::class, [
-                "label" => "Մրցույթի համառոտ բնութագիր"
+                "label" => "Մրցույթի համառոտ բնութագիր",
+                "required" => false
             ])
             ->add('start', DateType::class, [
                 "label" => "Սկզիբ"
