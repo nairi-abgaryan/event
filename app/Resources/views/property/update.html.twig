@@ -53,12 +53,12 @@
                    <span class="btn btn-success fileinput-button">
                         <label>Նկար</label>
                            <div class='form-group'>
-                            <input type='file'  name='product[product{{ value.id }}][image]' style='margin-bottom: 23px; margin-left: 4px;'>
+                            <input type='file'   name='product[product{{ value.id }}][image]' style='margin-bottom: 23px; margin-left: 4px;'>
                         </div>
                    </span>
                      {% if value.image is not null %}
                         <div class='form-group'>
-                            <img src="{% path value.image, 'reference' %}" style=' margin-left: 4px;' width="50px" height="50px" alt="">
+                            <img src="{% path value.image, 'reference' %}" accept="image/*" style=' margin-left: 4px;' width="50px" height="50px" alt="">
                         </div>
                     {% endif %}
                 </div>
