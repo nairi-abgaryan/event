@@ -14,6 +14,7 @@
                         <p>{{ value.start|date("Y/m/d") }}- {{ value.end|date("Y/m/d") }}</p>
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-8">
+                        <p>ID <span class="item-description">{{ value.id }}</span></p>
                         <p>Պատվիրատու <span class="item-description">{{ value.owner.companyName }}</span></p>
                         <p>Հրապարակման օր <span class="item-description">{{ value.createdAt|date("Y/m/d") }}</span></p>
                         <p>Խմբագրվել Է <span class="item-description">{{ value.updatedAt|date("Y/m/d") }}</span></p>
