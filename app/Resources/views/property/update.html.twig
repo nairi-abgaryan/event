@@ -79,7 +79,7 @@
         <label for="depozit">Կանխավճար</label><br>
         {{ form_widget(form.advance,{"value": property.advance}) }}<br>
         <label for="budget">Մրցույթային բյուջեն</label><br>
-        {{ form_widget(form.budget,{"value": property.budget}) }}<br>
+        {{ form_widget(form.budget,{"value": property.budget}) }} ՀՀ դրամ<br>
         <label for="desc">Մրցույթի համառոտ բնութագիր</label>
         {{ form_widget(form.overview, {"value": property.overview , 'attr': {'class': 'form-control',"id":"desc","rows": 5}}) }}
         <label>Մրցույթի տեղնիկական բնութագիր</label>
