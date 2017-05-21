@@ -13,10 +13,12 @@
                     <img  width="300px" src="{% path property.type.image, 'reference' %}" alt="">
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 add-price">
+                    {%  if property.owner != app.user %}
                         <div class="text-center">
                             <a href="{{ path('create_price',{"id" : property.id}) }}"><button class="give-price">Առաջարկել գին</button></a>
                         </div>
-                </div>
+                    {%  endif %}
+                    </div>
             </div>
             <div class="row single-tender-description">
                 <div class="text-center">

@@ -27,6 +27,9 @@ class PriceController extends FOSRestController
         $form = $this->createForm(PriceType::class, $request->request->all());
         $form->handleRequest($request);
         $products = $this->get("app.property_product_manager")->findByProperty($property);
+        if($property->getOwner() == $user){
+            return $this->redirect($this->generateUrl("get_property", ["property" => $property]));
+        }
 
         if (!$form->isValid()) {
             return $this->render(":price:create.html.twig",[
