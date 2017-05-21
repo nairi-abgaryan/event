@@ -69,11 +69,28 @@
                         <a data-target=".navbar-collapse" class="page-scroll" href="{{ path('privacy_list') }}">Ընդհանուր
                             պայմաններ</a>
                     </li>
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if app.user %}
+                        <li>
+                            <a data-target=".navbar-collapse" class="page-scroll" href="{{ path('retrieve_user',{"id":app.user.id}) }}">{{ app.user.companyName }}</a>
+                            {#<a data-target=".navbar-collapse"  href="{{ path('logout') }}">Դուրս գալ</a>#}
+                        </li>
+                    {% else %}
+                        <li>
+                            <a  data-target=".navbar-collapse"  href="{{ path('home') }}">Մուտք</a>
+                        </li>
+                        <li>
+                            <a  data-target=".navbar-collapse"  href="{{ path('user_register') }}">Գրանցում</a>
+                        </li>
+                    {% endif %}
                     <li>
                         {% if app.user %}
                             <a href="{{ path('logout') }}">Ելք</a>
                         {% endif %}
                     </li>
+
                 </ul>
             </div>
         </div>
@@ -152,7 +169,7 @@
                     format: 'yyyy-mm-dd'
                 }
             );
-        })();
+        });
     </script>
     <script>
 

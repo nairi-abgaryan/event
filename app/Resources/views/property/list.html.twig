@@ -49,7 +49,7 @@
                             Ոչ
                         {% endif %}
                     </td>
-                    <td>{{ value.budget }}</td>
+                    <td width="150px">{{ value.budget|number_format(0, '.') }}</td>
                     <td>
                         <a href="{{ path('my_property',{"id" : value.id}) }}">{{ value.priceCount }}</a>
                     </td>

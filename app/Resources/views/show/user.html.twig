@@ -13,6 +13,12 @@
                         {{ form_row(form.companyName, { 'attr': {'class': 'form-control', "placeholder":'Կազմակերպության Անունs',"value":user.companyName} }) }}
                         {{ form_row(form.name, { 'attr': {'class': 'form-control', "placeholder":"Անուն Ազգանուն", "value":user.name} }) }}
                         {{ form_row(form.phoneNumber, { 'attr': {'class': 'form-control', "placeholder":"Հեռ","value":user.phoneNumber} }) }}
+
+                        {% if form_errors(form.email)%}
+                            <div class="alert alert-danger">
+                                Ձեր լրացված տվյալը առկա է համակարգում
+                            </div>
+                        {% endif %}
                         {{ form_row(form.email, { 'attr': {'class': 'form-control', "placeholder":"Էլ հասցե","value":user.email} }) }}
                         {{ form_row(form.businessAddress, { 'attr': {'class': 'form-control', "placeholder":"Գործունեության հասցե","value":user.businessAddress} }) }}
                         {{ form_row(form.legalAddress, { 'attr': {'class': 'form-control', "placeholder":"Իրավաբանական  հասցե","value":user.legalAddress} }) }}

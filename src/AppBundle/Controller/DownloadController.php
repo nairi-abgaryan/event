@@ -28,12 +28,26 @@ class DownloadController extends FOSRestController
                 "status_code" => 403
             ]);
         }
+        $date = new \DateTime();
+
+        if ($property->getEnd() > $date )
+        {
+            return $this->render("error/error.html.twig",[
+                "status_text" => "Access denied ",
+                "status_code" => 403
+            ]);
+        }
+
+        header('Content-type: application/vnd.ms-excel');
+
+        header('Content-Disposition: attachment; filename="file.xls"');
 
         $price = $this->get("app.price.manager")->findByProperty($property);
         return $this->render("download/download.html.twig",[
             "price" => $price,
             "property" => $property,
         ]);
+
     }
 
 }

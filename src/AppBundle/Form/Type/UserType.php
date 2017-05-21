@@ -21,13 +21,21 @@ class UserType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
+                'attr'=>array(
+                    'oninvalid' => "setCustomValidity('Լրացնել դաշտը')",
+                    "onchange"=>"try { setCustomValidity('') } catch (e) {}",
+                ),
                 'constraints' => [
                     new Assert\NotBlank(),
-                    new Assert\Email(),
+                    new Assert\Email()
                 ],
                 'label' => false,
             ])
             ->add('plainPassword', PasswordType::class, [
+                'attr'=>array(
+                    'oninvalid' => "setCustomValidity('Լրացնել դաշտը')",
+                    "onchange"=>"try { setCustomValidity('') } catch (e) {}",
+                ),
                 'constraints' => [
                     new Assert\NotBlank(),
                 ],
@@ -38,31 +46,50 @@ class UserType extends AbstractType
                 'label' => false
             ])
             ->add('name', TextType::class, [
+                'attr'=>array(
+                    'oninvalid' => "setCustomValidity('Լրացնել դաշտը')",
+                    "onchange"=>"try { setCustomValidity('') } catch (e) {}",
+                ),
                 'constraints' => [
                     new Assert\NotBlank(),
                 ],
                 'label' => false,
             ])
             ->add('companyName', TextType::class, [
+                'attr'=>array(
+                    'oninvalid' => "setCustomValidity('Լրացնել դաշտը')",
+                    "onchange"=>"try { setCustomValidity('') } catch (e) {}",
+                ),
                 'constraints' => [
                     new Assert\NotBlank(),
                 ],
                 'label' => false,
             ])
             ->add('businessAddress', TextType::class, [
+                'attr'=>array(
+                    'oninvalid' => "setCustomValidity('Լրացնել դաշտը')",
+                    "onchange"=>"try { setCustomValidity('') } catch (e) {}",
+                ),
                 'constraints' => [
                     new Assert\NotBlank(),
                 ],
                 'label' => false,
             ])
             ->add('legalAddress', TextType::class, [
+                'attr'=>array(
+                    'oninvalid' => "setCustomValidity('Լրացնել դաշտը')",
+                    "onchange"=>"try { setCustomValidity('') } catch (e) {}",
+                ),
                 'constraints' => [
                     new Assert\NotBlank(),
                 ],
-                "required" =>false,
                 'label' => false,
             ])
             ->add('tin', TextType::class, [
+                'attr'=>array(
+                    'oninvalid' => "setCustomValidity('Լրացնել դաշտը')",
+                    "onchange"=>"try { setCustomValidity('') } catch (e) {}",
+                ),
                 'constraints' => [
                     new Assert\NotBlank(),
                 ],
@@ -70,6 +97,7 @@ class UserType extends AbstractType
             ])
             ->add('description', TextareaType::class,[
                 'label' => false,
+                "required" =>false,
             ]);
     }
 

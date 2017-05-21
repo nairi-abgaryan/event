@@ -114,15 +114,16 @@ class PropertyManager
     {
         return $this->repository->createQueryBuilder('property')
             ->where("property.type = :type")
-            ->andWhere("property.end > :end")
-            ->andWhere("property.removed = :removed")
-            ->andWhere("property.actived = :actived")
-            ->setParameters([
-                'actived' => 1,
-                'removed' => 0,
-                'type' => $type,
-                'end' => new \DateTime(\date('Y:m:d H:i:s'))
-            ])
+            ->andWhere("property.actived =:active")
+            ->andWhere("property.removed =:notRemoved")
+            ->andWhere("property.end >= :date")
+            ->setParameters(array(
+                "type" => $type,
+                "active"=>true,
+                "notRemoved" => false,
+                "date" => new \DateTime("now")
+            ))
+            ->orderBy("property.id","DESC")
             ;
     }
 

@@ -8,8 +8,9 @@
                 <div class="text-center">
                     <h4>{{ property.category }}</h4>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 tender-image">
-                    <img src="{{ asset('img/example1.jpg') }}" alt="">
+
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 tender-image col-md-offset-2">
+                    <img  width="300px" src="{% path property.type.image, 'reference' %}" alt="">
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 add-price">
                         <div class="text-center">

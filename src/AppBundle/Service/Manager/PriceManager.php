@@ -102,7 +102,7 @@ class PriceManager
     {
         $qb = $this->repository->createQueryBuilder('price')
             ->where("price.property = :property")
-            ->andWhere("owner = :owner")
+            ->andWhere("price.owner = :owner")
             ->setParameters(array("property" => $property, "owner" => $owner))
             ->getQuery()
             ->execute()
@@ -130,6 +130,19 @@ class PriceManager
         $this->em->flush();
 
         return $product;
+    }
+
+    /**
+     * @param Price $price
+     *
+     * @return string
+     */
+    public function remove(Price $price)
+    {
+        $this->em->remove($price);
+        $this->em->flush();
+
+        return "Removed item";
     }
 }
 

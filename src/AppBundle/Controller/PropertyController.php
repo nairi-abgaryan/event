@@ -308,7 +308,20 @@ class PropertyController extends FOSRestController
             ]);
         }
 
-       $this->get('app.price_product.manager')->remove($priceProduct);
+        $property = $priceProduct->getProperty();
+
+        $price = $this->get("app.price.manager")->findByPropertyOwner($property, $user);
+
+        foreach ($price as $value){
+            $this->get("app.price.manager")->remove($value);
+        }
+
+        $count = $this->get("app.price.manager")->findByCount($property);
+
+        $property->setPriceCount((int)$count["1"]);
+        $this->get("app.property_manager")->persist($property);
+
+        $this->get('app.price_product.manager')->remove($priceProduct);
 
         return $this->redirect($this->generateUrl("my_share"));
     }

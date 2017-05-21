@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
- * @UniqueEntity(fields={"email"})
+ * @UniqueEntity(fields={"email"},  message="Ձեր լրացված տվյալը առկա է համակարգում")
  * @Serializer\ExclusionPolicy("all")
  */
 class User implements UserInterface

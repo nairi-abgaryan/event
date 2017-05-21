@@ -4,8 +4,6 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Property;
 use AppBundle\Form\Type\SearchType;
-use Doctrine\Common\Collections\ArrayCollection;
-use Faker\Provider\cs_CZ\DateTime;
 use FOS\RestBundle\Controller\FOSRestController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -87,7 +85,6 @@ class TenderController extends FOSRestController
      */
     public function searchAction(Request $request)
     {
-
         $data = $request->request->all()["search"];
         $type = $this->get("app.property.type_manager")->findAll();
         $propertyType = ['Ապրանք', 'Աշխատանք', 'Ծառաություն'];

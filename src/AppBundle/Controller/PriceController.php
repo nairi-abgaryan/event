@@ -42,27 +42,27 @@ class PriceController extends FOSRestController
         $files =  $request->files->all()["product"];
 
         foreach ($products as $key => $value){
-
             $id = $value->getId();
-            $create = $this->get("app.price.manager")->create();
-            $create->setDescription($data["description"]);
-            $create->setProperty($property);
-            $create->setProduct($value);
-            $create->setOwner($user);
 
-            $create->setPrice(0);
-            if(isset($data["product"][$id]["price"]))
+            if(isset($data["product"][$id]["price"]) && $data["product"][$id]["price"] != 0){
+
+                $create = $this->get("app.price.manager")->create();
+                $create->setDescription($data["description"]);
+                $create->setProperty($property);
+                $create->setProduct($value);
+                $create->setOwner($user);
                 $create->setPrice((int)$data["product"][$id]["price"]);
 
-            $create->setFinancing($data["financing"]);
-            $create->setShipment($data["shipment"]);
+                $create->setFinancing($data["financing"]);
+                $create->setShipment($data["shipment"]);
 
-            if($files[$id]["file"]){
-                $create->setFilePdf($files[$id]["file"]);
-                $create = $this->addAvatar($create);
+                if($files[$id]["file"]){
+                    $create->setFilePdf($files[$id]["file"]);
+                    $create = $this->addAvatar($create);
+                }
+                $this->get("app.price.manager")->persist($create);
             }
 
-            $this->get("app.price.manager")->persist($create);
         }
 
         $count = $this->get("app.price.manager")->findByCount($property);
