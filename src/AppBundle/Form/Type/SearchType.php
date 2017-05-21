@@ -40,7 +40,8 @@ class SearchType extends AbstractType
                 'html5' => false,
                 'attr' => [
                     'class' => 'js-datepicker'
-                ]
+                ],
+                "required" => false
             ))
             ->add('end', DateType::class, array(
                 'label' => 'Սկիզբ',
@@ -48,7 +49,8 @@ class SearchType extends AbstractType
                 'html5' => false,
                 'attr' => [
                     'class' => 'js-datepicker'
-                ]
+                ],
+                "required" => false
             ))
             ->add('propertyType', ChoiceType::class, [
                 'choices'  => array(

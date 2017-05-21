@@ -113,18 +113,18 @@
                         startDate: startDate._d,
                     }
                 ).on('changeDate', function (selected) {
-                    var endStart = moment(selected.date)
+                    endStart = moment(selected.date).add(1, "d");
                     var end;
 
                     if (expres == 2) {
-                        end = moment(selected.date).add(1, 'd');
+                        end = moment(selected.date).add(2, 'd');
                     } else if (expres == 3) {
                         end = moment(selected.date).add(6, 'd');
                     } else if (expres == 4) {
                         console.log(expres);
                         end = moment(selected.date).add(29, 'd');
                     }else {
-                        end =  moment(selected.date).add(1, 'd');
+                        end =  moment(selected.date).add(2, 'd');
                     }
                     $('.js-datepicker2').datepicker('update', endStart._d);
                     $('.js-datepicker2').datepicker('setStartDate', endStart._d);
@@ -137,8 +137,8 @@
                 );
             }
             var expres = {{ property.type.id }};
-            console.log(expres);
-            timeDate(expres)
+            timeDate(expres);
+
         });
     </script>
 {% endblock %}

@@ -5,7 +5,6 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Property;
 use FOS\RestBundle\Controller\FOSRestController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Knp\Snappy\Pdf;
 
 /**
  * @Route("/downloads")
@@ -43,11 +42,14 @@ class DownloadController extends FOSRestController
         header('Content-Disposition: attachment; filename="file.xls"');
 
         $price = $this->get("app.price.manager")->findByProperty($property);
-        return $this->render("download/download.html.twig",[
+        $response =  $this->render("download/download.html.twig",[
             "price" => $price,
             "property" => $property,
         ]);
 
+        $response->setCharset('utf-8');
+        iconv("UTF-8", "UTF-8", $response->getContent());
+        return $response;
     }
 
 }
