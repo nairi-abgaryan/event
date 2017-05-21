@@ -5,13 +5,11 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Price;
 use AppBundle\Entity\Property;
 use AppBundle\Entity\PropertyProduct;
-use AppBundle\Entity\User;
 use AppBundle\Form\Type\PriceType;
 use FOS\RestBundle\Controller\FOSRestController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/price")

@@ -82,7 +82,7 @@
         {{ form_widget(form.budget,{"value": property.budget}) }} ՀՀ դրամ<br>
         <label for="desc">Մրցույթի համառոտ բնութագիր</label>
         {{ form_widget(form.overview, {"value": property.overview , 'attr': {'class': 'form-control',"id":"desc","rows": 5}}) }}
-        <label>Մրցույթի տեղնիկական բնութագիր</label>
+        <label>Մրցույթի տեխնիկական բնութագիր</label>
         <a target="_blank" href="{% path property.file, 'reference' %} ">Բեռնել</a>
         <a href="#"></a>
         <span class="btn btn-success fileinput-button">
