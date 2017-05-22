@@ -1,24 +1,23 @@
 {% extends ":tenders:base.html.twig" %}
 
-
 {% block body %}
     <div class="content" style="float: right;margin-top: -300px;">
         {% set count = 0 %}
         {% if property is defined  %}
         {% for values in property %}
+            <div class="row" style="width: 1100px;">
+                <div class="col-lg-3 col-md-3 col-sm-3"></div>
+                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 text-left">
+                    <h3>{{ values.0.type.name }}</h3>
+                    <div class="text-right">
+                        <a href="{{ path('list_type',{"type":values.0.type.id}) }}">
+                            <button class="detailed">Տեսնել բոլորը</button>
+                        </a>
+                    </div>
+                </div>
             {% for value in values %}
-                <div class="row" style="width: 1100px;">
-                    {% if value.id % 2 == 0 or count==0 %}
-                        <div class="col-lg-3 col-md-3 col-sm-3"></div>
-                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 text-left">
-                            <h3>{{ value.type.name }}</h3>
-                            <div class="text-right">
-                                <a href="{{ path('list_type',{"type":value.type.id}) }}">
-                                    <button class="detailed">Տեսնել բոլորը</button>
-                                </a>
-                            </div>
-                        </div>
-                    {% endif %}
+
+
                     {% set count = count +1 %}
                     <div class="col-lg-3 col-md-3 col-sm-3"></div>
                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 same-tender">
@@ -45,8 +44,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
+
             {% endfor %}
+            </div>
         {% endfor %}
         {% endif %}
     </div>

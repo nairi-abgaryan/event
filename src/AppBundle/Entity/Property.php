@@ -145,6 +145,11 @@ class Property
      */
     private $product;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $categoryType ;
+
     public function __construct()
     {
         $this->product = new ArrayCollection();
@@ -446,6 +451,22 @@ class Property
     public function setPropertyType($propertyType)
     {
         $this->propertyType = $propertyType;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCategoryType()
+    {
+        return $this->categoryType;
+    }
+
+    /**
+     * @param mixed $categoryType
+     */
+    public function setCategoryType($categoryType)
+    {
+        $this->categoryType = $categoryType;
     }
 
     /**

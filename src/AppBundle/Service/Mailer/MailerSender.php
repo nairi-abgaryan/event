@@ -43,8 +43,8 @@ class MailerSender
         $mail->SMTPAuth = true;
         $mail->Username = $this->username;
         $mail->Password = $this->password;
-        $mail->SMTPSecure = 'ssl';
-        $mail->Port = $this->port;
+        $mail->SMTPSecure = 'tsl';
+        $mail->Port = 25;
         $mail->setFrom($this->username, 'Uno Buy');
         $mail->addAddress($sendEmail, 'Uno');
         $mail->isHTML(true);
@@ -52,6 +52,7 @@ class MailerSender
         $mail->Subject = 'Uno Buy';
         $mail->Body = $body;
         $mail->send();
+
         if(!$mail->Send())  {
             echo "Message could not be sent. <p>";
             echo "Mailer Error: " . $mail->ErrorInfo;

@@ -44,6 +44,16 @@ class PriceManager
     }
 
     /**
+     * @param array $criteria
+     *
+     * @return object|null|Price
+     */
+    public function findOneBy($criteria = [])
+    {
+        return $this->repository->findOneBy($criteria);
+    }
+
+    /**
      * @param Property $property
      * @return \Doctrine\ORM\QueryBuilder
      */

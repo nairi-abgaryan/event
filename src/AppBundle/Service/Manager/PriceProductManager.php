@@ -2,6 +2,7 @@
 
 namespace AppBundle\Service\Manager;
 
+use AppBundle\Entity\Price;
 use AppBundle\Entity\PriceProduct;
 use AppBundle\Repository\PriceProductRepository;
 use Doctrine\ORM\EntityManager;
@@ -28,6 +29,16 @@ class PriceProductManager
     {
         $this->repository = $repository;
         $this->em = $em;
+    }
+
+    /**
+     * @param array $criteria
+     *
+     * @return object|null|Price
+     */
+    public function findOneBy($criteria = [])
+    {
+        return $this->repository->findOneBy($criteria);
     }
 
     /**

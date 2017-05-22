@@ -28,11 +28,9 @@ class TenderController extends FOSRestController
         $type = $this->get("app.property.type_manager")->findAll();
         $i = 0;
         $property = [];
-
-        foreach ($type as $item) {
-            $property[$i] = $this->get("app.property_manager")->findByTypeResultTwo($item);
-            $i++;
-        }
+        $property[1] = $this->get("app.property_manager")->findByTypeResultTwo($type['0']);
+        $property[2] = $this->get("app.property_manager")->findByTypeResultTwo($type['1']);
+        $property[3] = $this->get("app.property_manager")->findByTypeResultTwo($type['2']);
 
         return $this->render("tenders/list.html.twig",[
             "property" => $property,

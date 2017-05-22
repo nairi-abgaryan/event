@@ -10,14 +10,16 @@
                 <th>Տեսակը</th>
                 <th>Ժամկետ</th>
                 <th>
-                    <select>
-                        <option selected disabled>Կարգավիճակ</option>
-                        <option>Բոլորը</option>
-                        <option>Կայացած</option>
-                        <option>Ընթացիկ</option>
-                        <option>Չկայացած</option>
-                        <option>Արխիվացված</option>
-                    </select>
+                    <form action="" class="sort">
+                        <select name="category" class="sort_list">
+                            <option selected disabled>Կարգավիճակ</option>
+                            <option value="0">Բոլորը</option>
+                            <option value="1">Կայացած</option>
+                            <option value="2">Ընթացիկ</option>
+                            <option value="3">Չկայացած</option>
+                            <option value="4">Արխիվացված</option>
+                        </select>
+                    </form>
                 </th>
                 <th>Հաստատված</th>
                 <th>Մրցույթային բյուջե</th>
@@ -34,13 +36,13 @@
                     <td>{{ value.type }}</td>
                     <td>{{ value.start|date('Y/m/d') }} - {{ value.end|date('Y/m/d') }}</td>
                     <td>
-                        {% if value.removed == 1 %}
+                        {% if value.removed == 1 and value.categoryType != 1  and value.categoryType != 3 %}
                             Արխիվացված
-                        {% elseif date(value.end) < date() %}
+                        {% elseif  value.categoryType == 1 %}
                             Կայացած
-                        {% elseif date(value.end) > date() and date(value.start) < date() %}
+                        {% elseif date(value.end) > date() and date(value.start) < date() and value.categoryType != 1 and value.categoryType != 3 %}
                             Ընթացիկ
-                        {% elseif date(value.start) > date() %}
+                        {% elseif  value.categoryType == 3%}
                             Չկայացած
                         {% endif %}
                     </td>
@@ -84,4 +86,12 @@
             </div>
         </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(".sort_list").on("change", function () {
+            $(".sort").submit();
+        });
+    </script>
 {% endblock %}

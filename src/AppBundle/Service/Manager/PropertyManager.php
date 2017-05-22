@@ -68,6 +68,19 @@ class PropertyManager
     }
 
     /**
+     * @return mixed
+     */
+    public function findByDate($now, $date)
+    {
+        return $this->repository->createQueryBuilder('property')
+            ->where("property.end >= :now")
+            ->andWhere("property.end <= :date")
+            ->setParameters(array("date" => $date, "now" => $now))
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * @param User $user
      *
      * @return array
@@ -101,8 +114,10 @@ class PropertyManager
                 "date" => new \DateTime("now")
             ))
             ->orderBy("property.end","DESC")
+            ->setMaxResults(2)
             ->getQuery()
-            ->getResult();
+            ->execute()
+            ;
     }
 
     /**
@@ -127,6 +142,19 @@ class PropertyManager
             ;
     }
 
+    /**
+     * @return mixed
+     */
+    public function findByCategory($cridantial, $user, $name, $param)
+    {
+        $qb = $this->repository->createQueryBuilder('property')
+                ->where("property.owner = :owner")
+                ->andWhere("$cridantial")
+                ->setParameters(["$name" => $param, "owner" => $user])
+         ;
+
+        return $qb->getQuery()->getResult();
+    }
 
     /**
      * @return mixed

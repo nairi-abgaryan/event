@@ -30,7 +30,36 @@ class PropertyController extends FOSRestController
      */
     public function retrieveAction()
     {
-       return $this->getUser();
+
+        $date = new \DateTime("now");
+        $minutes_to_add = 5;
+        $now = new \DateTime("now");
+        $date->add(new \DateInterval('PT' . $minutes_to_add . 'M'));
+
+        $date->format('Y-m-d H:i:s');
+
+        $properties = $this->get("app.property_manager")->findByDate($now, $date);
+
+        foreach ($properties as $value){
+            $price = $this->get("app.price.manager")->findOneBy(["property" => $value]);
+            $value->setCategoryType(3);
+            $message  =  $this->render(":mail:end.tender.not.price.html.twig", [
+                    "value" => $value
+                ]);
+
+            if($price){
+
+                $value->setCategoryType(1);
+                $message = $this->render(":mail:end.tender.html.twig", [
+                    "value" => $value
+                ]);
+            }
+
+            $this->get("app.mailer_service")->sendMail($message, $value->getOwner()->getEmail());
+            $this->get("app.property_manager")->persist($value);
+        }
+
+        var_dump($properties);die();
     }
 
     /**
@@ -42,7 +71,39 @@ class PropertyController extends FOSRestController
     public function myListAction()
     {
         $user = $this->getUser();
-       $properties = $this->get("app.property_manager")->findBy($user);
+        $properties = $this->get("app.property_manager")->findBy($user);
+        $date = new \DateTime("now");
+        if(isset($_GET['category'])){
+            switch ($_GET['category']){
+                case 0:
+                    break;
+                case 1:
+                    $cridantial = "property.categoryType = :category";
+                    $param = 1;
+                    $name = 'category';
+                    $properties = $this->get("app.property_manager")->findByCategory($cridantial, $user, $name, $param);
+                    break;
+                case 2:
+                    $cridantial = "property.end >= :date";
+                    $param = $date;
+                    $name = 'date';
+                    $properties = $this->get("app.property_manager")->findByCategory($cridantial, $user, $name, $param);
+                    break;
+                case 3:
+                    $cridantial = "property.categoryType = :category";
+                    $param = 3;
+                    $name = 'category';
+                    $properties = $this->get("app.property_manager")->findByCategory($cridantial, $user, $name, $param);
+                    break;
+                case 4:
+                    $cridantial = "property.removed = :removed";
+                    $param = 1;
+                    $name = 'removed';
+                    $properties = $this->get("app.property_manager")->findByCategory($cridantial, $user, $name, $param);
+                    break;
+            }
+        }
+
 
         return $this->render(":property:list.html.twig",[
             "property" => $properties
