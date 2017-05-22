@@ -73,7 +73,10 @@ class UsersController extends FOSRestController
             $em->flush();
 
             $this->addFlash('success', 'Welcome '.$user->getEmail());
-
+            $message = $this->render(":mail:reg.html.twig", [
+                "value" => $user
+            ]);
+            $this->get('app.mailer_service')->sendMail($message, $user->getEmail());
             return $this->get('security.authentication.guard_handler')
                 ->authenticateUserAndHandleSuccess(
                     $user,
