@@ -31,22 +31,30 @@
                                     <th>Գին</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                {% for product in products %}
-                                <tr>
-                                    <td>
-                                         <span class="btn btn-success fileinput-button">
-                                                <label>Նկար</label>
-                                        <input type="file" name="product[{{ product.id }}][file]" >
-                                         </span>
-                                    </td>
-                                    <td>{{ product.name }}</td>
-                                    <td>{% if product.count  %}{{ product.count }}{% endif %}</td>
-                                    <td>{% if product.type  %}{{ product.type }}{% endif %}</td>
-                                    <td><input name="product[{{ product.id }}][price]"  type="text" placeholder="գին"></td>
-                                </tr>
-                                {% endfor %}
-                                </tbody>
+                                {% if checkOffer %}
+                                    <tbody>
+                                        {% for product in products %}
+                                            <tr>
+                                                <td>
+                                                     <span class="btn btn-success fileinput-button">
+                                                            <label>Նկար</label>
+                                                    <input type="file" name="product[{{ product.id }}][file]" >
+                                                     </span>
+                                                </td>
+                                                <td>{{ product.name }}</td>
+                                                <td>{% if product.count  %}{{ product.count }}{% endif %}</td>
+                                                <td>{% if product.type  %}{{ product.type }}{% endif %}</td>
+                                                <td><input name="product[{{ product.id }}][price]"  type="text" placeholder="գին"></td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                {% else %}
+                                    <tbody>
+                                        <tr>
+                                            <td>Դուք արդեն կատարել էք գնային առաջարկ</td>
+                                         </tr>
+                                    </tbody>
+                                 {% endif %}
                             </table>
                             <div class="text-center">
                                 <button class="give-price">Առաջարկել</button>

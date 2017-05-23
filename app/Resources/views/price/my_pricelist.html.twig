@@ -45,6 +45,13 @@
                         {% endfor %}
                         </tbody>
                     </table>
+                    {% if date(pricelist.0.property.end) > date() %}
+                        <div class="text-right">
+                            <a target="_blank" href="{{ path('my_share') }}">
+                                <button class="download-tender">Դուրս գալ</button>
+                            </a>
+                        </div>
+                    {% else %}
                     <div class="text-right">
                         <a data-url="{{ path('my_property',{"id":pricelist.0.property.id }) }}"
                            data-toggle="modal" data-target="#cancel" class="end-tender"><button>Ավարտել</button></a>
@@ -65,8 +72,8 @@
                                 </div>
                             </div>
                         </div>
-
-                    </div>
+                 </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

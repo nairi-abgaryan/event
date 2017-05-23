@@ -38,7 +38,6 @@ class DownloadController extends FOSRestController
         }
 
         header('Content-type: application/vnd.ms-excel');
-
         header('Content-Disposition: attachment; filename="file.xls"');
 
         $price = $this->get("app.price.manager")->findByProperty($property);

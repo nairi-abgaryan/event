@@ -30,13 +30,23 @@ class PriceController extends FOSRestController
         if($property->getOwner() == $user){
             return $this->redirect($this->generateUrl("get_property", ["property" => $property]));
         }
+        $checkOffer = $this->get("app.price.manager")->findByPropertyOwner($property, $user);
+        if($checkOffer){
+            return $this->render(":price:create.html.twig",[
+                "form" => $form->createView(),
+                "products" => $products,
+                "checkOffer" => false
+            ]);
+        }
 
         if (!$form->isValid()) {
             return $this->render(":price:create.html.twig",[
                 "form" => $form->createView(),
-                "products" => $products
+                "products" => $products,
+                "checkOffer" => true
             ]);
         }
+
 
         /** @var Price $data */
         $data = $form->getData();
