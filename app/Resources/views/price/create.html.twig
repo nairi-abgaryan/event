@@ -11,56 +11,64 @@
                         {{ form_start(form,{"attr":{"enctype":"multipart/form-data"}}) }}
                         <label for="comment">Լրացուցիչ տեղեկատվություն</label>
                         {{ form_widget(form.description,{"attr":{"class":"form-control"},"id":"comment", "rows":5}) }}
-                            <p>Ընտրեք վճարման տարբերակը</p>
-                            <div class="checkbox">
-                                {{ form_widget(form.financing) }}
-                            </div>
-                            <p>ԱԱՀ</p>
-                            <div class="checkbox">
-                                {{ form_widget(form.shipment) }}
-                            </div>
+                        <p>Ընտրեք վճարման տարբերակը</p>
+                        <div class="checkbox">
+                            {{ form_widget(form.financing) }}
+                        </div>
+                        <p>ԱԱՀ</p>
+                        <div class="checkbox">
+                            {{ form_widget(form.shipment) }}
+                        </div>
 
-                            <p>Ապրանքների ցանկ</p>
-                            <table>
-                                <thead>
-                                <tr>
-                                    <th>Ավելացնել Նկար</th>
-                                    <th>Անուն</th>
-                                    <th>Քանակ</th>
-                                    <th>Չափման<br/>միավոր</th>
-                                    <th>Գին</th>
-                                </tr>
-                                </thead>
-                                {% if checkOffer %}
-                                    <tbody>
-                                        {% for product in products %}
-                                            <tr>
-                                                <td>
+                        <p>Ապրանքների ցանկ</p>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Ավելացնել Նկար</th>
+                                <th>Անուն</th>
+                                <th>Քանակ</th>
+                                <th>Չափման<br/>միավոր</th>
+                                <th>Գին</th>
+                            </tr>
+                            </thead>
+                            {% if checkOffer %}
+                                <tbody>
+                                {% for product in products %}
+                                    <tr>
+                                        <td>
                                                      <span class="btn btn-success fileinput-button">
                                                             <label>Նկար</label>
-                                                    <input type="file" name="product[{{ product.id }}][file]" >
+                                                    <input type="file" name="product[{{ product.id }}][file]">
                                                      </span>
-                                                </td>
-                                                <td>{{ product.name }}</td>
-                                                <td>{% if product.count  %}{{ product.count }}{% endif %}</td>
-                                                <td>{% if product.type  %}{{ product.type }}{% endif %}</td>
-                                                <td><input name="product[{{ product.id }}][price]"  type="text" placeholder="գին"></td>
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                {% else %}
-                                    <tbody>
-                                        <tr>
-                                            <td>Դուք արդեն կատարել էք գնային առաջարկ</td>
-                                         </tr>
-                                    </tbody>
-                                 {% endif %}
-                            </table>
+                                        </td>
+                                        <td>{{ product.name }}</td>
+                                        <td>{% if product.count %}{{ product.count }}{% endif %}</td>
+                                        <td>{% if product.type %}{{ product.type }}{% endif %}</td>
+                                        <td><input name="product[{{ product.id }}][price]" type="text"
+                                                   placeholder="գին"></td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            {% else %}
+                                <tbody>
+                                <tr>
+                                    <td>Դուք արդեն կատարել էք գնային առաջարկ</td>
+                                </tr>
+                                </tbody>
+                            {% endif %}
+                        </table>
+                        {% if checkOffer %}
                             <div class="text-center">
                                 <button class="give-price">Առաջարկել</button>
-                             </div>
-
-                            {{ form_end(form) }}
+                            </div>
+                        {% else %}
+                            <div class="text-right">
+                                <a target="_blank" href="{{ path('my_share') }}">
+                                    <button class="download-tender">Դուրս գալ</button>
+                                </a>
+                            </div>
+                        {% endif %}
+                        {{ form_end(form) }}
                     </div>
                 </div>
             </div>
