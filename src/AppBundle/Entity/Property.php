@@ -146,9 +146,9 @@ class Property
     private $product;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="boolean", nullable=true)
      */
-    private $categoryType ;
+    private $categoryType = null ;
 
     public function __construct()
     {

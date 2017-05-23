@@ -36,13 +36,13 @@
                     <td>{{ value.type }}</td>
                     <td>{{ value.start|date('Y/m/d') }} - {{ value.end|date('Y/m/d') }}</td>
                     <td>
-                        {% if value.removed == 1 and value.categoryType != 1  and value.categoryType != 3 %}
+                        {% if value.removed == 1 and  value.categoryType is null %}
                             Արխիվացված
-                        {% elseif  value.categoryType == 1 %}
+                        {% elseif  value.categoryType %}
                             Կայացած
-                        {% elseif date(value.end) > date() and date(value.start) < date() and value.categoryType != 1 and value.categoryType != 3 %}
+                        {% elseif date(value.end) > date() and date(value.start) < date() and value.categoryType is null%}
                             Ընթացիկ
-                        {% elseif  value.categoryType == 3%}
+                        {% else %}
                             Չկայացած
                         {% endif %}
                     </td>

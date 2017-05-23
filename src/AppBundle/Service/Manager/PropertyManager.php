@@ -107,6 +107,7 @@ class PropertyManager
             ->andWhere("property.actived =:active")
             ->andWhere("property.removed =:notRemoved")
             ->andWhere("property.end >= :date")
+            ->andWhere("property.categoryType is null")
             ->setParameters(array(
                 "type" => $type,
                 "active"=>true,
@@ -132,6 +133,7 @@ class PropertyManager
             ->andWhere("property.actived =:active")
             ->andWhere("property.removed =:notRemoved")
             ->andWhere("property.end >= :date")
+            ->andWhere("property.categoryType is null")
             ->setParameters(array(
                 "type" => $type,
                 "active"=>true,
@@ -168,6 +170,7 @@ class PropertyManager
             ->andWhere("property.end <= :end")
             ->andWhere("property.actived = :actived")
             ->andWhere("property.removed = :removed")
+            ->andWhere("property.categoryType is null")
             ->andWhere($qb->expr()->in("property.propertyType" ,":propertyType"))
             ->andWhere($qb->expr()->in("property.category" ,":category"))
             ->setParameters(array(
