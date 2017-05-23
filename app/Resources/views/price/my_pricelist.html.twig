@@ -45,10 +45,10 @@
                         {% endfor %}
                         </tbody>
                     </table>
-                    {% if date(pricelist.0.property.end) > date() %}
+                    {% if date(pricelist.0.property.end)  %}
                         <div class="text-right">
-                            <a target="_blank" href="{{ path('my_share') }}">
-                                <button class="download-tender">Դուրս գալ</button>
+                            <a  href="{{ path('my_share') }}">
+                                <button >Դուրս գալ</button>
                             </a>
                         </div>
                     {% else %}

@@ -35,7 +35,7 @@ class PriceController extends FOSRestController
             return $this->render(":price:create.html.twig",[
                 "form" => $form->createView(),
                 "products" => $products,
-                "checkOffer" => false
+                "checkOffer" => null
             ]);
         }
 

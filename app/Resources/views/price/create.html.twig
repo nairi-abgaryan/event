@@ -61,20 +61,17 @@
                             <div class="text-center">
                                 <button class="give-price">Առաջարկել</button>
                             </div>
-                        {% else %}
-                            <div class="text-right">
-                                <a target="_blank" href="{{ path('my_share') }}">
-                                    <button class="download-tender">Դուրս գալ</button>
-                                </a>
-                            </div>
                         {% endif %}
                         {{ form_end(form) }}
+
+                        {% if checkOffer is null%}
+                            <div class="text-right">
+                                <a href="{{ path('list_property') }}">  <button >Դուրս գալ</button></a>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
     </section>
-{% endblock %}
-{% block stylesheets %}
-
 {% endblock %}
