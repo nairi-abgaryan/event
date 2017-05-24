@@ -61,6 +61,7 @@ class PropertyType extends AbstractType
             ])
             ->add('budget', NumberType::class, [
                 "label" =>false,
+                "required" =>true,
                 'attr'=>array(
                     'oninvalid' => "setCustomValidity('Լրացնել դաշտը')",
                     "onchange"=>"try { setCustomValidity('') } catch (e) {}",
