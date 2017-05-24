@@ -1,13 +1,13 @@
 @font-face {
-  font-family: 'Arian';
+  font-family: 'Arian' !important;
   src: url("../fonts/arnamu.ttf");
   font-style: normal; }
 @font-face {
-  font-family: 'Arian-bold';
+  font-family: 'Arian-bold' !important;;
   src: url("../fonts/arnamu_bold.ttf");
   font-style: normal; }
 @font-face {
-  font-family: 'Arian-italic';
+  font-family: 'Arian-italic' !important;;
   src: url("../fonts/arnamu_italic.ttf");
   font-style: normal; }
 html {
@@ -26,7 +26,7 @@ body {
   min-height: 100%; }
 
 h1, h2, h3, h4, p, ul, a {
-  font-family: 'Arian', sans-serif; }
+  font-family: 'Arian', sans-serif !important;; }
 
 /* Navigation Bar */
 @media (min-width: 767px) {
