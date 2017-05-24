@@ -18,7 +18,7 @@
             <tbody>
             {% for value in properties %}
                 <tr>
-                    <td><a href="{{ path('get_property',{"id":value.property.id}) }}">578</a></td>
+                    <td><a href="{{ path('get_property',{"id":value.property.id}) }}">{{ value.property.id  }}</a></td>
                     <td>{{ value.property.type.name }}</td>
                     <td>{{ value.property.owner.companyName }}</td>
                     <td>{{ value.property.start|date('Y/m/d') }} - {{ value.property.end|date('Y/m/d') }}</td>
