@@ -34,7 +34,7 @@
                     <td><input type="checkbox"></td>
                     <td><a href="{{ path('update_property',{"id":value.id}) }}">{{ value.id }} </a></td>
                     <td>{{ value.type }}</td>
-                    <td>{{ value.start|date('Y/m/d') }} - {{ value.end|date('Y/m/d') }}</td>
+                    <td>{{ value.start|date('Y/m/d H:i') }} - {{ value.end|date('Y/m/d H:i') }}</td>
                     <td>
                         {% if value.removed == 1 and  value.categoryType is null %}
                             Արխիվացված

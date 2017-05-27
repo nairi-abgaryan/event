@@ -97,13 +97,17 @@
         {% if form_errors(form.advance) %}
             <span style="color: red">*Ձեր լրացրած դաշտը սխալ է  </span>
         {% endif %}
-        {{ form_widget(form.advance) }}<br>
+        {{ form_widget(form.advance) }} <span class="default_price_advance"></span> ՀՀ դրամ<br>
         <label for="budget">Մրցույթային բյուջեն</label><br>
         {% if form_errors(form.advance) %}
             <span style="color: red">*Ձեր լրացրած դաշտը սխալ է  </span>
         {% endif %}
-        {{ form_widget(form.advance) }}<br>
-        {{ form_widget(form.budget, {"attr":{"id":"budget"}}) }} ՀՀ դրամ<br>
+        {{ form_widget(form.advance) }} <br>
+        {% if form_errors(form.budget) %}
+            <span style="color: red">*Ձեր լրացրած դաշտը սխալ է  </span>
+        {% endif %}
+        {{ form_widget(form.budget, {"attr":{"id":"budget"}}) }} <span class="default_price"></span> ՀՀ դրամ<br>
+
         <label for="desc">Մրցույթի համառոտ բնութագիր</label>
         {{ form_widget(form.overview, { 'attr': {'class': 'form-control',"id":"desc","rows": 5}}) }}
         <label>Մրցույթի տեխնիկական բնութագիր</label>
@@ -124,6 +128,20 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('js/accounting.js') }}"></script>
+    <script>
+        $('#property_budget').on("keyup", function () {
+             var num = $(this).val();
+            num = accounting.formatNumber(num, 2);;
+            $(".default_price").html(num);
+        });
+        $('#property_advance').on("keyup", function () {
+             var num = $(this).val();
+            num = accounting.formatNumber(num, 2);;
+            $(".default_price_advance").html(num);
+        });
+
+    </script>
     <script src="{{ asset('js/datepicker.min.js') }}"></script>
     <script type="text/javascript">
         $(function () {

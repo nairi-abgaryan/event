@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -53,19 +54,25 @@ class PropertyType extends AbstractType
                 "label"=>false
             ])
             ->add('shipment')
-            ->add('advance', TextType::class, [
+            ->add('advance', NumberType::class, [
                 'attr'=>array(
                     'oninvalid'=>"setCustomValidity('Լրացնել դաշտը')",
                     "onchange"=>"try { setCustomValidity('') } catch (e) {}",
-                )
+                ),
+                "constraints" => [
+                    new Assert\NotBlank()
+                ]
             ])
-            ->add('budget', NumberType::class, [
+            ->add('budget', NumberType ::class, [
                 "label" =>false,
                 "required" =>true,
                 'attr'=>array(
                     'oninvalid' => "setCustomValidity('Լրացնել դաշտը')",
                     "onchange"=>"try { setCustomValidity('') } catch (e) {}",
-                )
+                ),
+                "constraints" => [
+                    new Assert\NotBlank()
+                ]
             ])
             ->add('overview', TextareaType::class, [
                 "label" => false,

@@ -36,7 +36,7 @@
                         </span>
                     </p>
                     <p>Առաքում <span class="item-description">{{ property.shipment }}</span></p>
-                    <p>Հայտի ժամկետը <span class="item-description">{{ property.start|date("Y/m/d") }} - {{ property.end|date("Y/m/d") }}</span></p>
+                    <p>Հայտի ժամկետը <span class="item-description">{{ property.start|date("Y/m/d H:i") }} - {{ property.end|date("Y/m/d") }}</span></p>
                     <p>Գնման առարկա  <span class="item-description">{{ property.propertyType }}</span></p>
                     <p>Բյուջե <span class="item-description">{{ property.budget|number_format(0, '.') }} ՀՀ դրամ</span></p>
                     <p>Բնութագիր</p>

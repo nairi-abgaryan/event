@@ -23,11 +23,11 @@
                                     {% if date(value.property.end) <= date() %}
                                         {{ value.price }}
                                         {% else %}
-                                        Դուք կարող էք տեսնել առաջարկները {{ value.property.end | date("Y/m/d") }} -ից
+                                        Դուք կարող էք տեսնել առաջարկները {{ value.property.end | date("Y/m/d H:i") }} -ից
                                     {% endif %}
                                 </td>
                                 <td>
-                                    {% if date(value.property.end) <= date() %}
+                                    {% if date(value.property.end) < date() %}
                                     <a target="_blank" href="{{ asset('uploads/files/') }}{{ value.file }}">
                                         <button class="download-tender">Ներբեռնել</button>
                                     </a>
@@ -45,7 +45,7 @@
                         {% endfor %}
                         </tbody>
                     </table>
-                    {% if date(pricelist.0.property.end)  %}
+                    {% if date(pricelist.0.property.end) > date()  %}
                         <div class="text-right">
                             <a  href="{{ path('my_share') }}">
                                 <button >Դուրս գալ</button>
@@ -55,6 +55,9 @@
                     <div class="text-right">
                         <a data-url="{{ path('my_property',{"id":pricelist.0.property.id }) }}"
                            data-toggle="modal" data-target="#cancel" class="end-tender"><button>Ավարտել</button></a>
+                        <a  href="{{ path('my_property', {"id":pricelist.0.property.id}) }}">
+                            <button >Դուրս գալ</button>
+                        </a>
                         <div class="modal fade" id="cancel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">

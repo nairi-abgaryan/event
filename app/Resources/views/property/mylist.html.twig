@@ -21,7 +21,7 @@
                     <td><a href="{{ path('get_property',{"id":value.property.id}) }}">{{ value.property.id  }}</a></td>
                     <td>{{ value.property.type.name }}</td>
                     <td>{{ value.property.owner.companyName }}</td>
-                    <td>{{ value.property.start|date('Y/m/d') }} - {{ value.property.end|date('Y/m/d') }}</td>
+                    <td>{{ value.property.start|date('Y/m/d H:i') }} - {{ value.property.end|date('Y/m/d H:i') }}</td>
                     <td>{% if value.established %}Այո{% else %}Ոչ{% endif %}</td>
                     <td>
                         <a data-toggle="modal" data-target="#cancel" href="#">
