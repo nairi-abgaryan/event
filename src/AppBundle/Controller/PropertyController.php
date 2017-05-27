@@ -141,6 +141,10 @@ class PropertyController extends FOSRestController
             $startDate = new \DateTime($data->getStart()->format("Y-m-d H:i:s"));
             $data->setEnd($startDate->add(new \DateInterval('P'.$limit.'D')));
         }
+        $time = date("H");
+        $time1 = date("i");
+        $data->getEnd()->setTime($time, $time1);
+        $data->getStart()->setTime($time, $time1);
 
         if($data->getFilePdf()){
             $this->addAvatar($data);
@@ -232,7 +236,10 @@ class PropertyController extends FOSRestController
             $startDate = new \DateTime($data->getStart()->format("Y-m-d H:i:s"));
             $data->setEnd($startDate->add(new \DateInterval('P'.$limit.'D')));
         }
-
+        $time = date("H");
+        $time1 = date("i");
+        $data->getEnd()->setTime($time, $time1);
+        $data->getStart()->setTime($time, $time1);
         if($data->getFilePdf()){
             $this->addAvatar($data);
         }
