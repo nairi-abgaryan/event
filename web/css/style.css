@@ -7,7 +7,7 @@
   src: url("../fonts/arnamu_bold.ttf");
   font-style: normal; }
 @font-face {
-  font-family: 'Arian-italic' ;;
+  font-family: 'Arian-italic' ;
   src: url("../fonts/arnamu_italic.ttf");
   font-style: normal; }
 html {
@@ -25,7 +25,7 @@ body {
   padding-bottom: 6rem;
   min-height: 100%; }
 
-h1, h2, h3, h4, p, ul,li,tr,td, a {
+h1, h2, h3, h4, p, ul,li,tr,td, a,select,button,input {
   font-family: 'Arian', sans-serif !important;; }
 
 /* Navigation Bar */
