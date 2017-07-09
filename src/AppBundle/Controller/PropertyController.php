@@ -142,6 +142,7 @@ class PropertyController extends FOSRestController
             $startDate = new \DateTime($data->getStart()->format("Y-m-d H:i:s"));
             $data->setEnd($startDate->add(new \DateInterval('P'.$limit.'D')));
         }
+
         $time = date("H");
         $time1 = date("i");
         $data->getEnd()->setTime($time, $time1);
@@ -204,6 +205,7 @@ class PropertyController extends FOSRestController
     {
         date_default_timezone_set("Asia/Yerevan");
         $user = $this->getUser();
+
         if($user !== $property->getOwner()){
             return $this->render("error/error.html.twig",[
                 "status_text" => "Access denied ",
@@ -233,18 +235,21 @@ class PropertyController extends FOSRestController
         $diff = $data->getEnd()->diff($data->getStart());
 
         $now = new \DateTime('now');
-        $interval_update = $now->diff($data->getStart());
+        if($now > $data->getStart()){
+            $interval_update = $now->diff($data->getStart());
 
-        $updateDate = $interval_update->format('%a')."\n";
+            $updateDate = $interval_update->format('%a')."\n";
 
-        if($updateDate > $limit/2){
-            return $this->render(":property:update.html.twig",[
-                "form" => $form->createView(),
-                "property" => $property,
-                "product" => $product,
-                "update" => null
-            ]);
+            if((int)$updateDate > $limit/2){
+                return $this->render(":property:update.html.twig",[
+                    "form" => $form->createView(),
+                    "property" => $property,
+                    "product" => $product,
+                    "update" => null
+                ]);
+            }
         }
+
 
         if ($diff->days > $limit || $data->getEnd() < $data->getStart()){
             $startDate = new \DateTime($data->getStart()->format("Y-m-d H:i:s"));
@@ -259,7 +264,7 @@ class PropertyController extends FOSRestController
         }
         $data->setOwner($user);
         $products = $request->request->all()['product'];
-        $files = $request->filкes->all()['product'];
+        $files = $request->files->all()['product'];
 
         foreach ($product as $product_create){
             $id = $product_create->getId();
