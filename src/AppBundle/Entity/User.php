@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @UniqueEntity(fields={"email"},  message="Ձեր լրացված տվյալը առկա է համակարգում")
+ * @UniqueEntity(fields={"tin"},  message="Ձեր լրացված տվյալը առկա է համակարգում")
  * @Serializer\ExclusionPolicy("all")
  */
 class User implements UserInterface
@@ -63,7 +64,7 @@ class User implements UserInterface
 
 
     /**
-     * @ORM\Column(type="string",nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     private $businessAddress;
 
@@ -73,7 +74,7 @@ class User implements UserInterface
     private $legalAddress;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="integer", unique=true)
      */
     private $tin;
 

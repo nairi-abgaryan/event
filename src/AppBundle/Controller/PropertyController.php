@@ -187,10 +187,7 @@ class PropertyController extends FOSRestController
         }
 
         $property = $this->get("app.property_manager")->findBy($user);
-
-        return $this->render(":property:list.html.twig",[
-            "property" => $property
-        ]);
+        return $this->redirectToRoute('my_list_property', ["property" => $property]);
     }
 
     /**
@@ -232,6 +229,11 @@ class PropertyController extends FOSRestController
         $limit = $data->getType()->getLimitDays();
         $diff = $data->getEnd()->diff($data->getStart());
 
+        $now = new \DateTime('now');
+        $interval_update = $now->diff($data->getStart());
+        echo $interval_update->format('%a')."\n";
+        echo $limit."\n";
+        die();
         if ($diff->days > $limit || $data->getEnd() < $data->getStart()){
             $startDate = new \DateTime($data->getStart()->format("Y-m-d H:i:s"));
             $data->setEnd($startDate->add(new \DateInterval('P'.$limit.'D')));
@@ -245,7 +247,7 @@ class PropertyController extends FOSRestController
         }
         $data->setOwner($user);
         $products = $request->request->all()['product'];
-        $files = $request->files->all()['product'];
+        $files = $request->filкes->all()['product'];
 
         foreach ($product as $product_create){
             $id = $product_create->getId();
@@ -256,7 +258,7 @@ class PropertyController extends FOSRestController
             if($files['product'.$id.'']["image"]){
                 $image = $files['product'.$id.'']["image"];
                 $media = $this->addImage($image);
-                $product_create->setImage($media);;
+                $product_create->setImage($media);
             }
 
             $this->get('app.property_product_manager')->persist($product_create);

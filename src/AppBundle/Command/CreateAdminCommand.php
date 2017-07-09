@@ -26,7 +26,7 @@ class CreateAdminCommand extends ContainerAwareCommand
         $email = $this->getContainer()->getParameter('admin_email');
         $password = $this->getContainer()->getParameter('admin_password');
         $phone_number = $this->getContainer()->getParameter("admin_phone");
-        $company_name= $this->getContainer()->getParameter("company_name");
+        $company_name = $this->getContainer()->getParameter("company_name");
         $validator = Validation::createValidator();
 
         // Validate email
@@ -63,6 +63,7 @@ class CreateAdminCommand extends ContainerAwareCommand
             $user->setPlainPassword($password);
             $user->setPhoneNumber($phone_number);
             $user->setCompanyName($phone_number);
+            $user->setTin(1234);
             $user->setRoles(['ROLE_ADMIN']);
         }
 

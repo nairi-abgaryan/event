@@ -1,9 +1,9 @@
 @font-face {
-  font-family: 'Arian';
-  src: url("../fonts/arnamu.ttf");
-  font-style: normal; }
+  font-family: 'Arian' !important;
+  src: url("../fonts/arnamu.ttf") !important;
+  font-style: normal !important; }
 @font-face {
-  font-family: 'Arian-bold' ;;
+  font-family: 'Arian-bold' ;
   src: url("../fonts/arnamu_bold.ttf");
   font-style: normal; }
 @font-face {
