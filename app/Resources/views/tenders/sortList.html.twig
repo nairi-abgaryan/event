@@ -19,7 +19,7 @@
                         <p>Հրապարակման օր <span class="item-description">{{ value.createdAt|date("Y/m/d H:i") }}</span></p>
                         <p>Խմբագրվել Է <span class="item-description">{{ value.updatedAt|date("Y/m/d H:i") }}</span></p>
                         <h4>Համառոտ բնութագիր</h4>
-                        <p>{{ value.overview|truncate(300) }}</p>
+                        <p style="width: 490px;">{{ value.overview|truncate(300) }}</p>
                         <div class="text-right">
                             <a href="{{ path('get_property',{"id":value.id}) }}">
                                 <button class="detailed">Մանրամասն</button>

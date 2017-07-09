@@ -19,7 +19,7 @@ class EndTenderCommand extends ContainerAwareCommand
     {
         date_default_timezone_set('Asia/Yerevan');
         $date = new \DateTime("now");
-        $minutes_to_add = 5;
+        $minutes_to_add = 3;
         $now = new \DateTime("now");
         $date->add(new \DateInterval('PT' . $minutes_to_add . 'M'));
 
@@ -44,7 +44,6 @@ class EndTenderCommand extends ContainerAwareCommand
             $this->getContainer()->get("app.mailer_service")->sendMail($message, $value->getOwner()->getEmail());
             return $this->getContainer()->get("app.property_manager")->persist($value);
         }
-
     }
 }
 

@@ -10,6 +10,9 @@
     </style>
 {% endblock %}
 {% block body %}
+    {% if update is null %}
+        <h3 style="color: red;">Մրցույթը չի կարող խմբագրվել</h3>
+    {% endif %}
     <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12 create-tender">
         {{ form_start(form) }}
         <p>Մրցույթի տեսակը</p>
@@ -82,7 +85,7 @@
         {{ form_widget(form.budget,{"value": property.budget}) }} ՀՀ դրամ<br>
         <label for="desc">Մրցույթի համառոտ բնութագիր</label>
         {{ form_widget(form.overview, {"value": property.overview , 'attr': {'class': 'form-control',"id":"desc","rows": 5}}) }}
-        <label>Մրցույթի տեխնիկական բնութագիր</label>
+        <label>Մրցույթային փաթեթ</label>
         <a target="_blank" href="{% path property.file, 'reference' %} ">Բեռնել</a>
         <a href="#"></a>
         <span class="btn btn-success fileinput-button">

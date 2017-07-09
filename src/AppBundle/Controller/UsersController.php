@@ -30,7 +30,7 @@ class UsersController extends FOSRestController
             throw $this->createAccessDeniedException();
         }
 
-        $form = $this->createForm(UserType::class,$user);
+        $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
 

@@ -45,11 +45,11 @@ class MailerSender
         $mail->Password = $this->password;
         $mail->SMTPSecure = 'tsl';
         $mail->Port = 25;
-        $mail->setFrom($this->username, 'Uno Buy');
-        $mail->addAddress($sendEmail, 'Uno');
+        $mail->setFrom($this->username, 'UnoBuy Administration');
+        $mail->addAddress($sendEmail, 'UnoBuy Administration');
         $mail->isHTML(true);
         $mail->CharSet = "utf8";
-        $mail->Subject = 'Uno Buy';
+        $mail->Subject = 'UnoBuy Administration';
         $mail->Body = $body;
         $mail->send();
 

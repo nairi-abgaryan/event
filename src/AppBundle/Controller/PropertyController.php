@@ -119,6 +119,7 @@ class PropertyController extends FOSRestController
      */
     public function createAction(Request $request)
     {
+        date_default_timezone_set("Asia/Yerevan");
         $user = $this->getUser();
         $form = $this->createForm(PropertyType::class);
         $form_product = $this->createForm(PropertyProductType::class);
@@ -201,6 +202,7 @@ class PropertyController extends FOSRestController
      */
     public function updateAction(Request $request, Property $property)
     {
+        date_default_timezone_set("Asia/Yerevan");
         $user = $this->getUser();
         if($user !== $property->getOwner()){
             return $this->render("error/error.html.twig",[
@@ -220,7 +222,8 @@ class PropertyController extends FOSRestController
                 "form" => $form->createView(),
                 "property" => $property,
                 "form_product" => $form_product->createView(),
-                "product" => $product
+                "product" => $product,
+                "update" => true
             ]);
         }
 
@@ -231,9 +234,18 @@ class PropertyController extends FOSRestController
 
         $now = new \DateTime('now');
         $interval_update = $now->diff($data->getStart());
-        echo $interval_update->format('%a')."\n";
-        echo $limit."\n";
-        die();
+
+        $updateDate = $interval_update->format('%a')."\n";
+
+        if($updateDate > $limit/2){
+            return $this->render(":property:update.html.twig",[
+                "form" => $form->createView(),
+                "property" => $property,
+                "product" => $product,
+                "update" => null
+            ]);
+        }
+
         if ($diff->days > $limit || $data->getEnd() < $data->getStart()){
             $startDate = new \DateTime($data->getStart()->format("Y-m-d H:i:s"));
             $data->setEnd($startDate->add(new \DateInterval('P'.$limit.'D')));
@@ -268,7 +280,8 @@ class PropertyController extends FOSRestController
         return $this->render(":property:update.html.twig",[
             "form" => $form->createView(),
             "property" => $property,
-            "product" => $product
+            "product" => $product,
+            "update" => true
         ]);
     }
 

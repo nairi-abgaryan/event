@@ -48,6 +48,7 @@ class Price
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @Serializer\Expose
      */
     private $owner;
