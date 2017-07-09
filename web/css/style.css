@@ -41,7 +41,6 @@ h1, h2, h3, h4, p, ul,li,tr,td,a,select,button,input {
 .navbar-toggle {
   cursor: pointer;
   padding: 20px 41px 16px 0; }
-
 .navbar-toggle span, .navbar-toggle span:before, .navbar-toggle span:after {
   cursor: pointer;
   height: 2px;
