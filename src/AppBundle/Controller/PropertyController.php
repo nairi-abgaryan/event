@@ -234,7 +234,7 @@ class PropertyController extends FOSRestController
         $limit = $data->getType()->getLimitDays();
         $diff = $data->getEnd()->diff($data->getStart());
 
-        $now = new \DateTime('now');
+        $now = new \DateTime();
         if($now > $data->getStart()){
             $interval_update = $now->diff($data->getStart());
 
