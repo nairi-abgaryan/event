@@ -103,7 +103,6 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
-
 # Lexik JWT Authentication
 lexik_jwt_authentication:
     private_key_path: "%kernel.root_dir%/../var/jwt/private.pem"
