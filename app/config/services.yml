@@ -139,6 +139,9 @@ services:
     # ------------------------------------------------------------------------------------------------------------------
     # Entity managers
     # ------------------------------------------------------------------------------------------------------------------
+    app.token:
+        class: AppBundle\Service\Manager\TokenManager
+        arguments: ["@app.orm.token.repository", "@app.orm.token.manager"]
 
     app.help.manager:
         class: AppBundle\Service\Manager\HelpManager

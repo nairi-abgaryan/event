@@ -2,7 +2,7 @@ parameters:
     # ------------------------------------------------------------------------------------------------------------------
     # Entities
     # ------------------------------------------------------------------------------------------------------------------
-
+    app.entity.token.class: AppBundle\Entity\Token
     app.entity.privacy.class: AppBundle\Entity\Privacy
     app.entity.help.class: AppBundle\Entity\Helpful
     app.entity.shipment.class: AppBundle\Entity\Shipment
@@ -23,7 +23,7 @@ parameters:
     # ------------------------------------------------------------------------------------------------------------------
     # Repositories
     # ------------------------------------------------------------------------------------------------------------------
-
+    app.repository.token.class: AppBundle\Repository\TokenRepository
     app.repository.privacy.class: AppBundle\Repository\PrivacyRepository
     app.repository.help.class: AppBundle\Repository\HelpRepository
     app.repository.shipment.class: AppBundle\Repository\ShipmentRepository
@@ -45,6 +45,11 @@ services:
     # ------------------------------------------------------------------------------------------------------------------
     # Manager Registry Services
     # ------------------------------------------------------------------------------------------------------------------
+
+    app.orm.token.manager:
+        class: Doctrine\Common\Persistence\ManagerRegistry
+        factory: ["@doctrine", getManagerForClass]
+        arguments: ["%app.entity.token.class%"]
 
     app.orm.help.manager:
         class: Doctrine\Common\Persistence\ManagerRegistry
@@ -129,6 +134,10 @@ services:
     # ------------------------------------------------------------------------------------------------------------------
     # Repositories
     # ------------------------------------------------------------------------------------------------------------------
+    app.orm.token.repository:
+        class: "%app.repository.token.class%"
+        factory: ["@app.orm.token.manager", getRepository]
+        arguments: ["%app.entity.token.class%"]
 
     app.orm.help.repository:
         class: "%app.entity.help.class%"

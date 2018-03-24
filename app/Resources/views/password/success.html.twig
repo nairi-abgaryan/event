@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+{% block title %}Flip Real Estate Deals - Contact!{% endblock %}
+{% block body %}
+    <section class="contact-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                </div>
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                    <h3>Reset password</h3>
+                    {% if  form_errors(form)  %}
+                        <div class="alert alert-danger">
+                            {{ form_errors(form) }}
+                        </div>
+                    {% endif %}
+                    {{ form_start(form, {"action":"/reset/","id":"contact_form_signup"}) }}
+                    <input type="hidden" name="token" value="{{ token }}">
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
